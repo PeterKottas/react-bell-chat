@@ -45,6 +45,7 @@ interface ChatState {
 }
 
 class Chat extends React.Component<ChatProps, ChatState> {
+  private onMessageSendRef: () => void;
   constructor(props: ChatProps) {
     super(props);
     this.state = {
@@ -71,6 +72,18 @@ class Chat extends React.Component<ChatProps, ChatState> {
           authorId: 2,
           message: 'Hey! Evan here. react-chat-ui is pretty dooope.',
         },
+        {
+          authorId: 0,
+          message: 'My message.',
+        },
+        {
+          authorId: 0,
+          message: 'One more.',
+        },
+        {
+          authorId: 2,
+          message: 'One more to see the scroll.',
+        },
       ],
       useCustomBubble: false,
       currentUser: 0,
@@ -84,18 +97,13 @@ class Chat extends React.Component<ChatProps, ChatState> {
 
   onMessageSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    this.pushMessage(this.state.currentUser, this.state.messageText);
-    this.setState({ messageText: '' });
-    return true;
-  }
-
-  pushMessage(recipient, message) {
     const newMessage = {
-      authorId: recipient,
-      message,
+      authorId: this.state.currentUser,
+      message: this.state.messageText,
     };
     const messages = this.state.messages.concat(newMessage);
-    this.setState({ messages });
+    this.setState({ messageText: '', messages }, () => this.onMessageSendRef && this.onMessageSendRef());
+    return true;
   }
 
   render() {
@@ -117,16 +125,18 @@ class Chat extends React.Component<ChatProps, ChatState> {
           <ChatFeed
             selfAuthorId={0}
             authors={this.state.authors}
-            chatBubble={this.state.useCustomBubble && customBubble}
+            customChatBubble={this.state.useCustomBubble && customBubble}
             maxHeight={250}
             messages={this.state.messages} // Boolean: list of message objects
             showAvatar
+            onMessageSendRef={onMessageSendRef => this.onMessageSendRef = onMessageSendRef}
           />
 
           <form onSubmit={e => this.onMessageSubmit(e)}>
             <input
               placeholder="Type a message..."
               className="message-input"
+              value={this.state.messageText}
               onChange={e => this.setState({ messageText: e.target.value })}
             />
           </form>
