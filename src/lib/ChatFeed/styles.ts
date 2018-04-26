@@ -2,7 +2,6 @@ import * as React from 'react';
 
 export interface ChatFeedStyles {
   chatPanel: React.CSSProperties;
-  chatHistory: React.CSSProperties;
   chatBubbleWrapper: React.CSSProperties;
   img: React.CSSProperties;
 }
@@ -13,10 +12,6 @@ export default {
     flexDirection: 'column',
     flex: 1,
     overflow: 'hidden',
-  },
-  chatHistory: { 
-    overflow: 'auto',
-    padding: '0 10px'
   },
   chatBubbleWrapper: {
     marginTop: 10,

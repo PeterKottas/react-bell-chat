@@ -6,12 +6,13 @@ import { Author } from '../Author';
 import { ChatBubbleStyles } from '../ChatBubble/';
 import { AvatarProps } from '../Avatar';
 import { ChatScrollAreaProps } from '../ChatScrollArea';
+import { MaxHeightProperty } from 'csstype';
 export interface ChatFeedProps {
     authors: Author[];
     selfAuthorId: number;
     bubblesCentered?: boolean;
     bubbleStyles?: ChatBubbleStyles;
-    maxHeight?: number;
+    maxHeight?: MaxHeightProperty<string | number>;
     messages: Message[];
     showAvatar?: boolean;
     customChatBubble?: (props: ChatBubbleProps) => JSX.Element;

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { MaxHeightProperty } from 'csstype';
 
 const styles: { [key: string]: React.CSSProperties } = {
   chatHistory: {
@@ -11,7 +12,7 @@ const styles: { [key: string]: React.CSSProperties } = {
 
 export interface ChatScrollAreaProps {
   // scrollDown: () => void;
-  maxHeight?: number;
+  maxHeight?: MaxHeightProperty<string | number>;
   refScrollElement: (scrollElement: IChatScrollArea) => void;
 }
 
