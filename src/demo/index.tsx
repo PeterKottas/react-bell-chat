@@ -1,8 +1,8 @@
-import React from 'react';
+import * as React from 'react';
 import { render } from 'react-dom';
-import { ChatFeed, ChatBubble, BubbleGroup, Message } from '../lib';
+import { ChatFeed, ChatBubble, BubbleGroup, Message, Author } from '../lib';
 
-const styles = {
+const styles: { [key: string]: React.CSSProperties } = {
   button: {
     backgroundColor: '#fff',
     borderColor: '#1D2129',
@@ -11,7 +11,7 @@ const styles = {
     borderWidth: 2,
     color: '#1D2129',
     fontSize: 18,
-    fontWeight: '300',
+    fontWeight: 300,
     paddingTop: 8,
     paddingBottom: 8,
     paddingLeft: 16,
@@ -34,51 +34,74 @@ const customBubble = props => (
   <div>
     <p>{`${props.message.senderName} ${props.message.id ? 'says' : 'said'}: ${
       props.message.message
-    }`}</p>
+      }`}</p>
   </div>
 );
 
-class Chat extends React.Component {
-  constructor() {
-    super();
+interface ChatProps {
+
+}
+
+interface ChatState {
+  authors: Author[];
+  messages: Message[];
+  useCustomBubble: boolean;
+  currentUser: number;
+  messageText: string;
+}
+
+class Chat extends React.Component<ChatProps, ChatState> {
+  constructor(props: ChatProps) {
+    super(props);
     this.state = {
-      messages: [
-        new Message({ id: 1, message: 'Hey guys!', senderName: 'Mark' }),
-        new Message({
+      authors: [
+        {
+          id: 0,
+          name: 'You'
+        },
+        {
+          id: 1,
+          name: 'Mark'
+        },
+        {
           id: 2,
+          name: 'Evan'
+        }
+      ],
+      messages: [
+        {
+          authorId: 1,
+          message: 'Hey guys!!',
+        },
+        {
+          authorId: 2,
           message: 'Hey! Evan here. react-chat-ui is pretty dooope.',
-          senderName: 'Evan',
-        }),
+        },
       ],
       useCustomBubble: false,
-      curr_user: 0,
+      currentUser: 0,
+      messageText: ''
     };
   }
 
   onPress(user) {
-    this.setState({ curr_user: user });
+    this.setState({ currentUser: user });
   }
 
-  onMessageSubmit(e) {
-    const input = this.message;
+  onMessageSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (!input.value) {
-      return false;
-    }
-    this.pushMessage(this.state.curr_user, input.value);
-    input.value = '';
+    this.pushMessage(this.state.currentUser, this.state.messageText);
+    this.setState({ messageText: '' });
     return true;
   }
 
   pushMessage(recipient, message) {
-    const prevState = this.state;
-    const newMessage = new Message({
-      id: recipient,
+    const newMessage = {
+      authorId: recipient,
       message,
-      senderName: users[recipient],
-    });
-    prevState.messages.push(newMessage);
-    this.setState(this.state);
+    };
+    const messages = this.state.messages.concat(newMessage);
+    this.setState({ messages });
   }
 
   render() {
@@ -98,17 +121,16 @@ class Chat extends React.Component {
         </div>
         <div className="chatfeed-wrapper">
           <ChatFeed
+            selfAuthorId={0}
+            authors={this.state.authors}
             chatBubble={this.state.useCustomBubble && customBubble}
             maxHeight={250}
             messages={this.state.messages} // Boolean: list of message objects
-            showSenderName
+            showAvatar
           />
 
           <form onSubmit={e => this.onMessageSubmit(e)}>
             <input
-              ref={m => {
-                this.message = m;
-              }}
               placeholder="Type a message..."
               className="message-input"
             />
@@ -118,7 +140,7 @@ class Chat extends React.Component {
             <button
               style={{
                 ...styles.button,
-                ...(this.state.curr_user === 0 ? styles.selected : {}),
+                ...(this.state.currentUser === 0 ? styles.selected : {}),
               }}
               onClick={() => this.onPress(0)}
             >
@@ -127,7 +149,7 @@ class Chat extends React.Component {
             <button
               style={{
                 ...styles.button,
-                ...(this.state.curr_user === 1 ? styles.selected : {}),
+                ...(this.state.currentUser === 1 ? styles.selected : {}),
               }}
               onClick={() => this.onPress(1)}
             >
@@ -136,7 +158,7 @@ class Chat extends React.Component {
             <button
               style={{
                 ...styles.button,
-                ...(this.state.curr_user === 2 ? styles.selected : {}),
+                ...(this.state.currentUser === 2 ? styles.selected : {}),
               }}
               onClick={() => this.onPress(2)}
             >
@@ -161,41 +183,44 @@ class Chat extends React.Component {
         </div>
         <h2 className="text-center">There are Bubbles!</h2>
         <ChatBubble
-          message={new Message({ id: 1, message: 'I float to the left!' })}
+          selfAuthorId={0}
+          message={{ authorId: 1, message: 'I float to the left!' }}
         />
         <ChatBubble
-          message={new Message({ id: 0, message: 'I float to the right!' })}
+          selfAuthorId={0}
+          message={{ authorId: 0, message: 'I float to the right!' }}
         />
 
         <h2 className="text-center">And we have Bubble Groups!</h2>
         <BubbleGroup
           messages={[
-            new Message({ id: 1, message: 'Hey!' }),
-            new Message({ id: 1, message: 'I forgot to mention...' }),
-            new Message({
-              id: 1,
+            { authorId: 1, message: 'Hey!' },
+            { authorId: 1, message: 'I forgot to mention...' },
+            {
+              authorId: 1,
               message:
                 "Oh no, I forgot... I think I was going to say I'm a BubbleGroup",
-            }),
+            },
           ]}
-          id={1}
-          showSenderName={true}
-          senderName={'Elon Musk'}
+          selfAuthorId={0}
+          author={this.state.authors[1]}
+          showAvatar={true}
         />
         <ChatBubble
-          message={new Message({ id: 2, message: "I 'm a single ChatBubble!" })}
+          selfAuthorId={0}
+          message={{ authorId: 2, message: "I 'm a single ChatBubble!" }}
         />
         <BubbleGroup
           messages={[
-            new Message({ id: 0, message: 'How could you forget already?!' }),
-            new Message({
-              id: 0,
+            { authorId: 0, message: 'How could you forget already?!' },
+            {
+              authorId: 0,
               message: "Oh well. I'm a BubbleGroup as well",
-            }),
+            },
           ]}
-          id={1}
-          showSenderName={true}
-          senderName={'Elon Musk'}
+          selfAuthorId={0}
+          author={this.state.authors[0]}
+          showAvatar={true}
         />
       </div>
     );

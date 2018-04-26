@@ -2,7 +2,7 @@
 
 # 🙊 react-chat-ui
 
-A library of React components for building chat UI's.
+A library of React components for building chat UIs.
 
 [![NPM](https://nodei.co/npm/react-chat-ui.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/react-chat-ui/)
 
@@ -17,6 +17,8 @@ Keep in mind that this project is still in the early stages of development. If y
 ## Installation
 
 `npm install react-chat-ui --save`
+OR
+`yarn add react-chat-ui`
 
 ## Basic Usage
 
@@ -32,10 +34,11 @@ render() {
     // Your JSX...
 
     <ChatFeed
-      messages={this.state.messages} // Boolean: list of message objects
+      messages={this.state.messages} // Array: list of message objects
+      authors={this.state.authors} // Array: list of authors
       isTyping={this.state.is_typing} // Boolean: is the recipient typing
-      hasInputField={false} // Boolean: use our input, or use your own
-      showSenderName // show the name of the user who sent the message
+      inputField={undefined} // Your custom input element
+      showAvatar // show the avatar of the user who sent the message
       bubblesCentered={false} //Boolean should the bubbles be centered in the feed?
       // JSON: Custom bubble styles
       bubbleStyles={
@@ -43,7 +46,7 @@ render() {
           text: {
             fontSize: 30
           },
-          chatbubble: {
+          chatBubble: {
             borderRadius: 70,
             padding: 40
           }
@@ -65,11 +68,14 @@ Like so:
 //...
 this.state = {
   messages: [
-    new Message({
-      id: 1,
+    {
+      authorId: 1,
       message: "I'm the recipient! (The person you're talking to)",
-    }), // Gray bubble
-    new Message({ id: 0, message: "I'm you -- the blue bubble!" }), // Blue bubble
+    }, // Gray bubble
+    { 
+      authorId: 0, 
+      message: "I'm you -- the blue bubble!" 
+    }, // Blue bubble
   ],
   //...
 };
