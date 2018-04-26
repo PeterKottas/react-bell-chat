@@ -10,10 +10,10 @@ export interface BubbleGroupProps {
   messages: Message[];
   author: Author;
   showAvatar?: boolean;
-  chatBubble?: (props: ChatBubbleProps) => JSX.Element;
   bubblesCentered?: boolean;
   bubbleStyles?: ChatBubbleStyles;
   customAvatar?: (props: AvatarProps) => JSX.Element;
+  customChatBubble?: (props: ChatBubbleProps) => JSX.Element;
 };
 
 export default class BubbleGroup extends React.Component<BubbleGroupProps> {
@@ -36,9 +36,9 @@ export default class BubbleGroup extends React.Component<BubbleGroupProps> {
       bubblesCentered,
       bubbleStyles,
       showAvatar,
-      chatBubble,
+      customChatBubble,
     } = this.props;
-    const ChatBubble = chatBubble || DefaultChatBubble;
+    const ChatBubble = customChatBubble || DefaultChatBubble;
 
     const messageNodes = messages.map((message, i) => (
       <ChatBubble

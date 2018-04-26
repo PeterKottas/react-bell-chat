@@ -9,10 +9,10 @@ export interface BubbleGroupProps {
     messages: Message[];
     author: Author;
     showAvatar?: boolean;
-    chatBubble?: (props: ChatBubbleProps) => JSX.Element;
     bubblesCentered?: boolean;
     bubbleStyles?: ChatBubbleStyles;
     customAvatar?: (props: AvatarProps) => JSX.Element;
+    customChatBubble?: (props: ChatBubbleProps) => JSX.Element;
 }
 export default class BubbleGroup extends React.Component<BubbleGroupProps> {
     static defaultProps: BubbleGroupProps;

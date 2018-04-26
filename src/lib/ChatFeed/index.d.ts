@@ -11,7 +11,6 @@ export interface ChatFeedProps {
     selfAuthorId: number;
     bubblesCentered?: boolean;
     bubbleStyles?: ChatBubbleStyles;
-    inputField?: JSX.Element;
     maxHeight?: number;
     messages: Message[];
     showAvatar?: boolean;

@@ -19,7 +19,6 @@ export interface ChatFeedProps {
   selfAuthorId: number;
   bubblesCentered?: boolean;
   bubbleStyles?: ChatBubbleStyles;
-  inputField?: JSX.Element;
   maxHeight?: number;
   messages: Message[];
   showAvatar?: boolean;
@@ -76,7 +75,7 @@ export default class ChatFeed extends React.Component<ChatFeedProps> {
             messages={messageGroup}
             author={author}
             showAvatar={showAvatar}
-            chatBubble={customChatBubble}
+            customChatBubble={customChatBubble}
             bubbleStyles={bubbleStyles}
           />
         );
