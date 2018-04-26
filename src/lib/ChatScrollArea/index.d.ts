@@ -1,8 +1,7 @@
 /// <reference types="react" />
 import * as React from 'react';
-import { MaxHeightProperty } from 'csstype';
 export interface ChatScrollAreaProps {
-    maxHeight?: MaxHeightProperty<string | number>;
+    maxHeight?: string | number;
     refScrollElement: (scrollElement: IChatScrollArea) => void;
 }
 export interface IChatScrollArea {
