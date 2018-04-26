@@ -9,9 +9,9 @@ const defaultBubbleStyles: ChatBubbleStyles = {
 };
 
 export interface ChatBubbleStyles {
-  userBubble: React.CSSProperties;
-  chatBubble: React.CSSProperties;
-  text: React.CSSProperties;
+  userBubble?: React.CSSProperties;
+  chatBubble?: React.CSSProperties;
+  text?: React.CSSProperties;
 }
 
 export interface ChatBubbleProps {

@@ -2,9 +2,9 @@
 import * as React from 'react';
 import Message from '../Message';
 export interface ChatBubbleStyles {
-    userBubble: React.CSSProperties;
-    chatBubble: React.CSSProperties;
-    text: React.CSSProperties;
+    userBubble?: React.CSSProperties;
+    chatBubble?: React.CSSProperties;
+    text?: React.CSSProperties;
 }
 export interface ChatBubbleProps {
     message: Message;
