@@ -25,7 +25,7 @@ module.exports = merge(
 )(require('./webpack.config.base'), {
     entry:
     {
-        'main': './src/demo/ClientApp/Main.tsx'
+        'bundle': './src/demo/index.tsx'
     },
     output: {
         path: path.join(__dirname, '..', 'docs', 'dist'),

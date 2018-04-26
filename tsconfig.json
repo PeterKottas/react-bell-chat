@@ -1,15 +1,15 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
+    "noUnusedLocals": true,    
+    "declaration": true,
+    "baseUrl": ".",
     "moduleResolution": "node",
-    "noResolve": false,
-    "noImplicitAny": false,
-    "outDir": "temp",
-    "removeComments": true,
+    "target": "es5",
+    "jsx": "react",
+    "experimentalDecorators": true,
     "sourceMap": true,
-    "allowJs": true,
-    "jsx": "react"
+    "skipDefaultLibCheck": true,
+    "lib": [ "es6", "dom" ]
   },
   "include": ["src/**/*.ts"],
   "exclude": ["./node_modules/**/*"]

@@ -24,12 +24,6 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
 };
 
-const users = {
-  0: 'You',
-  1: 'Mark',
-  2: 'Evan',
-};
-
 const customBubble = props => (
   <div>
     <p>{`${props.message.senderName} ${props.message.id ? 'says' : 'said'}: ${
@@ -133,6 +127,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
             <input
               placeholder="Type a message..."
               className="message-input"
+              onChange={e => this.setState({ messageText: e.target.value })}
             />
           </form>
 
