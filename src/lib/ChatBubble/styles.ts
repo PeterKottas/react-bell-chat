@@ -11,7 +11,7 @@ const styles = {
     borderRadius: 7,
     marginRight: 'auto',
     marginLeft: 'auto',
-    maxWidth: 425,
+    maxWidth: '80%',
     paddingTop: 8,
     paddingBottom: 8,
     paddingLeft: 14,
