@@ -1,4 +1,8 @@
 import ChatBubble, { ChatBubbleProps } from './ChatBubble/';
+import Avatar, { AvatarProps } from './Avatar/';
+import IsTyping, { IsTypingProps } from './IsTyping/';
+import ChatScrollArea, { ChatScrollAreaProps } from './ChatScrollArea/';
+import LastSeenAvatar, { LastSeenAvatarProps } from './LastSeenAvatar/';
 import BubbleGroup, { BubbleGroupProps } from './BubbleGroup';
 import ChatFeed, { ChatFeedProps } from './ChatFeed/';
 import ChatInput, { ChatInputProps } from './ChatInput/';
@@ -16,4 +20,12 @@ export {
   BubbleGroupProps,
   Message,
   Author,
+  Avatar,
+  AvatarProps,
+  LastSeenAvatar,
+  LastSeenAvatarProps,
+  IsTyping,
+  IsTypingProps,
+  ChatScrollArea,
+  ChatScrollAreaProps,
 };
