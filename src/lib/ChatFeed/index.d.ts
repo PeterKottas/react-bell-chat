@@ -7,6 +7,7 @@ import { ChatBubbleStyles } from '../ChatBubble/';
 import { AvatarProps } from '../Avatar';
 import { ChatScrollAreaProps } from '../ChatScrollArea';
 import { LastSeenAvatarProps } from '../LastSeenAvatar';
+import { DateRowProps } from '../DateRow';
 export interface ChatFeedProps {
     className?: string;
     authors: Author[];
@@ -27,6 +28,7 @@ export interface ChatFeedProps {
     customScrollArea?: (props: ChatScrollAreaProps) => JSX.Element;
     customIsTyping?: (props: ChatScrollAreaProps) => JSX.Element;
     customLastSeenAvatar?: (props: LastSeenAvatarProps) => JSX.Element;
+    customDateRow?: (props: DateRowProps) => JSX.Element;
     onMessageSendRef?: (onMessageSend: () => void) => void;
 }
 export default class ChatFeed extends React.Component<ChatFeedProps> {

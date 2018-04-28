@@ -6,6 +6,7 @@ import LastSeenAvatar, { LastSeenAvatarProps } from './LastSeenAvatar/';
 import BubbleGroup, { BubbleGroupProps } from './BubbleGroup';
 import ChatFeed, { ChatFeedProps } from './ChatFeed/';
 import ChatInput, { ChatInputProps } from './ChatInput/';
+import DateRow, { DateRowProps } from './DateRow/';
 import Message from './Message/';
 import Author from './Author/';
-export { ChatFeed, ChatFeedProps, ChatInput, ChatInputProps, ChatBubble, ChatBubbleProps, BubbleGroup, BubbleGroupProps, Message, Author, Avatar, AvatarProps, LastSeenAvatar, LastSeenAvatarProps, IsTyping, IsTypingProps, ChatScrollArea, ChatScrollAreaProps };
+export { ChatFeed, ChatFeedProps, ChatInput, ChatInputProps, DateRow, DateRowProps, ChatBubble, ChatBubbleProps, BubbleGroup, BubbleGroupProps, Message, Author, Avatar, AvatarProps, LastSeenAvatar, LastSeenAvatarProps, IsTyping, IsTypingProps, ChatScrollArea, ChatScrollAreaProps };

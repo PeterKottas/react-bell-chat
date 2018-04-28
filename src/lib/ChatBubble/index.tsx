@@ -84,6 +84,7 @@ export default class ChatBubble extends React.Component<ChatBubbleProps, ChatBub
                 ...styles.createdOn,
                 ...(youAreAuthor ? bubbleStyles.createdOn : bubbleStyles.recipientCreatedOn)
               }}
+              title={this.props.message.createdOn.toLocaleString()}
             >{this.props.message.createdOn.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
             </span>
           )}

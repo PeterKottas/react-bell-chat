@@ -13,6 +13,8 @@ import Avatar, { AvatarProps } from '../Avatar';
 import IsTyping from '../IsTyping';
 import ChatScrollArea, { ChatScrollAreaProps, IChatScrollArea } from '../ChatScrollArea';
 import LastSeenAvatar, { LastSeenAvatarProps } from '../LastSeenAvatar';
+import { groupBy } from '../utils/utils';
+import DateRow, { DateRowProps } from '../DateRow';
 
 // Model for ChatFeed props.
 
@@ -36,6 +38,7 @@ export interface ChatFeedProps {
   customScrollArea?: (props: ChatScrollAreaProps) => JSX.Element;
   customIsTyping?: (props: ChatScrollAreaProps) => JSX.Element;
   customLastSeenAvatar?: (props: LastSeenAvatarProps) => JSX.Element;
+  customDateRow?: (props: DateRowProps) => JSX.Element;
   onMessageSendRef?: (onMessageSend: () => void) => void;
 }
 
@@ -48,6 +51,7 @@ export default class ChatFeed extends React.Component<ChatFeedProps> {
     customAvatar: props => <Avatar {...props} />,
     customScrollArea: props => <ChatScrollArea {...props} />,
     customLastSeenAvatar: props => <LastSeenAvatar {...props} />,
+    customDateRow: props => <DateRow {...props} />,
     yourAuthorId: 0
   }
 
@@ -71,35 +75,41 @@ export default class ChatFeed extends React.Component<ChatFeedProps> {
   renderMessages(messages: Message[]) {
     const { bubbleStyles, customChatBubble, showRecipientAvatar } = this.props;
 
-    let group = [];
-
-    const messageNodes = messages.map((message, index) => {
-      group.push(message);
-      // Find diff in message type or no more messages
-      if (!messages[index + 1] || messages[index + 1].authorId !== message.authorId) {
-        const messageGroup = group;
-        const author = this.props.authors && this.props.authors.filter(a => a.id === message.authorId)[0];
-        group = [];
-        return (
-          <BubbleGroup
-            key={index}
-            yourAuthorId={this.props.yourAuthorId}
-            messages={messageGroup}
-            author={author}
-            authors={this.props.authors}
-            showRecipientAvatar={showRecipientAvatar}
-            customChatBubble={customChatBubble}
-            bubbleStyles={bubbleStyles}
-            showRecipientLastSeenMessage={this.props.showRecipientLastSeenMessage}
-            customAvatar={this.props.customAvatar}
-            customLastSeenAvatar={this.props.customLastSeenAvatar}
-          />
-        );
+    //First group by days
+    const groups = groupBy(messages, item => item.createdOn && item.createdOn.toDateString());
+    let messageNodes: JSX.Element[] = [];
+    Object.keys(groups).forEach(key => {
+      let group = [];
+      const messagesGroup = groups[key];
+      if (messagesGroup[0] && messagesGroup[0].createdOn) {
+        messageNodes.push(<this.props.customDateRow date={messagesGroup[0].createdOn} />);
       }
-
-      return null;
+      messageNodes = messageNodes.concat(messagesGroup.map((message, index) => {
+        group.push(message);
+        // Find diff in message type or no more messages
+        if (!messagesGroup[index + 1] || messagesGroup[index + 1].authorId !== message.authorId) {
+          const messageGroup = group;
+          const author = this.props.authors && this.props.authors.filter(a => a.id === message.authorId)[0];
+          group = [];
+          return (
+            <BubbleGroup
+              key={index}
+              yourAuthorId={this.props.yourAuthorId}
+              messages={messageGroup}
+              author={author}
+              authors={this.props.authors}
+              showRecipientAvatar={showRecipientAvatar}
+              customChatBubble={customChatBubble}
+              bubbleStyles={bubbleStyles}
+              showRecipientLastSeenMessage={this.props.showRecipientLastSeenMessage}
+              customAvatar={this.props.customAvatar}
+              customLastSeenAvatar={this.props.customLastSeenAvatar}
+            />
+          );
+        }
+        return null;
+      }));
     });
-
     return messageNodes;
   }
 
