@@ -8,6 +8,7 @@ const defaultBubbleStyles: ChatBubbleStyles = {
   userBubble: {},
   chatBubble: {},
   text: {},
+  createdOn: {}
 };
 
 export interface ChatBubbleStyles {
@@ -15,6 +16,7 @@ export interface ChatBubbleStyles {
   recipientBubble?: React.CSSProperties;
   chatBubble?: React.CSSProperties;
   text?: React.CSSProperties;
+  createdOn?: React.CSSProperties;
 }
 
 export interface ChatBubbleProps {
@@ -74,7 +76,13 @@ export default class ChatBubble extends React.Component<ChatBubbleProps, ChatBub
       >
         <div style={chatBubbleStyles}>
           <p style={{ ...styles.p, ...text }}>{this.props.message.message}</p>
-          {this.props.message.createdOn && <span className="react-chat-ui__chat-bubble__created-on" style={styles.createdOn}>{this.props.message.createdOn.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}</span>}
+          {this.props.message.createdOn && (
+            <span
+              className="react-chat-ui__chat-bubble__created-on"
+              style={{ ...styles.createdOn, ...bubbleStyles.createdOn }}
+            >{this.props.message.createdOn.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
+            </span>
+          )}
         </div>
         {this.props.showRecipientLastSeenMessage && this.props.lastSeenByAuthors && this.props.lastSeenByAuthors.length > 0 && this.props.customLastSeenAvatar && (
           <div

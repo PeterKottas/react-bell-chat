@@ -8,6 +8,7 @@ export interface ChatBubbleStyles {
     recipientBubble?: React.CSSProperties;
     chatBubble?: React.CSSProperties;
     text?: React.CSSProperties;
+    createdOn?: React.CSSProperties;
 }
 export interface ChatBubbleProps {
     message: Message;
