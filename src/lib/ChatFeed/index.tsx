@@ -23,6 +23,7 @@ export interface ChatFeedProps {
   bubblesCentered?: boolean;
   bubbleStyles?: ChatBubbleStyles;
   maxHeight?: string | number;
+  minHeight?: string | number;
   messages: Message[];
   showRecipientAvatar?: boolean;
   showRecipientAvatarChatMessagesStyle?: React.CSSProperties;
@@ -121,6 +122,7 @@ export default class ChatFeed extends React.Component<ChatFeedProps> {
         }}
       >
         <this.props.customScrollArea
+          minHeight={this.props.minHeight}
           maxHeight={this.props.maxHeight}
           refScrollElement={e => this.scrollElementRef = e}
         >

@@ -12,6 +12,7 @@ const styles: { [key: string]: React.CSSProperties } = {
 export interface ChatScrollAreaProps {
   // scrollDown: () => void;
   maxHeight?: string | number;
+  minHeight?: string | number;
   refScrollElement: (scrollElement: IChatScrollArea) => void;
 }
 
@@ -47,7 +48,8 @@ export class ChatScrollArea extends React.Component<ChatScrollAreaProps> impleme
         className="react-chat-ui__chat-history"
         style={{
           ...styles.chatHistory,
-          maxHeight: this.props.maxHeight
+          ...(this.props.maxHeight !== undefined ? { maxHeight: this.props.maxHeight } : {}),
+          ...(this.props.minHeight !== undefined ? { minHeight: this.props.minHeight } : {}),
         }}
       >
         {this.props.children}

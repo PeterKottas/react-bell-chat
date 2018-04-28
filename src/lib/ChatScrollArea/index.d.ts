@@ -2,6 +2,7 @@
 import * as React from 'react';
 export interface ChatScrollAreaProps {
     maxHeight?: string | number;
+    minHeight?: string | number;
     refScrollElement: (scrollElement: IChatScrollArea) => void;
 }
 export interface IChatScrollArea {

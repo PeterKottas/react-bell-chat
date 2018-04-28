@@ -14,6 +14,7 @@ export interface ChatFeedProps {
     bubblesCentered?: boolean;
     bubbleStyles?: ChatBubbleStyles;
     maxHeight?: string | number;
+    minHeight?: string | number;
     messages: Message[];
     showRecipientAvatar?: boolean;
     showRecipientAvatarChatMessagesStyle?: React.CSSProperties;
