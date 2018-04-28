@@ -6,7 +6,7 @@ The `ChatBubble` component basically just turns a given string into chat bubble.
 
 **message**: This must be a valid [Message](../Message) object.
 **bubbleStyles** (optional): styles to apply to the chat bubbles _(will probably change. I will update this page with a proposal)_
-* **selfAuthorId**: _number_ - Your author id.
+* **yourAuthorId**: _number_ - Your author id.
 
 ```javascript
 bubbleStyles={{

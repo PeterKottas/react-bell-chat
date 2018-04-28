@@ -3,19 +3,38 @@ import { Author } from '../Author';
 
 export interface AvatarProps {
   author: Author;
+  containerStyle?: React.CSSProperties;
+
 }
 
-const styles: {[key:string]: React.CSSProperties} = {
+const styles = {
   container: {
-    margin: 0,
-    fontSize: '14px',
+    position: 'absolute',
+    left: -50,
+    top: 0,
+    width: 40,
+    height: 40,
+    lineHeight: '40px',
     fontWeight: 400,
-    color: 'rgb(153, 153, 153)'
-  }
-}
+    color: 'white',
+    backgroundColor: 'rgb(153, 153, 153)',
+    borderRadius: 20,
+    textAlign: 'center',
+    borderTopRightRadius: 5
+  } as React.CSSProperties
+};
 
 const Avatar: React.SFC<AvatarProps> = props => props.author && (
-  <div style={styles.container}>{props.author.name}</div>
+  <div
+    style={{
+      ...styles.container,
+      ...props.containerStyle
+    }}
+    title={props.author.name}
+    className="react-chat-ui__avatar"
+  >
+    <span>{props.author.name.split(' ').map(part => part[0]).join().toUpperCase().substr(0, 3)}</span>
+  </div>
 );
 
 export default Avatar;

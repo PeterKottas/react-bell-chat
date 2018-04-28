@@ -44,7 +44,7 @@ export class ChatScrollArea extends React.Component<ChatScrollAreaProps> impleme
     return (
       <div
         ref={scrollContainer => this.scrollContainer = scrollContainer}
-        className="chat-history"
+        className="react-chat-ui__chat-history"
         style={{
           ...styles.chatHistory,
           maxHeight: this.props.maxHeight

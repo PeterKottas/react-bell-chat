@@ -1,6 +1,8 @@
 /// <reference types="react" />
 import * as React from 'react';
 import Message from '../Message';
+import { Author } from '../Author';
+import { LastSeenAvatarProps } from './../LastSeenAvatar';
 export interface ChatBubbleStyles {
     userBubble?: React.CSSProperties;
     chatBubble?: React.CSSProperties;
@@ -8,11 +10,21 @@ export interface ChatBubbleStyles {
 }
 export interface ChatBubbleProps {
     message: Message;
+    author?: Author;
     bubbleStyles?: ChatBubbleStyles;
     bubblesCentered?: boolean;
-    selfAuthorId: number;
+    yourAuthorId: number;
+    isFirstInGroup?: boolean;
+    isLastInGroup?: boolean;
+    isCenterInGroup?: boolean;
+    lastSeenByAuthors?: Author[];
+    showRecipientLastSeenMessage?: boolean;
+    customLastSeenAvatar?: (props: LastSeenAvatarProps) => JSX.Element;
 }
-export default class ChatBubble extends React.Component<ChatBubbleProps> {
+export interface ChatBubbleState {
+    mouseOverLastSeenContainer: boolean;
+}
+export default class ChatBubble extends React.Component<ChatBubbleProps, ChatBubbleState> {
     constructor(props: ChatBubbleProps);
     render(): JSX.Element;
 }

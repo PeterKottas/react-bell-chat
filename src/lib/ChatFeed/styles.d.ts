@@ -1,9 +1,12 @@
 /// <reference types="react" />
 import * as React from 'react';
-export interface ChatFeedStyles {
+declare const _default: {
     chatPanel: React.CSSProperties;
+    showRecipientAvatarChatMessagesStyle: React.CSSProperties;
+    showIsTypingChatMessagesStyle: React.CSSProperties;
+    showRecipientLastSeenMessageChatMessagesStyle: React.CSSProperties;
     chatBubbleWrapper: React.CSSProperties;
     img: React.CSSProperties;
-}
-declare const _default: ChatFeedStyles;
+    chatMessages: React.CSSProperties;
+};
 export default _default;

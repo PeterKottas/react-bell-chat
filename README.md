@@ -91,7 +91,7 @@ this.state = {
 
 ## Contributing!¡1 🔧
 
-Contributions are always welcomed and encouraged. If you don't want to write a feature request yourself, let ya boi know (either on [Twitter](http://twitter.com/brandonmowat) or by creating a Pull Request) and I'll get that shit coded right up.
+Contributions are always welcomed and encouraged. If you don't want to write a feature request youryour, let ya boi know (either on [Twitter](http://twitter.com/brandonmowat) or by creating a Pull Request) and I'll get that shit coded right up.
 
 ## Support
 

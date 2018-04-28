@@ -6,17 +6,26 @@ import { Author } from '../Author';
 import { ChatBubbleStyles } from '../ChatBubble/';
 import { AvatarProps } from '../Avatar';
 import { ChatScrollAreaProps } from '../ChatScrollArea';
+import { LastSeenAvatarProps } from '../LastSeenAvatar';
 export interface ChatFeedProps {
+    className?: string;
     authors: Author[];
-    selfAuthorId: number;
+    yourAuthorId: number;
     bubblesCentered?: boolean;
     bubbleStyles?: ChatBubbleStyles;
     maxHeight?: string | number;
     messages: Message[];
-    showAvatar?: boolean;
+    showRecipientAvatar?: boolean;
+    showRecipientAvatarChatMessagesStyle?: React.CSSProperties;
+    showRecipientLastSeenMessage?: boolean;
+    showRecipientLastSeenMessageChatMessagesStyle?: React.CSSProperties;
+    showIsTyping?: boolean;
+    showIsTypingChatMessagesStyle?: React.CSSProperties;
     customChatBubble?: (props: ChatBubbleProps) => JSX.Element;
     customAvatar?: (props: AvatarProps) => JSX.Element;
     customScrollArea?: (props: ChatScrollAreaProps) => JSX.Element;
+    customIsTyping?: (props: ChatScrollAreaProps) => JSX.Element;
+    customLastSeenAvatar?: (props: LastSeenAvatarProps) => JSX.Element;
     onMessageSendRef?: (onMessageSend: () => void) => void;
 }
 export default class ChatFeed extends React.Component<ChatFeedProps> {
@@ -29,6 +38,7 @@ export default class ChatFeed extends React.Component<ChatFeedProps> {
      * Determines what type of message/messages to render.
      */
     renderMessages(messages: Message[]): JSX.Element[];
+    renderIsTyping(): JSX.Element;
     /**
      * render : renders our chat feed
      */

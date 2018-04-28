@@ -10,21 +10,31 @@ import styles from './styles';
 import { Author } from '../Author';
 import { ChatBubbleStyles } from '../ChatBubble/';
 import Avatar, { AvatarProps } from '../Avatar';
+import IsTyping from '../IsTyping';
 import ChatScrollArea, { ChatScrollAreaProps, IChatScrollArea } from '../ChatScrollArea';
+import LastSeenAvatar, { LastSeenAvatarProps } from '../LastSeenAvatar';
 
 // Model for ChatFeed props.
 
 export interface ChatFeedProps {
+  className?: string;
   authors: Author[];
-  selfAuthorId: number;
+  yourAuthorId: number;
   bubblesCentered?: boolean;
   bubbleStyles?: ChatBubbleStyles;
   maxHeight?: string | number;
   messages: Message[];
-  showAvatar?: boolean;
+  showRecipientAvatar?: boolean;
+  showRecipientAvatarChatMessagesStyle?: React.CSSProperties;
+  showRecipientLastSeenMessage?: boolean;
+  showRecipientLastSeenMessageChatMessagesStyle?: React.CSSProperties;
+  showIsTyping?: boolean;
+  showIsTypingChatMessagesStyle?: React.CSSProperties;
   customChatBubble?: (props: ChatBubbleProps) => JSX.Element;
   customAvatar?: (props: AvatarProps) => JSX.Element;
   customScrollArea?: (props: ChatScrollAreaProps) => JSX.Element;
+  customIsTyping?: (props: ChatScrollAreaProps) => JSX.Element;
+  customLastSeenAvatar?: (props: LastSeenAvatarProps) => JSX.Element;
   onMessageSendRef?: (onMessageSend: () => void) => void;
 }
 
@@ -36,7 +46,8 @@ export default class ChatFeed extends React.Component<ChatFeedProps> {
     customChatBubble: props => <DefaultChatBubble {...props} />,
     customAvatar: props => <Avatar {...props} />,
     customScrollArea: props => <ChatScrollArea {...props} />,
-    selfAuthorId: 0
+    customLastSeenAvatar: props => <LastSeenAvatar {...props} />,
+    yourAuthorId: 0
   }
 
   private scrollElementRef: IChatScrollArea;
@@ -57,7 +68,7 @@ export default class ChatFeed extends React.Component<ChatFeedProps> {
    * Determines what type of message/messages to render.
    */
   renderMessages(messages: Message[]) {
-    const { bubbleStyles, customChatBubble, showAvatar } = this.props;
+    const { bubbleStyles, customChatBubble, showRecipientAvatar } = this.props;
 
     let group = [];
 
@@ -71,12 +82,15 @@ export default class ChatFeed extends React.Component<ChatFeedProps> {
         return (
           <BubbleGroup
             key={index}
-            selfAuthorId={this.props.selfAuthorId}
+            yourAuthorId={this.props.yourAuthorId}
             messages={messageGroup}
             author={author}
-            showAvatar={showAvatar}
+            authors={this.props.authors}
+            showRecipientAvatar={showRecipientAvatar}
             customChatBubble={customChatBubble}
             bubbleStyles={bubbleStyles}
+            showRecipientLastSeenMessage={this.props.showRecipientLastSeenMessage}
+            customLastSeenAvatar={this.props.customLastSeenAvatar}
           />
         );
       }
@@ -84,23 +98,15 @@ export default class ChatFeed extends React.Component<ChatFeedProps> {
       return null;
     });
 
-    this.props.authors && this.props.authors.forEach(a => {
-      if (a.isTyping) {
-        messageNodes.push(
-          <div key="isTyping" style={{ ...styles.chatBubbleWrapper }}>
-            <this.props.customChatBubble
-              selfAuthorId={this.props.selfAuthorId}
-              message={{ authorId: a.id, message: '...' }}
-              bubbleStyles={bubbleStyles}
-              bubblesCentered={this.props.bubblesCentered}
-            />
-          </div>
-        );
-      }
-    });
-    // messageNodes.reverse();
-    // return nodes
     return messageNodes;
+  }
+
+  renderIsTyping() {
+    const typingAuthors = this.props.authors && this.props.authors.filter(a => a.isTyping && a.id !== this.props.yourAuthorId);
+    if (!typingAuthors || typingAuthors.length === 0) {
+      return null;
+    }
+    return <IsTyping typingAuthors={typingAuthors} />;
   }
 
   /**
@@ -108,13 +114,30 @@ export default class ChatFeed extends React.Component<ChatFeedProps> {
    */
   render() {
     return (
-      <div id="chat-panel" style={styles.chatPanel}>
+      <div
+        id={'react-chat-ui__chat-panel ' + (this.props.className ? this.props.className : '')}
+        style={{
+          ...styles.chatPanel
+        }}
+      >
         <this.props.customScrollArea
           maxHeight={this.props.maxHeight}
           refScrollElement={e => this.scrollElementRef = e}
         >
-          <div className="chat-messages">
+          <div
+            style={{
+              ...styles.chatMessages,
+              ...(this.props.showRecipientAvatar && styles.showRecipientAvatarChatMessagesStyle),
+              ...(this.props.showRecipientAvatar && this.props.showRecipientAvatarChatMessagesStyle),
+              ...(this.props.showIsTyping && styles.showIsTypingChatMessagesStyle),
+              ...(this.props.showIsTyping && this.props.showIsTypingChatMessagesStyle),
+              ...(this.props.showRecipientLastSeenMessage && styles.showRecipientLastSeenMessageChatMessagesStyle),
+              ...(this.props.showRecipientLastSeenMessage && this.props.showRecipientLastSeenMessageChatMessagesStyle),
+            }}
+            className="react-chat-ui__chat-messages"
+          >
             {this.renderMessages(this.props.messages)}
+            {this.props.showIsTyping && this.renderIsTyping()}
           </div>
         </this.props.customScrollArea>
       </div>

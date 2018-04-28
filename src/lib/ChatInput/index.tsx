@@ -24,7 +24,7 @@ export interface ChatInputProps {
 const ChatInput = (props: ChatInputProps) => {
   const { inputStyles, inputPlaceholder } = props;
   return (
-    <div className="chat-input" style={styles.chatInput}>
+    <div className="react-chat-ui__chat-input" style={styles.chatInput}>
       <input type="text" style={inputStyles || styles.inputStyle} placeholder={inputPlaceholder} />
     </div>
   );

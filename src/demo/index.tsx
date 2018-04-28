@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { render } from 'react-dom';
-import { ChatFeed, ChatBubble, BubbleGroup, Message, Author } from '../lib';
+import { ChatFeed, ChatBubble, BubbleGroup, Message, Author, ChatBubbleProps } from '../lib';
 
 const styles: { [key: string]: React.CSSProperties } = {
   button: {
@@ -24,9 +24,9 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
 };
 
-const customBubble = props => (
+const customBubble: React.SFC<ChatBubbleProps>= props => (
   <div>
-    <p>{`${props.message.senderName} ${props.message.id ? 'says' : 'said'}: ${
+    <p>{`${props.author && props.author.name} ${props.message.authorId !== props.yourAuthorId ? 'says' : 'said'}: ${
       props.message.message
       }`}</p>
   </div>
@@ -42,52 +42,89 @@ interface ChatState {
   useCustomBubble: boolean;
   currentUser: number;
   messageText: string;
+  simulateTyping: boolean;
 }
 
 class Chat extends React.Component<ChatProps, ChatState> {
   private onMessageSendRef: () => void;
+  private firstAuthorTimer: number;
+  private secondAuthorTimer: number;
+
   constructor(props: ChatProps) {
     super(props);
     this.state = {
       authors: [
         {
           id: 0,
-          name: 'You'
+          name: 'You',
         },
         {
           id: 1,
-          name: 'Mark'
+          name: 'Mark',
+          isTyping: true,
+          lastSeenMessageId: 7,
         },
         {
           id: 2,
-          name: 'Evan'
+          name: 'Evan',
+          isTyping: true,
+          lastSeenMessageId: 7,
         }
       ],
       messages: [
         {
+          id: 0,
           authorId: 1,
           message: 'Hey guys!!',
+          createdOn: new Date(2018, 4, 27, 18, 32, 24)
         },
         {
+          id: 1,
           authorId: 2,
           message: 'Hey! Evan here. react-chat-ui is pretty dooope.',
+          createdOn: new Date(2018, 4, 28, 18, 12, 24)
         },
         {
+          id: 2,
+          authorId: 2,
+          message: 'Rly is.',
+          createdOn: new Date(2018, 4, 28, 18, 13, 24)
+        },
+        {
+          id: 3,
+          authorId: 2,
+          message: 'Long group.',
+          createdOn: new Date(2018, 4, 28, 18, 13, 24)
+        },
+        {
+          id: 4,
           authorId: 0,
           message: 'My message.',
+          createdOn: new Date(2018, 4, 29, 19, 32, 24)
         },
         {
+          id: 5,
           authorId: 0,
           message: 'One more.',
+          createdOn: new Date(2018, 4, 29, 19, 33, 24)
         },
         {
+          id: 6,
           authorId: 2,
-          message: 'One more to see the scroll.',
+          message: 'One more group to see the scroll.',
+          createdOn: new Date(2018, 4, 29, 19, 35, 24)
         },
+        {
+          id: 7,
+          authorId: 2,
+          message: 'I said group.',
+          createdOn: new Date(2018, 4, 29, 19, 35, 24)
+        }
       ],
       useCustomBubble: false,
       currentUser: 0,
-      messageText: ''
+      messageText: '',
+      simulateTyping: false
     };
   }
 
@@ -123,13 +160,15 @@ class Chat extends React.Component<ChatProps, ChatState> {
         </div>
         <div className="chatfeed-wrapper">
           <ChatFeed
-            selfAuthorId={0}
+            yourAuthorId={0}
             authors={this.state.authors}
             customChatBubble={this.state.useCustomBubble && customBubble}
-            maxHeight={250}
+            maxHeight={350}
             messages={this.state.messages} // Boolean: list of message objects
-            showAvatar
+            showRecipientAvatar
             onMessageSendRef={onMessageSendRef => this.onMessageSendRef = onMessageSendRef}
+            showIsTyping={true}
+            showRecipientLastSeenMessage={true}
           />
 
           <form onSubmit={e => this.onMessageSubmit(e)}>
@@ -143,6 +182,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
 
           <div style={{ display: 'flex', justifyContent: 'space-around' }}>
             <button
+              role="button"
               style={{
                 ...styles.button,
                 ...(this.state.currentUser === 0 ? styles.selected : {}),
@@ -171,7 +211,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
             </button>
           </div>
           <div
-            style={{ display: 'flex', justifyContent: 'center', marginTop: 10 }}
+            style={{ display: 'flex', justifyContent: 'space-around', marginTop: 10 }}
           >
             <button
               style={{
@@ -184,15 +224,33 @@ class Chat extends React.Component<ChatProps, ChatState> {
             >
               Custom Bubbles
             </button>
+            <button
+              style={{
+                ...styles.button,
+                ...(this.state.simulateTyping ? styles.selected : {}),
+              }}
+              onClick={() => {
+                if (this.state.simulateTyping) {
+                  clearInterval(this.firstAuthorTimer);
+                  clearInterval(this.secondAuthorTimer);
+                } else {
+                  this.firstAuthorTimer = window.setInterval(() => this.setState({ authors: this.state.authors.slice(0).map((a, i) => i === 1 ? a : { ...a, isTyping: !a.isTyping }) }), 2000);
+                  this.secondAuthorTimer = window.setInterval(() => this.setState({ authors: this.state.authors.slice(0).map((a, i) => i === 2 ? a : { ...a, isTyping: !a.isTyping }) }), 3200);
+                }
+                this.setState({ simulateTyping: !this.state.simulateTyping });
+              }}
+            >
+              Simulate typing
+            </button>
           </div>
         </div>
         <h2 className="text-center">There are Bubbles!</h2>
         <ChatBubble
-          selfAuthorId={0}
+          yourAuthorId={0}
           message={{ authorId: 1, message: 'I float to the left!' }}
         />
         <ChatBubble
-          selfAuthorId={0}
+          yourAuthorId={0}
           message={{ authorId: 0, message: 'I float to the right!' }}
         />
 
@@ -207,12 +265,11 @@ class Chat extends React.Component<ChatProps, ChatState> {
                 "Oh no, I forgot... I think I was going to say I'm a BubbleGroup",
             },
           ]}
-          selfAuthorId={0}
+          yourAuthorId={0}
           author={this.state.authors[1]}
-          showAvatar={true}
         />
         <ChatBubble
-          selfAuthorId={0}
+          yourAuthorId={0}
           message={{ authorId: 2, message: "I 'm a single ChatBubble!" }}
         />
         <BubbleGroup
@@ -223,9 +280,8 @@ class Chat extends React.Component<ChatProps, ChatState> {
               message: "Oh well. I'm a BubbleGroup as well",
             },
           ]}
-          selfAuthorId={0}
+          yourAuthorId={0}
           author={this.state.authors[0]}
-          showAvatar={true}
         />
       </div>
     );

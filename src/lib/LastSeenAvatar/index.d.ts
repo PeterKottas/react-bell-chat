@@ -1,9 +1,9 @@
 /// <reference types="react" />
 import * as React from 'react';
 import { Author } from '../Author';
-export interface AvatarProps {
+export interface LastSeenAvatarProps {
     author: Author;
     containerStyle?: React.CSSProperties;
 }
-declare const Avatar: React.SFC<AvatarProps>;
-export default Avatar;
+declare const LastSeenAvatar: React.SFC<LastSeenAvatarProps>;
+export default LastSeenAvatar;
