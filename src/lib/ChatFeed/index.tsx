@@ -91,6 +91,7 @@ export default class ChatFeed extends React.Component<ChatFeedProps> {
             customChatBubble={customChatBubble}
             bubbleStyles={bubbleStyles}
             showRecipientLastSeenMessage={this.props.showRecipientLastSeenMessage}
+            customAvatar={this.props.customAvatar}
             customLastSeenAvatar={this.props.customLastSeenAvatar}
           />
         );
