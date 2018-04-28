@@ -52,7 +52,7 @@ export default class BubbleGroup extends React.Component<BubbleGroupProps> {
         isFirstInGroup={i === 0}
         isLastInGroup={i === messages.length - 1 && messages.length > 1}
         isCenterInGroup={i < messages.length - 1 && messages.length > 1}
-        lastSeenByAuthors={this.props.authors && this.props.authors.filter(a => a.lastSeenMessageId === message.id)}
+        lastSeenByAuthors={this.props.authors && this.props.authors.filter(a => a.lastSeenMessageId !== undefined && a.lastSeenMessageId === message.id)}
         showRecipientLastSeenMessage={this.props.showRecipientLastSeenMessage}
         customLastSeenAvatar={this.props.customLastSeenAvatar}
       />
