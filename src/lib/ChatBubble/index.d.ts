@@ -5,6 +5,7 @@ import { Author } from '../Author';
 import { LastSeenAvatarProps } from './../LastSeenAvatar';
 export interface ChatBubbleStyles {
     userBubble?: React.CSSProperties;
+    recipientBubble?: React.CSSProperties;
     chatBubble?: React.CSSProperties;
     text?: React.CSSProperties;
 }

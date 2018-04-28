@@ -33,7 +33,7 @@ const Avatar: React.SFC<AvatarProps> = props => props.author && (
     title={props.author.name}
     className="react-chat-ui__avatar"
   >
-    <span>{props.author.name.split(' ').map(part => part[0]).join().toUpperCase().substr(0, 3)}</span>
+    <span>{props.author.name.split(' ').map(part => part[0]).join('').toUpperCase().substr(0, 3)}</span>
   </div>
 );
 

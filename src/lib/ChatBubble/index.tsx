@@ -12,6 +12,7 @@ const defaultBubbleStyles: ChatBubbleStyles = {
 
 export interface ChatBubbleStyles {
   userBubble?: React.CSSProperties;
+  recipientBubble?: React.CSSProperties;
   chatBubble?: React.CSSProperties;
   text?: React.CSSProperties;
 }
@@ -50,19 +51,19 @@ export default class ChatBubble extends React.Component<ChatBubbleProps, ChatBub
     const { yourAuthorId } = this.props;
     let { bubbleStyles } = this.props;
     bubbleStyles = bubbleStyles || defaultBubbleStyles;
-    const { userBubble, chatBubble, text } = bubbleStyles;
+    const { userBubble, chatBubble, text, recipientBubble } = bubbleStyles;
     const youAreAuthor = this.props.message.authorId === yourAuthorId;
 
     // message.id 0 is reserved for blue
     const chatBubbleStyles: React.CSSProperties = {
       ...styles.chatBubble,
-      ...chatBubble,
       ...(youAreAuthor ? {} : styles.recipientChatBubble),
       ...(youAreAuthor ? styles.chatBubbleOrientationNormal : styles.recipientChatBubbleOrientationNormal),
       ...(this.props.isFirstInGroup && (youAreAuthor ? styles.firstChatBubbleInGroup : styles.recipientFirstChatBubbleInGroup)),
       ...(this.props.isLastInGroup && (youAreAuthor ? styles.lastChatBubbleInGroup : styles.recipientLastChatBubbleInGroup)),
       ...(this.props.isCenterInGroup && (youAreAuthor ? styles.centerChatBubbleInGroup : styles.recipientCenterChatBubbleInGroup)),
-      ...userBubble,
+      ...chatBubble,
+      ...(youAreAuthor ? userBubble : recipientBubble),
     };
 
     return (
