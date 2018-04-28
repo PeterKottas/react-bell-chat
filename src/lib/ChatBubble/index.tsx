@@ -17,6 +17,7 @@ export interface ChatBubbleStyles {
   chatBubble?: React.CSSProperties;
   text?: React.CSSProperties;
   createdOn?: React.CSSProperties;
+  recipientCreatedOn?: React.CSSProperties;
 }
 
 export interface ChatBubbleProps {
@@ -79,7 +80,10 @@ export default class ChatBubble extends React.Component<ChatBubbleProps, ChatBub
           {this.props.message.createdOn && (
             <span
               className="react-chat-ui__chat-bubble__created-on"
-              style={{ ...styles.createdOn, ...bubbleStyles.createdOn }}
+              style={{
+                ...styles.createdOn,
+                ...(youAreAuthor ? bubbleStyles.createdOn : bubbleStyles.recipientCreatedOn)
+              }}
             >{this.props.message.createdOn.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
             </span>
           )}
