@@ -27,6 +27,7 @@ export interface ChatFeedProps {
   maxHeight?: string | number;
   minHeight?: string | number;
   messages: Message[];
+  showDateRow?: boolean; 
   showRecipientAvatar?: boolean;
   showRecipientAvatarChatMessagesStyle?: React.CSSProperties;
   showRecipientLastSeenMessage?: boolean;
@@ -81,7 +82,7 @@ export default class ChatFeed extends React.Component<ChatFeedProps> {
     Object.keys(groups).forEach(key => {
       let group = [];
       const messagesGroup = groups[key];
-      if (messagesGroup[0] && messagesGroup[0].createdOn) {
+      if (messagesGroup[0] && messagesGroup[0].createdOn && this.props.showDateRow) {
         messageNodes.push(<this.props.customDateRow date={messagesGroup[0].createdOn} />);
       }
       messageNodes = messageNodes.concat(messagesGroup.map((message, index) => {

@@ -43,6 +43,10 @@ interface ChatState {
   currentUser: number;
   messageText: string;
   simulateTyping: boolean;
+  showAvatar: boolean;
+  showLastSeen: boolean;
+  showDateRow: boolean;
+  showIsTyping: boolean;
 }
 
 class Chat extends React.Component<ChatProps, ChatState> {
@@ -124,7 +128,11 @@ class Chat extends React.Component<ChatProps, ChatState> {
       useCustomBubble: false,
       currentUser: 0,
       messageText: '',
-      simulateTyping: false
+      simulateTyping: false,
+      showAvatar: true,
+      showDateRow: true,
+      showLastSeen: true,
+      showIsTyping: true
     };
   }
 
@@ -165,10 +173,11 @@ class Chat extends React.Component<ChatProps, ChatState> {
             customChatBubble={this.state.useCustomBubble && customBubble}
             maxHeight={350}
             messages={this.state.messages} // Boolean: list of message objects
-            showRecipientAvatar
+            showRecipientAvatar={this.state.showAvatar}
             onMessageSendRef={onMessageSendRef => this.onMessageSendRef = onMessageSendRef}
-            showIsTyping={true}
-            showRecipientLastSeenMessage={true}
+            showIsTyping={this.state.showIsTyping}
+            showRecipientLastSeenMessage={this.state.showLastSeen}
+            showDateRow={this.state.showDateRow}
           />
 
           <form onSubmit={e => this.onMessageSubmit(e)}>
@@ -241,6 +250,46 @@ class Chat extends React.Component<ChatProps, ChatState> {
               }}
             >
               Simulate typing
+            </button>
+          </div>
+          <div
+            style={{ display: 'flex', justifyContent: 'space-around', marginTop: 10 }}
+          >
+            <button
+              style={{
+                ...styles.button,
+                ...(this.state.showAvatar ? styles.selected : {}),
+              }}
+              onClick={() => this.setState({ showAvatar: !this.state.showAvatar })}
+            >
+              Show avatar
+            </button>
+            <button
+              style={{
+                ...styles.button,
+                ...(this.state.showIsTyping ? styles.selected : {}),
+              }}
+              onClick={() => this.setState({ showIsTyping: !this.state.showIsTyping })}
+            >
+              Show typing
+            </button>
+            <button
+              style={{
+                ...styles.button,
+                ...(this.state.showLastSeen ? styles.selected : {}),
+              }}
+              onClick={() => this.setState({ showLastSeen: !this.state.showLastSeen })}
+            >
+              Show last seen
+            </button>
+            <button
+              style={{
+                ...styles.button,
+                ...(this.state.showDateRow ? styles.selected : {}),
+              }}
+              onClick={() => this.setState({ showDateRow: !this.state.showDateRow })}
+            >
+              Show date row
             </button>
           </div>
         </div>

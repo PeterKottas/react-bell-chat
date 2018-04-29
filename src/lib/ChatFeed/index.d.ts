@@ -17,6 +17,7 @@ export interface ChatFeedProps {
     maxHeight?: string | number;
     minHeight?: string | number;
     messages: Message[];
+    showDateRow?: boolean;
     showRecipientAvatar?: boolean;
     showRecipientAvatarChatMessagesStyle?: React.CSSProperties;
     showRecipientLastSeenMessage?: boolean;
