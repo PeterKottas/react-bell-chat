@@ -47,6 +47,8 @@ interface ChatState {
   showLastSeen: boolean;
   showDateRow: boolean;
   showIsTyping: boolean;
+  showLoadMoreMessages: boolean;
+  showLoadingMessages: boolean;
 }
 
 class Chat extends React.Component<ChatProps, ChatState> {
@@ -132,7 +134,9 @@ class Chat extends React.Component<ChatProps, ChatState> {
       showAvatar: true,
       showDateRow: true,
       showLastSeen: true,
-      showIsTyping: true
+      showIsTyping: true,
+      showLoadMoreMessages: true,
+      showLoadingMessages: true,
     };
   }
 
@@ -178,6 +182,8 @@ class Chat extends React.Component<ChatProps, ChatState> {
             showIsTyping={this.state.showIsTyping}
             showRecipientLastSeenMessage={this.state.showLastSeen}
             showDateRow={this.state.showDateRow}
+            showLoadMoreMessages={this.state.showLoadMoreMessages}
+            showLoadingMessages={this.state.showLoadingMessages}
           />
 
           <form onSubmit={e => this.onMessageSubmit(e)}>
@@ -290,6 +296,28 @@ class Chat extends React.Component<ChatProps, ChatState> {
               onClick={() => this.setState({ showDateRow: !this.state.showDateRow })}
             >
               Show date row
+            </button>
+          </div>
+          <div
+            style={{ display: 'flex', justifyContent: 'space-around', marginTop: 10 }}
+          >
+            <button
+              style={{
+                ...styles.button,
+                ...(this.state.showLoadingMessages ? styles.selected : {}),
+              }}
+              onClick={() => this.setState({ showLoadingMessages: !this.state.showLoadingMessages })}
+            >
+              Loading
+            </button>
+            <button
+              style={{
+                ...styles.button,
+                ...(this.state.showLoadMoreMessages ? styles.selected : {}),
+              }}
+              onClick={() => this.setState({ showLoadMoreMessages: !this.state.showLoadMoreMessages })}
+            >
+              Show load more messages
             </button>
           </div>
         </div>

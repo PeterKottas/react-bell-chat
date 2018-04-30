@@ -7,6 +7,8 @@ import BubbleGroup, { BubbleGroupProps } from './BubbleGroup';
 import ChatFeed, { ChatFeedProps } from './ChatFeed/';
 import ChatInput, { ChatInputProps } from './ChatInput/';
 import DateRow, { DateRowProps } from './DateRow/';
+import LoadMoreMessages, { LoadMoreMessagesProps } from './LoadMoreMessages/';
+import LoadingMessages, { LoadingMessagesProps } from './LoadingMessages/';
 import Message from './Message/';
 import Author from './Author/';
 
@@ -15,6 +17,10 @@ export {
   ChatFeedProps,
   ChatInput,
   ChatInputProps,
+  LoadMoreMessages,
+  LoadMoreMessagesProps,
+  LoadingMessages,
+  LoadingMessagesProps,
   DateRow,
   DateRowProps,
   ChatBubble,

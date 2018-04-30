@@ -33,5 +33,7 @@ export default {
     zIndex: 100,
   } as React.CSSProperties,
   chatMessages: {
+    paddingBottom: 10,
+    paddingTop: 10,
   } as React.CSSProperties
 };

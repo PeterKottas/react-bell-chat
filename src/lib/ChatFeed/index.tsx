@@ -15,31 +15,43 @@ import ChatScrollArea, { ChatScrollAreaProps, IChatScrollArea } from '../ChatScr
 import LastSeenAvatar, { LastSeenAvatarProps } from '../LastSeenAvatar';
 import { groupBy } from '../utils/utils';
 import DateRow, { DateRowProps } from '../DateRow';
+import LoadMoreMessages, { LoadMoreMessagesProps } from '../LoadMoreMessages';
+import LoadingMessages, { LoadingMessagesProps } from '../LoadingMessages';
 
 // Model for ChatFeed props.
 
 export interface ChatFeedProps {
   className?: string;
+
+  messages: Message[];
   authors: Author[];
   yourAuthorId: number;
+
   bubblesCentered?: boolean;
   bubbleStyles?: ChatBubbleStyles;
   maxHeight?: string | number;
   minHeight?: string | number;
-  messages: Message[];
-  showDateRow?: boolean; 
+
+  showDateRow?: boolean;
   showRecipientAvatar?: boolean;
-  showRecipientAvatarChatMessagesStyle?: React.CSSProperties;
   showRecipientLastSeenMessage?: boolean;
-  showRecipientLastSeenMessageChatMessagesStyle?: React.CSSProperties;
   showIsTyping?: boolean;
+  showLoadMoreMessages?: boolean;
+  showLoadingMessages?: boolean;
+
+  showRecipientAvatarChatMessagesStyle?: React.CSSProperties;
+  showRecipientLastSeenMessageChatMessagesStyle?: React.CSSProperties;
   showIsTypingChatMessagesStyle?: React.CSSProperties;
+
+  customLoadingMessages?: (props: LoadingMessagesProps) => JSX.Element;
+  customLoadMoreMessages?: (props: LoadMoreMessagesProps) => JSX.Element;
   customChatBubble?: (props: ChatBubbleProps) => JSX.Element;
   customAvatar?: (props: AvatarProps) => JSX.Element;
   customScrollArea?: (props: ChatScrollAreaProps) => JSX.Element;
   customIsTyping?: (props: ChatScrollAreaProps) => JSX.Element;
   customLastSeenAvatar?: (props: LastSeenAvatarProps) => JSX.Element;
   customDateRow?: (props: DateRowProps) => JSX.Element;
+
   onMessageSendRef?: (onMessageSend: () => void) => void;
 }
 
@@ -53,6 +65,8 @@ export default class ChatFeed extends React.Component<ChatFeedProps> {
     customScrollArea: props => <ChatScrollArea {...props} />,
     customLastSeenAvatar: props => <LastSeenAvatar {...props} />,
     customDateRow: props => <DateRow {...props} />,
+    customLoadingMessages: props => <LoadingMessages {...props} />,
+    customLoadMoreMessages: props => <LoadMoreMessages {...props} />,
     yourAuthorId: 0
   }
 
@@ -79,11 +93,12 @@ export default class ChatFeed extends React.Component<ChatFeedProps> {
     //First group by days
     const groups = groupBy(messages, item => item.createdOn && item.createdOn.toDateString());
     let messageNodes: JSX.Element[] = [];
+    let jsxKey = 0;
     Object.keys(groups).forEach(key => {
       let group = [];
       const messagesGroup = groups[key];
       if (messagesGroup[0] && messagesGroup[0].createdOn && this.props.showDateRow) {
-        messageNodes.push(<this.props.customDateRow date={messagesGroup[0].createdOn} />);
+        messageNodes.push(<this.props.customDateRow key={key} date={messagesGroup[0].createdOn} />);
       }
       messageNodes = messageNodes.concat(messagesGroup.map((message, index) => {
         group.push(message);
@@ -92,9 +107,10 @@ export default class ChatFeed extends React.Component<ChatFeedProps> {
           const messageGroup = group;
           const author = this.props.authors && this.props.authors.filter(a => a.id === message.authorId)[0];
           group = [];
+          jsxKey++;
           return (
             <BubbleGroup
-              key={index}
+              key={jsxKey}
               yourAuthorId={this.props.yourAuthorId}
               messages={messageGroup}
               author={author}
@@ -150,6 +166,8 @@ export default class ChatFeed extends React.Component<ChatFeedProps> {
             }}
             className="react-chat-ui__chat-messages"
           >
+            {this.props.showLoadMoreMessages && <this.props.customLoadMoreMessages />}
+            {this.props.showLoadingMessages && <this.props.customLoadingMessages />}
             {this.renderMessages(this.props.messages)}
             {this.props.showIsTyping && this.renderIsTyping()}
           </div>
