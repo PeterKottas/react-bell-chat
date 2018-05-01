@@ -1,10 +1,10 @@
 import ChatBubble, { ChatBubbleProps } from './ChatBubble/';
 import Avatar, { AvatarProps } from './Avatar/';
 import IsTyping, { IsTypingProps } from './IsTyping/';
-import ChatScrollArea, { ChatScrollAreaProps, ChatScrollAreaInterface } from './ChatScrollArea/';
+import ChatScrollArea, { ChatScrollAreaProps, ChatScrollAreaApi } from './ChatScrollArea/';
 import LastSeenAvatar, { LastSeenAvatarProps } from './LastSeenAvatar/';
 import BubbleGroup, { BubbleGroupProps } from './BubbleGroup';
-import ChatFeed, { ChatFeedProps } from './ChatFeed/';
+import ChatFeed, { ChatFeedProps, ChatFeedApi } from './ChatFeed/';
 import ChatInput, { ChatInputProps } from './ChatInput/';
 import DateRow, { DateRowProps } from './DateRow/';
 import LoadMoreMessages, { LoadMoreMessagesProps } from './LoadMoreMessages/';
@@ -15,6 +15,7 @@ import Author from './Author/';
 export {
   ChatFeed,
   ChatFeedProps,
+  ChatFeedApi,
   ChatInput,
   ChatInputProps,
   LoadMoreMessages,
@@ -37,5 +38,5 @@ export {
   IsTypingProps,
   ChatScrollArea,
   ChatScrollAreaProps,
-  ChatScrollAreaInterface
+  ChatScrollAreaApi
 };

@@ -3,17 +3,15 @@ import * as React from 'react';
 export interface ChatScrollAreaProps {
     maxHeight?: string | number;
     minHeight?: string | number;
-    refScrollElement: (scrollElement: ChatScrollAreaInterface) => void;
     children?: any;
+    ref?: (api: ChatScrollAreaApi) => void;
 }
-export interface ChatScrollAreaInterface {
+export interface ChatScrollAreaApi {
     scrollToBottom: () => void;
 }
-export declare class ChatScrollArea extends React.Component<ChatScrollAreaProps> implements ChatScrollAreaInterface {
+export declare class ChatScrollArea extends React.Component<ChatScrollAreaProps> implements ChatScrollAreaApi {
     scrollContainer: HTMLDivElement;
     constructor(props: ChatScrollAreaProps);
-    componentDidMount(): void;
-    componentWillUnmount(): void;
     scrollToBottom(): void;
     render(): JSX.Element;
 }

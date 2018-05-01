@@ -12,26 +12,18 @@ const styles: { [key: string]: React.CSSProperties } = {
 export interface ChatScrollAreaProps {
   maxHeight?: string | number;
   minHeight?: string | number;
-  refScrollElement: (scrollElement: ChatScrollAreaInterface) => void;
   children?: any;
+  ref?: (api: ChatScrollAreaApi) => void;
 }
 
-export interface ChatScrollAreaInterface {
+export interface ChatScrollAreaApi {
   scrollToBottom: () => void;
 }
 
-export class ChatScrollArea extends React.Component<ChatScrollAreaProps> implements ChatScrollAreaInterface {
+export class ChatScrollArea extends React.Component<ChatScrollAreaProps> implements ChatScrollAreaApi {
   scrollContainer: HTMLDivElement;
   constructor(props: ChatScrollAreaProps) {
     super(props);
-  }
-
-  public componentDidMount() {
-    this.props.refScrollElement(this);
-  }
-
-  public componentWillUnmount() {
-    this.props.refScrollElement(undefined);
   }
 
   public scrollToBottom() {

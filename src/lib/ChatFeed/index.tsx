@@ -11,7 +11,7 @@ import { Author } from '../Author';
 import { ChatBubbleStyles } from '../ChatBubble/';
 import Avatar, { AvatarProps } from '../Avatar';
 import IsTyping from '../IsTyping';
-import ChatScrollArea, { ChatScrollAreaProps, ChatScrollAreaInterface } from '../ChatScrollArea';
+import ChatScrollArea, { ChatScrollAreaProps, ChatScrollAreaApi } from '../ChatScrollArea';
 import LastSeenAvatar, { LastSeenAvatarProps } from '../LastSeenAvatar';
 import { groupBy } from '../utils/utils';
 import DateRow, { DateRowProps } from '../DateRow';
@@ -52,14 +52,18 @@ export interface ChatFeedProps {
   customLastSeenAvatar?: (props: LastSeenAvatarProps) => JSX.Element;
   customDateRow?: (props: DateRowProps) => JSX.Element;
 
-  onMessageSendRef?: (onMessageSend: () => void) => void;
+  ref?: (api: ChatFeedApi) => void;
 }
 
 export interface ChatFeedState {
 }
 
+export interface ChatFeedApi {
+  onMessageSend: () => void;
+}
+
 // React component to render a complete chat feed
-export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedState> {
+export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedState> implements ChatFeedApi {
   public static defaultProps: ChatFeedProps = {
     messages: [],
     authors: [],
@@ -73,18 +77,14 @@ export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedSta
     yourAuthorId: 0
   }
 
-  private scrollElementRef: ChatScrollAreaInterface;
+  private scrollElementRef: ChatScrollAreaApi;
 
   constructor(props: ChatFeedProps) {
     super(props);
   }
 
-  componentDidMount() {
-    this.props.onMessageSendRef && this.props.onMessageSendRef(() => this.scrollElementRef && this.scrollElementRef.scrollToBottom());
-  }
-
-  componentWillUnmount() {
-    this.props.onMessageSendRef && this.props.onMessageSendRef(undefined);
+  public onMessageSend() {
+    this.scrollElementRef && this.scrollElementRef.scrollToBottom();
   }
 
   shouldComponentUpdate(nextProps: ChatFeedProps, nextState: ChatFeedState) {
@@ -95,9 +95,17 @@ export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedSta
   }
 
   shallowDiffers(a, b) {
-    for (let i in a) if (!(i in b)) return true
-    for (let i in b) if (a[i] !== b[i]) return true
-    return false
+    for (let i in a) {
+      if (!(i in b)) {
+        return true;
+      }
+    }
+    for (let i in b) {
+      if (a[i] !== b[i]) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**
@@ -168,7 +176,7 @@ export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedSta
         <this.props.customScrollArea
           minHeight={this.props.minHeight}
           maxHeight={this.props.maxHeight}
-          refScrollElement={e => this.scrollElementRef = e}
+          ref={e => this.scrollElementRef = e}
         >
           <div
             style={{

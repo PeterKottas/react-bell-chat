@@ -36,16 +36,18 @@ export interface ChatFeedProps {
     customIsTyping?: (props: ChatScrollAreaProps) => JSX.Element;
     customLastSeenAvatar?: (props: LastSeenAvatarProps) => JSX.Element;
     customDateRow?: (props: DateRowProps) => JSX.Element;
-    onMessageSendRef?: (onMessageSend: () => void) => void;
+    ref?: (api: ChatFeedApi) => void;
 }
 export interface ChatFeedState {
 }
-export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedState> {
+export interface ChatFeedApi {
+    onMessageSend: () => void;
+}
+export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedState> implements ChatFeedApi {
     static defaultProps: ChatFeedProps;
     private scrollElementRef;
     constructor(props: ChatFeedProps);
-    componentDidMount(): void;
-    componentWillUnmount(): void;
+    onMessageSend(): void;
     shouldComponentUpdate(nextProps: ChatFeedProps, nextState: ChatFeedState): boolean;
     shallowDiffers(a: any, b: any): boolean;
     /**

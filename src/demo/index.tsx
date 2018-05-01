@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { render } from 'react-dom';
-import { ChatFeed, ChatBubble, BubbleGroup, Message, Author, ChatBubbleProps } from '../lib';
+import { ChatFeed, ChatBubble, BubbleGroup, Message, Author, ChatBubbleProps, ChatFeedApi } from '../lib';
 
 const styles: { [key: string]: React.CSSProperties } = {
   button: {
@@ -52,7 +52,7 @@ interface ChatState {
 }
 
 class Chat extends React.Component<ChatProps, ChatState> {
-  private onMessageSendRef: () => void;
+  private chat: ChatFeedApi;
   private firstAuthorTimer: number;
   private secondAuthorTimer: number;
 
@@ -151,7 +151,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
       message: this.state.messageText,
     };
     const messages = this.state.messages.concat(newMessage);
-    this.setState({ messageText: '', messages }, () => this.onMessageSendRef && this.onMessageSendRef());
+    this.setState({ messageText: '', messages }, () => this.chat && this.chat.onMessageSend());
     return true;
   }
 
@@ -178,7 +178,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
             maxHeight={350}
             messages={this.state.messages} // Boolean: list of message objects
             showRecipientAvatar={this.state.showAvatar}
-            onMessageSendRef={onMessageSendRef => this.onMessageSendRef = onMessageSendRef}
+            ref={e => this.chat = e}
             showIsTyping={this.state.showIsTyping}
             showRecipientLastSeenMessage={this.state.showLastSeen}
             showDateRow={this.state.showDateRow}
