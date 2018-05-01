@@ -1,7 +1,7 @@
 import ChatBubble, { ChatBubbleProps } from './ChatBubble/';
 import Avatar, { AvatarProps } from './Avatar/';
 import IsTyping, { IsTypingProps } from './IsTyping/';
-import ChatScrollArea, { ChatScrollAreaProps } from './ChatScrollArea/';
+import ChatScrollArea, { ChatScrollAreaProps, ChatScrollAreaInterface } from './ChatScrollArea/';
 import LastSeenAvatar, { LastSeenAvatarProps } from './LastSeenAvatar/';
 import BubbleGroup, { BubbleGroupProps } from './BubbleGroup';
 import ChatFeed, { ChatFeedProps } from './ChatFeed/';
@@ -37,4 +37,5 @@ export {
   IsTypingProps,
   ChatScrollArea,
   ChatScrollAreaProps,
+  ChatScrollAreaInterface
 };

@@ -11,7 +11,7 @@ import { Author } from '../Author';
 import { ChatBubbleStyles } from '../ChatBubble/';
 import Avatar, { AvatarProps } from '../Avatar';
 import IsTyping from '../IsTyping';
-import ChatScrollArea, { ChatScrollAreaProps, IChatScrollArea } from '../ChatScrollArea';
+import ChatScrollArea, { ChatScrollAreaProps, ChatScrollAreaInterface } from '../ChatScrollArea';
 import LastSeenAvatar, { LastSeenAvatarProps } from '../LastSeenAvatar';
 import { groupBy } from '../utils/utils';
 import DateRow, { DateRowProps } from '../DateRow';
@@ -70,7 +70,7 @@ export default class ChatFeed extends React.Component<ChatFeedProps> {
     yourAuthorId: 0
   }
 
-  private scrollElementRef: IChatScrollArea;
+  private scrollElementRef: ChatScrollAreaInterface;
 
   constructor(props: ChatFeedProps) {
     super(props);
