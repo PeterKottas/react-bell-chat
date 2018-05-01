@@ -80,14 +80,14 @@ export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedSta
     yourAuthorId: 0
   }
 
-  private scrollElementRef: ChatScrollAreaApi;
+  private scrollApi: ChatScrollAreaApi;
 
   constructor(props: ChatFeedProps) {
     super(props);
   }
 
   public onMessageSend() {
-    this.scrollElementRef && this.scrollElementRef.scrollToBottom();
+    this.scrollApi && this.scrollApi.scrollToBottom();
   }
 
   shouldComponentUpdate(nextProps: ChatFeedProps, nextState: ChatFeedState) {
@@ -179,7 +179,7 @@ export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedSta
         <this.props.customScrollArea
           minHeight={this.props.minHeight}
           maxHeight={this.props.maxHeight}
-          ref={e => this.scrollElementRef = e}
+          apiRef={e => this.scrollApi = e}
         >
           <div
             style={{

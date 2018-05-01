@@ -45,7 +45,7 @@ export interface ChatFeedApi {
 }
 export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedState> implements ChatFeedApi {
     static defaultProps: ChatFeedProps;
-    private scrollElementRef;
+    private scrollApi;
     constructor(props: ChatFeedProps);
     onMessageSend(): void;
     shouldComponentUpdate(nextProps: ChatFeedProps, nextState: ChatFeedState): boolean;

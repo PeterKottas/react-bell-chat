@@ -13,7 +13,7 @@ export interface ChatScrollAreaProps {
   maxHeight?: string | number;
   minHeight?: string | number;
   children?: any;
-  ref?: (api: ChatScrollAreaApi) => void;
+  apiRef?: (api: ChatScrollAreaApi) => void;
 }
 
 export interface ChatScrollAreaApi {
