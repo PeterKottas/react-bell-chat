@@ -62,18 +62,21 @@ export interface ChatFeedApi {
   onMessageSend: () => void;
 }
 
+const DefaultChatBubbleFunc = props => <DefaultChatBubble {...props} />;
+const DefaultScrollAreaFunc = props => <ChatScrollArea {...props} />;
+
 // React component to render a complete chat feed
 export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedState> implements ChatFeedApi {
   public static defaultProps: ChatFeedProps = {
     messages: [],
     authors: [],
-    customChatBubble: props => <DefaultChatBubble {...props} />,
-    customAvatar: props => <Avatar {...props} />,
-    customScrollArea: props => <ChatScrollArea {...props} />,
-    customLastSeenAvatar: props => <LastSeenAvatar {...props} />,
-    customDateRow: props => <DateRow {...props} />,
-    customLoadingMessages: props => <LoadingMessages {...props} />,
-    customLoadMoreMessages: props => <LoadMoreMessages {...props} />,
+    customChatBubble: DefaultChatBubbleFunc,
+    customAvatar: Avatar,
+    customScrollArea: DefaultScrollAreaFunc,
+    customLastSeenAvatar: LastSeenAvatar,
+    customDateRow: DateRow,
+    customLoadingMessages: LoadingMessages,
+    customLoadMoreMessages: LoadMoreMessages,
     yourAuthorId: 0
   }
 

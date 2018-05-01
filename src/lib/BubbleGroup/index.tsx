@@ -24,7 +24,7 @@ export default class BubbleGroup extends React.Component<BubbleGroupProps> {
   public static defaultProps: BubbleGroupProps = {
     messages: [],
     author: undefined,
-    customAvatar: props => <Avatar {...props} />,
+    customAvatar: Avatar,
     showRecipientLastSeenMessage: false
   }
 
