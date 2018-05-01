@@ -38,12 +38,16 @@ export interface ChatFeedProps {
     customDateRow?: (props: DateRowProps) => JSX.Element;
     onMessageSendRef?: (onMessageSend: () => void) => void;
 }
-export default class ChatFeed extends React.Component<ChatFeedProps> {
+export interface ChatFeedState {
+}
+export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedState> {
     static defaultProps: ChatFeedProps;
     private scrollElementRef;
     constructor(props: ChatFeedProps);
     componentDidMount(): void;
     componentWillUnmount(): void;
+    shouldComponentUpdate(nextProps: ChatFeedProps, nextState: ChatFeedState): boolean;
+    shallowDiffers(a: any, b: any): boolean;
     /**
      * Determines what type of message/messages to render.
      */

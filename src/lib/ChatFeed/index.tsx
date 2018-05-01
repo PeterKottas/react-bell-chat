@@ -55,8 +55,11 @@ export interface ChatFeedProps {
   onMessageSendRef?: (onMessageSend: () => void) => void;
 }
 
+export interface ChatFeedState {
+}
+
 // React component to render a complete chat feed
-export default class ChatFeed extends React.Component<ChatFeedProps> {
+export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedState> {
   public static defaultProps: ChatFeedProps = {
     messages: [],
     authors: [],
@@ -82,6 +85,19 @@ export default class ChatFeed extends React.Component<ChatFeedProps> {
 
   componentWillUnmount() {
     this.props.onMessageSendRef && this.props.onMessageSendRef(undefined);
+  }
+
+  shouldComponentUpdate(nextProps: ChatFeedProps, nextState: ChatFeedState) {
+    return (
+      this.shallowDiffers(this.props, nextProps) ||
+      this.shallowDiffers(this.state, nextState)
+    )
+  }
+
+  shallowDiffers(a, b) {
+    for (let i in a) if (!(i in b)) return true
+    for (let i in b) if (a[i] !== b[i]) return true
+    return false
   }
 
   /**
