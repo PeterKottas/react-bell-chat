@@ -4,6 +4,7 @@ const styles = {
   chatBubbleWrapper: {
     position: 'relative',
     marginBottom: 2,
+    display: 'flex'
   } as React.CSSProperties,
   chatBubble: {
     position: 'relative',
@@ -16,7 +17,6 @@ const styles = {
     paddingBottom: 8,
     paddingLeft: 14,
     paddingRight: 14,
-    width: '-webkit-fit-content',
     // boxShadow: 'rgba(0, 0, 0, 0.3) 2px 2px 2px'
   } as React.CSSProperties,
   chatBubbleOrientationNormal: {
