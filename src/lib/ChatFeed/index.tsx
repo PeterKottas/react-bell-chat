@@ -60,6 +60,7 @@ export interface ChatFeedState {
 
 export interface ChatFeedApi {
   onMessageSend: () => void;
+  scrollApi: ChatScrollAreaApi;
 }
 
 const DefaultChatBubbleFunc = props => <DefaultChatBubble {...props} />;
@@ -80,7 +81,7 @@ export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedSta
     yourAuthorId: 0
   }
 
-  private scrollApi: ChatScrollAreaApi;
+  public scrollApi: ChatScrollAreaApi;
 
   constructor(props: ChatFeedProps) {
     super(props);
@@ -180,24 +181,20 @@ export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedSta
           minHeight={this.props.minHeight}
           maxHeight={this.props.maxHeight}
           apiRef={e => this.scrollApi = e}
+          containerStyles={{
+            ...styles.chatMessages,
+            ...(this.props.showRecipientAvatar && styles.showRecipientAvatarChatMessagesStyle),
+            ...(this.props.showRecipientAvatar && this.props.showRecipientAvatarChatMessagesStyle),
+            ...(this.props.showIsTyping && styles.showIsTypingChatMessagesStyle),
+            ...(this.props.showIsTyping && this.props.showIsTypingChatMessagesStyle),
+            ...(this.props.showRecipientLastSeenMessage && styles.showRecipientLastSeenMessageChatMessagesStyle),
+            ...(this.props.showRecipientLastSeenMessage && this.props.showRecipientLastSeenMessageChatMessagesStyle),
+          }}
         >
-          <div
-            style={{
-              ...styles.chatMessages,
-              ...(this.props.showRecipientAvatar && styles.showRecipientAvatarChatMessagesStyle),
-              ...(this.props.showRecipientAvatar && this.props.showRecipientAvatarChatMessagesStyle),
-              ...(this.props.showIsTyping && styles.showIsTypingChatMessagesStyle),
-              ...(this.props.showIsTyping && this.props.showIsTypingChatMessagesStyle),
-              ...(this.props.showRecipientLastSeenMessage && styles.showRecipientLastSeenMessageChatMessagesStyle),
-              ...(this.props.showRecipientLastSeenMessage && this.props.showRecipientLastSeenMessageChatMessagesStyle),
-            }}
-            className="react-chat-ui__chat-messages"
-          >
-            {this.props.showLoadMoreMessages && <this.props.customLoadMoreMessages />}
-            {this.props.showLoadingMessages && <this.props.customLoadingMessages />}
-            {this.renderMessages(this.props.messages)}
-            {this.props.showIsTyping && this.renderIsTyping()}
-          </div>
+          {this.props.showLoadMoreMessages && <this.props.customLoadMoreMessages />}
+          {this.props.showLoadingMessages && <this.props.customLoadingMessages />}
+          {this.renderMessages(this.props.messages)}
+          {this.props.showIsTyping && this.renderIsTyping()}
         </this.props.customScrollArea>
       </div>
     );

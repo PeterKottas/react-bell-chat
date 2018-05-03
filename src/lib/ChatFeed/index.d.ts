@@ -5,7 +5,7 @@ import Message from '../Message';
 import { Author } from '../Author';
 import { ChatBubbleStyles } from '../ChatBubble/';
 import { AvatarProps } from '../Avatar';
-import { ChatScrollAreaProps } from '../ChatScrollArea';
+import { ChatScrollAreaProps, ChatScrollAreaApi } from '../ChatScrollArea';
 import { LastSeenAvatarProps } from '../LastSeenAvatar';
 import { DateRowProps } from '../DateRow';
 import { LoadMoreMessagesProps } from '../LoadMoreMessages';
@@ -42,10 +42,11 @@ export interface ChatFeedState {
 }
 export interface ChatFeedApi {
     onMessageSend: () => void;
+    scrollApi: ChatScrollAreaApi;
 }
 export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedState> implements ChatFeedApi {
     static defaultProps: ChatFeedProps;
-    private scrollApi;
+    scrollApi: ChatScrollAreaApi;
     constructor(props: ChatFeedProps);
     onMessageSend(): void;
     shouldComponentUpdate(nextProps: ChatFeedProps, nextState: ChatFeedState): boolean;
