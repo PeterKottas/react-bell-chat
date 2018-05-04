@@ -1,8 +1,8 @@
 {
-  "name": "react-chat-ui",
+  "name": "react-bell-chat",
   "version": "0.3.0",
   "description": "A library of React components for building chat UIs",
-  "repository": "https://github.com/brandonmowat/react-chat-ui",
+  "repository": "https://github.com/brandonmowat/react-bell-chat",
   "main": "./lib/index.js",
   "typings": "src/lib/index.d.ts",
   "scripts": {

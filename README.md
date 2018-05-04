@@ -1,14 +1,14 @@
-![react-chat-ui logo](https://i.imgur.com/YhPrFWw.png)
+![react-bell-chat logo](https://i.imgur.com/YhPrFWw.png)
 
-# 🙊 react-chat-ui
+# 🙊 react-bell-chat
 
 A library of React components for building chat UIs.
 
 # DEMO
 
-[Live demo](https://peterkottas.github.io/react-chat-ui/)
+[Live demo](https://peterkottas.github.io/react-bell-chat/)
 
-[![NPM](https://nodei.co/npm/react-chat-ui.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/react-chat-ui/)
+[![NPM](https://nodei.co/npm/react-bell-chat.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/react-bell-chat/)
 
 ## Features
 
@@ -20,14 +20,14 @@ Keep in mind that this project is still in the early stages of development. If y
 
 ## Installation
 
-`npm install react-chat-ui --save`
+`npm install react-bell-chat --save`
 OR
-`yarn add react-chat-ui`
+`yarn add react-bell-chat`
 
 ## Basic Usage
 
 ```javascript
-import { ChatFeed, Message } from 'react-chat-ui'
+import { ChatFeed, Message } from 'react-bell-chat'
 
 // Your code stuff...
 
