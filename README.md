@@ -170,8 +170,9 @@ Most of the UI is customizable via injecting custom components. These are pure c
 
 ## FAQ
 
-1. Q: My chat is scrolling up/down automatically everytime I use setState on parent component.
-   A: Make sure to provide const expresions for custom components. Not inline functions.
+Q: My chat is scrolling up/down automatically everytime I use setState on parent component.
+
+A: Make sure to provide const expresions for custom components. Not inline functions.
 
 ## Contributing 🔧
 
