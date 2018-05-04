@@ -9,14 +9,14 @@ export default {
     position: 'relative'
   } as React.CSSProperties,
   showRecipientAvatarChatMessagesStyle: {
-    paddingLeft: 60
+    paddingLeft: 50
   } as React.CSSProperties,
   showIsTypingChatMessagesStyle: {
     paddingBottom: 24,
     position: 'relative'
   } as React.CSSProperties,
   showRecipientLastSeenMessageChatMessagesStyle: {
-    paddingRight: 40,
+    paddingRight: 30,
   } as React.CSSProperties,
   chatBubbleWrapper: {
     marginTop: 10,
@@ -33,6 +33,7 @@ export default {
     zIndex: 100,
   } as React.CSSProperties,
   chatMessages: {
-    padding: 10,
+    paddingBottom: 10,
+    paddingTop: 10,
   } as React.CSSProperties
 };

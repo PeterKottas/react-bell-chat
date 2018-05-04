@@ -14,6 +14,7 @@ declare const styles: {
     centerChatBubbleInGroup: React.CSSProperties;
     recipientCenterChatBubbleInGroup: React.CSSProperties;
     createdOn: React.CSSProperties;
+    isSend: React.CSSProperties;
     lastSeenByContainer: React.CSSProperties;
 };
 export default styles;

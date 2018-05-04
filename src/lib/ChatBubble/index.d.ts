@@ -23,11 +23,17 @@ export interface ChatBubbleProps {
     lastSeenByAuthors?: Author[];
     showRecipientLastSeenMessage?: boolean;
     customLastSeenAvatar?: (props: LastSeenAvatarProps) => JSX.Element;
+    loadingSpinnerColor?: string;
+    isSendIconColor?: string;
 }
 export interface ChatBubbleState {
     mouseOverLastSeenContainer: boolean;
 }
 export default class ChatBubble extends React.Component<ChatBubbleProps, ChatBubbleState> {
+    static defaultProps: {
+        loadingSpinnerColor: string;
+        isSendIconColor: string;
+    };
     constructor(props: ChatBubbleProps);
     render(): JSX.Element;
 }

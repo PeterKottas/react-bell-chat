@@ -14,7 +14,7 @@ const styles = {
     marginLeft: 'auto',
     maxWidth: '80%',
     paddingTop: 8,
-    paddingBottom: 8,
+    paddingBottom: 10,
     paddingLeft: 14,
     paddingRight: 14,
     // boxShadow: 'rgba(0, 0, 0, 0.3) 2px 2px 2px'
@@ -57,10 +57,16 @@ const styles = {
   } as React.CSSProperties,
   createdOn: {
     position: 'absolute',
-    right: 4,
+    right: 14,
     bottom: 2,
     fontSize: 9,
     color: 'rgba(255, 255, 255, 0.55)'
+  } as React.CSSProperties,
+  isSend: {
+    position: 'absolute',
+    right: 2,
+    bottom: 2,
+    fontSize: 9,
   } as React.CSSProperties,
   lastSeenByContainer: {
     position: 'absolute',

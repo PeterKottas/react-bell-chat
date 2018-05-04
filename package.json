@@ -9,8 +9,10 @@
     "start": "set NODE_ENV=local && webpack-dev-server --config webpack/webpack.config.dev.js --content-base src/demo/dist --hot --inline --open --history-api-fallback",
     "build:clean": "rimraf lib/",
     "build:lib": "webpack --config ./webpack/webpack.config.js && webpack --config ./webpack/webpack.config.min.js",
+    "build:gh-pages": "rimraf docs/ && set NODE_ENV=production && xcopy src\\demo\\dist\\index.html docs\\* /y /e /i /h && webpack --config ./webpack/webpack.config.gh-pages.js",
     "build": "npm run build:clean && npm run build:lib",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-deploy": "npm run build && npm run build:gh-pages"
   },
   "keywords": [
     "react",
@@ -24,9 +26,9 @@
   "license": "ISC",
   "dependencies": {},
   "peerDependencies": {
+    "prop-types": "*",
     "react": "*",
-    "react-dom": "*",
-    "prop-types": "*"
+    "react-dom": "*"
   },
   "devDependencies": {
     "@types/react": "^16.3.12",
@@ -34,9 +36,11 @@
     "awesome-typescript-loader": "3.4.1",
     "browserify": "^14.4.0",
     "prop-types": "^15.5.10",
-    "react": "^16.1.0",
-    "react-dom": "^16.1.0",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
     "rimraf": "2.6.2",
+    "tslint": "^5.10.0",
+    "tslint-react": "^3.5.1",
     "typescript": "^2.5.2",
     "uglifyjs-webpack-plugin": "^1.2.5",
     "webpack": "3.10.0",

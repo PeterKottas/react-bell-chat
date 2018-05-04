@@ -3,13 +3,16 @@ import * as React from 'react';
 export interface ChatScrollAreaProps {
     maxHeight?: string | number;
     minHeight?: string | number;
-    children?: any;
+    children?: JSX.Element | JSX.Element[];
     containerStyles?: React.CSSProperties;
     apiRef?: (api: ChatScrollAreaApi) => void;
+    loadOldMessagesThreshold: number;
+    onLoadOldMessages: () => Promise<void>;
 }
 export interface ChatScrollAreaApi {
-    scrollToBottom: () => void;
+    scrollToBottom: (behavior?: ScrollBehavior) => void;
     scrollTo: (top: number) => void;
+    scrolledToBottom: () => boolean;
 }
 export declare class ChatScrollArea extends React.Component<ChatScrollAreaProps> {
     scrollContainer: HTMLDivElement;

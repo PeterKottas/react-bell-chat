@@ -11,14 +11,17 @@ const styles: { [key: string]: React.CSSProperties } = {
 export interface ChatScrollAreaProps {
   maxHeight?: string | number;
   minHeight?: string | number;
-  children?: any;
+  children?: JSX.Element | JSX.Element[];
   containerStyles?: React.CSSProperties;
   apiRef?: (api: ChatScrollAreaApi) => void;
+  loadOldMessagesThreshold: number;
+  onLoadOldMessages: () => Promise<void>;
 }
 
 export interface ChatScrollAreaApi {
-  scrollToBottom: () => void;
+  scrollToBottom: (behavior?: ScrollBehavior) => void;
   scrollTo: (top: number) => void;
+  scrolledToBottom: () => boolean;
 }
 
 export class ChatScrollArea extends React.Component<ChatScrollAreaProps> {
@@ -33,12 +36,19 @@ export class ChatScrollArea extends React.Component<ChatScrollAreaProps> {
         ref={scrollContainer => {
           this.scrollContainer = scrollContainer;
           this.props.apiRef && this.props.apiRef({
-            scrollToBottom: () => scrollContainer && scrollContainer.scrollTo({
-              top: scrollContainer.scrollHeight
-            }),
-            scrollTo: top => scrollContainer && scrollContainer.scrollTo({
-              top: top
-            })
+            scrollToBottom: (behavior = 'auto') => scrollContainer && (scrollContainer.scrollTo ?
+              scrollContainer.scrollTo({
+                top: scrollContainer.scrollHeight,
+                behavior
+              }) :
+              scrollContainer.scrollTop = scrollContainer.scrollHeight),
+            scrollTo: top => scrollContainer && (scrollContainer.scrollTo ?
+              scrollContainer.scrollTo({
+                top: top
+              })
+              :
+              scrollContainer.scrollTop = top),
+            scrolledToBottom: () => this.scrollContainer.clientHeight + this.scrollContainer.scrollTop === this.scrollContainer.scrollHeight
           });
         }}
         className="react-chat-ui__chat-history"
@@ -48,6 +58,7 @@ export class ChatScrollArea extends React.Component<ChatScrollAreaProps> {
           ...(this.props.minHeight !== undefined ? { minHeight: this.props.minHeight } : {}),
           ...this.props.containerStyles
         }}
+        onScroll={e => this.scrollContainer && this.scrollContainer.scrollTop <= this.props.loadOldMessagesThreshold && this.props.onLoadOldMessages()}
       >
         {this.props.children}
       </div>

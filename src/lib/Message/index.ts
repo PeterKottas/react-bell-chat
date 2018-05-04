@@ -8,6 +8,7 @@ export interface Message {
   authorId: number;
   message: string;
   createdOn?: Date;
+  isSend?: boolean;
 }
 
 export default Message;

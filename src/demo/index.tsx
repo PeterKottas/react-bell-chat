@@ -24,11 +24,9 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
 };
 
-const customBubble: React.SFC<ChatBubbleProps>= props => (
+const customBubble: React.SFC<ChatBubbleProps> = props => (
   <div>
-    <p>{`${props.author && props.author.name} ${props.message.authorId !== props.yourAuthorId ? 'says' : 'said'}: ${
-      props.message.message
-      }`}</p>
+    <p>{props.author && props.author.name + ' ' + (props.message.authorId !== props.yourAuthorId ? 'says' : 'said') + ': ' + props.message.message}</p>
   </div>
 );
 
@@ -47,8 +45,8 @@ interface ChatState {
   showLastSeen: boolean;
   showDateRow: boolean;
   showIsTyping: boolean;
-  showLoadMoreMessages: boolean;
   showLoadingMessages: boolean;
+  hasOldMessages: boolean;
 }
 
 class Chat extends React.Component<ChatProps, ChatState> {
@@ -82,49 +80,57 @@ class Chat extends React.Component<ChatProps, ChatState> {
           id: 0,
           authorId: 1,
           message: 'Hey guys!!',
-          createdOn: new Date(2018, 4, 27, 18, 32, 24)
+          createdOn: new Date(2018, 2, 27, 18, 32, 24),
+          isSend: true
         },
         {
           id: 1,
           authorId: 2,
           message: 'Hey! Evan here. react-chat-ui is pretty dooope.',
-          createdOn: new Date(2018, 4, 28, 18, 12, 24)
+          createdOn: new Date(2018, 2, 28, 18, 12, 24),
+          isSend: true
         },
         {
           id: 2,
           authorId: 2,
           message: 'Rly is.',
-          createdOn: new Date(2018, 4, 28, 18, 13, 24)
+          createdOn: new Date(2018, 2, 28, 18, 13, 24),
+          isSend: true
         },
         {
           id: 3,
           authorId: 2,
           message: 'Long group.',
-          createdOn: new Date(2018, 4, 28, 18, 13, 24)
+          createdOn: new Date(2018, 2, 28, 18, 13, 24),
+          isSend: true
         },
         {
           id: 4,
           authorId: 0,
           message: 'My message.',
-          createdOn: new Date(2018, 4, 29, 19, 32, 24)
+          createdOn: new Date(2018, 2, 29, 19, 32, 24),
+          isSend: true
         },
         {
           id: 5,
           authorId: 0,
           message: 'One more.',
-          createdOn: new Date(2018, 4, 29, 19, 33, 24)
+          createdOn: new Date(2018, 2, 29, 19, 33, 24),
+          isSend: true
         },
         {
           id: 6,
           authorId: 2,
           message: 'One more group to see the scroll.',
-          createdOn: new Date(2018, 4, 29, 19, 35, 24)
+          createdOn: new Date(2018, 2, 29, 19, 35, 24),
+          isSend: true
         },
         {
           id: 7,
           authorId: 2,
           message: 'I said group.',
-          createdOn: new Date(2018, 4, 29, 19, 35, 24)
+          createdOn: new Date(2018, 2, 29, 19, 35, 24),
+          isSend: true
         }
       ],
       useCustomBubble: false,
@@ -135,23 +141,34 @@ class Chat extends React.Component<ChatProps, ChatState> {
       showDateRow: true,
       showLastSeen: true,
       showIsTyping: true,
-      showLoadMoreMessages: true,
-      showLoadingMessages: true,
-    };
+      showLoadingMessages: false,
+      hasOldMessages: true
+    } as ChatState;
   }
 
-  onPress(user) {
+  onPress(user: number) {
     this.setState({ currentUser: user });
   }
 
   onMessageSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const newMessage = {
-      authorId: this.state.currentUser,
-      message: this.state.messageText,
-    };
-    const messages = this.state.messages.concat(newMessage);
-    this.setState({ messageText: '', messages }, () => this.chat && this.chat.onMessageSend());
+    if (this.state.messageText !== '') {
+      const id = Number(new Date());
+      const newMessage: Message = {
+        id,
+        authorId: this.state.currentUser,
+        message: this.state.messageText,
+        createdOn: new Date(),
+        isSend: false
+      };
+      this.setState(previousState => ({
+        messageText: '',
+        messages: previousState.messages.concat(newMessage)
+      }), () => this.chat && this.chat.onMessageSend());
+      setTimeout(() => {
+        this.setState(previousState => ({ messages: previousState.messages.map(m => m.id === id ? { ...m, isSend: true } : m) }));
+      }, 2000);
+    }
     return true;
   }
 
@@ -176,14 +193,25 @@ class Chat extends React.Component<ChatProps, ChatState> {
             authors={this.state.authors}
             customChatBubble={this.state.useCustomBubble && customBubble}
             maxHeight={350}
-            messages={this.state.messages} // Boolean: list of message objects
+            messages={this.state.messages}
             showRecipientAvatar={this.state.showAvatar}
             ref={e => this.chat = e}
             showIsTyping={this.state.showIsTyping}
             showRecipientLastSeenMessage={this.state.showLastSeen}
             showDateRow={this.state.showDateRow}
-            showLoadMoreMessages={this.state.showLoadMoreMessages}
             showLoadingMessages={this.state.showLoadingMessages}
+            // tslint:disable-next-line:no-console
+            onLoadOldMessages={() => new Promise(resolve => setTimeout(() => {
+              this.setState(previousState => ({
+                messages: [{
+                  id: Number(new Date()),
+                  createdOn: new Date(2017, 1, 1),
+                  message: 'Old message',
+                  authorId: Math.round(Math.random() + 1)
+                } as Message].concat(previousState.messages)
+              }), () => resolve());
+            }, 1000))}
+            hasOldMessages={this.state.hasOldMessages}
           />
 
           <form onSubmit={e => this.onMessageSubmit(e)}>
@@ -249,13 +277,34 @@ class Chat extends React.Component<ChatProps, ChatState> {
                   clearInterval(this.firstAuthorTimer);
                   clearInterval(this.secondAuthorTimer);
                 } else {
-                  this.firstAuthorTimer = window.setInterval(() => this.setState({ authors: this.state.authors.slice(0).map((a, i) => i === 1 ? a : { ...a, isTyping: !a.isTyping }) }), 2000);
-                  this.secondAuthorTimer = window.setInterval(() => this.setState({ authors: this.state.authors.slice(0).map((a, i) => i === 2 ? a : { ...a, isTyping: !a.isTyping }) }), 3200);
+                  this.firstAuthorTimer = window.setInterval(() => this.setState({
+                    authors: this.state.authors.slice(0).map((a, i) => i === 1 ? a : { ...a, isTyping: !a.isTyping })
+                  }), 2000);
+                  this.secondAuthorTimer = window.setInterval(() => this.setState({
+                    authors: this.state.authors.slice(0).map((a, i) => i === 2 ? a : { ...a, isTyping: !a.isTyping })
+                  }), 3200);
                 }
                 this.setState({ simulateTyping: !this.state.simulateTyping });
               }}
             >
               Simulate typing
+            </button>
+            <button
+              style={{
+                ...styles.button,
+              }}
+              onClick={() => {
+                this.setState({
+                  messages: this.state.messages.concat([{
+                    id: Number(new Date()),
+                    createdOn: new Date(),
+                    message: 'Simulated message',
+                    authorId: Math.round(Math.random() + 1)
+                  }])
+                });
+              }}
+            >
+              Simulate message
             </button>
           </div>
           <div
@@ -308,16 +357,16 @@ class Chat extends React.Component<ChatProps, ChatState> {
               }}
               onClick={() => this.setState({ showLoadingMessages: !this.state.showLoadingMessages })}
             >
-              Loading
+              Show Loading
             </button>
             <button
               style={{
                 ...styles.button,
-                ...(this.state.showLoadMoreMessages ? styles.selected : {}),
+                ...(this.state.hasOldMessages ? styles.selected : {}),
               }}
-              onClick={() => this.setState({ showLoadMoreMessages: !this.state.showLoadMoreMessages })}
+              onClick={() => this.setState({ hasOldMessages: !this.state.hasOldMessages })}
             >
-              Show load more messages
+              Has more messages
             </button>
           </div>
         </div>
@@ -339,7 +388,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
             {
               authorId: 1,
               message:
-                "Oh no, I forgot... I think I was going to say I'm a BubbleGroup",
+                'Oh no, I forgot... I think I was going to say I\'m a BubbleGroup',
             },
           ]}
           yourAuthorId={0}
@@ -347,14 +396,14 @@ class Chat extends React.Component<ChatProps, ChatState> {
         />
         <ChatBubble
           yourAuthorId={0}
-          message={{ authorId: 2, message: "I 'm a single ChatBubble!" }}
+          message={{ authorId: 2, message: 'I \'m a single ChatBubble!' }}
         />
         <BubbleGroup
           messages={[
             { authorId: 0, message: 'How could you forget already?!' },
             {
               authorId: 0,
-              message: "Oh well. I'm a BubbleGroup as well",
+              message: 'Oh well. I\'m a BubbleGroup as well',
             },
           ]}
           yourAuthorId={0}
