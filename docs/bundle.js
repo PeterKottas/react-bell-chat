@@ -1421,27 +1421,7 @@ var Chat = /** @class */ (function (_super) {
                     React.createElement("button", { style: __assign({}, styles.button, (this.state.showDateRow ? styles.selected : {})), onClick: function () { return _this.setState({ showDateRow: !_this.state.showDateRow }); } }, "Show date row")),
                 React.createElement("div", { style: { display: 'flex', justifyContent: 'space-around', marginTop: 10 } },
                     React.createElement("button", { style: __assign({}, styles.button, (this.state.showLoadingMessages ? styles.selected : {})), onClick: function () { return _this.setState({ showLoadingMessages: !_this.state.showLoadingMessages }); } }, "Show Loading"),
-                    React.createElement("button", { style: __assign({}, styles.button, (this.state.hasOldMessages ? styles.selected : {})), onClick: function () { return _this.setState({ hasOldMessages: !_this.state.hasOldMessages }); } }, "Has more messages"))),
-            React.createElement("h2", { className: "text-center" }, "There are Bubbles!"),
-            React.createElement(lib_1.ChatBubble, { yourAuthorId: 0, message: { authorId: 1, message: 'I float to the left!' } }),
-            React.createElement(lib_1.ChatBubble, { yourAuthorId: 0, message: { authorId: 0, message: 'I float to the right!' } }),
-            React.createElement("h2", { className: "text-center" }, "And we have Bubble Groups!"),
-            React.createElement(lib_1.BubbleGroup, { messages: [
-                    { authorId: 1, message: 'Hey!' },
-                    { authorId: 1, message: 'I forgot to mention...' },
-                    {
-                        authorId: 1,
-                        message: 'Oh no, I forgot... I think I was going to say I\'m a BubbleGroup',
-                    },
-                ], yourAuthorId: 0, author: this.state.authors[1] }),
-            React.createElement(lib_1.ChatBubble, { yourAuthorId: 0, message: { authorId: 2, message: 'I \'m a single ChatBubble!' } }),
-            React.createElement(lib_1.BubbleGroup, { messages: [
-                    { authorId: 0, message: 'How could you forget already?!' },
-                    {
-                        authorId: 0,
-                        message: 'Oh well. I\'m a BubbleGroup as well',
-                    },
-                ], yourAuthorId: 0, author: this.state.authors[0] })));
+                    React.createElement("button", { style: __assign({}, styles.button, (this.state.hasOldMessages ? styles.selected : {})), onClick: function () { return _this.setState({ hasOldMessages: !_this.state.hasOldMessages }); } }, "Has more messages")))));
     };
     return Chat;
 }(React.Component));

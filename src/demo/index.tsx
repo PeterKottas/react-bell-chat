@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { render } from 'react-dom';
-import { ChatFeed, ChatBubble, BubbleGroup, Message, Author, ChatBubbleProps, ChatFeedApi } from '../lib';
+import { ChatFeed, Message, Author, ChatBubbleProps, ChatFeedApi } from '../lib';
 
 const styles: { [key: string]: React.CSSProperties } = {
   button: {
@@ -370,45 +370,6 @@ class Chat extends React.Component<ChatProps, ChatState> {
             </button>
           </div>
         </div>
-        <h2 className="text-center">There are Bubbles!</h2>
-        <ChatBubble
-          yourAuthorId={0}
-          message={{ authorId: 1, message: 'I float to the left!' }}
-        />
-        <ChatBubble
-          yourAuthorId={0}
-          message={{ authorId: 0, message: 'I float to the right!' }}
-        />
-
-        <h2 className="text-center">And we have Bubble Groups!</h2>
-        <BubbleGroup
-          messages={[
-            { authorId: 1, message: 'Hey!' },
-            { authorId: 1, message: 'I forgot to mention...' },
-            {
-              authorId: 1,
-              message:
-                'Oh no, I forgot... I think I was going to say I\'m a BubbleGroup',
-            },
-          ]}
-          yourAuthorId={0}
-          author={this.state.authors[1]}
-        />
-        <ChatBubble
-          yourAuthorId={0}
-          message={{ authorId: 2, message: 'I \'m a single ChatBubble!' }}
-        />
-        <BubbleGroup
-          messages={[
-            { authorId: 0, message: 'How could you forget already?!' },
-            {
-              authorId: 0,
-              message: 'Oh well. I\'m a BubbleGroup as well',
-            },
-          ]}
-          yourAuthorId={0}
-          author={this.state.authors[0]}
-        />
       </div>
     );
   }
