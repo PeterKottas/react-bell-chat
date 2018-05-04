@@ -6,7 +6,7 @@ A library of React components for building chat UIs.
 
 # DEMO
 
-![Live demo](https://peterkottas.github.io/react-chat-ui/)
+[Live demo](https://peterkottas.github.io/react-chat-ui/)
 
 [![NPM](https://nodei.co/npm/react-chat-ui.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/react-chat-ui/)
 
