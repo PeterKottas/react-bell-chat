@@ -55,8 +55,7 @@ render() {
 }
 ```
 
-Make sure to keep a list of proper message objects in your class state.
-Like so:
+The bare minimum is to provide a list of messages and authors, check this out for an example:
 
 ```typescript
 //...
@@ -82,13 +81,15 @@ this.state = {
       id: 1,
       name: 'Mark',
       isTyping: true,
-      lastSeenMessageId: 1
+      lastSeenMessageId: 1,
+      bgImageUrl: undefined
     },
     {
       id: 2,
       name: 'Peter',
       isTyping: false,
-      lastSeenMessageId: 2
+      lastSeenMessageId: 2,
+      bgImageUrl: undefined
     }
   ]
 };
@@ -111,7 +112,7 @@ Where scroll api is
 interface ChatScrollAreaApi {
   scrollToBottom: (behavior?: ScrollBehavior) => void;
   scrollTo: (top: number) => void;
-  scrolledToBottom: () => boolean;
+  scrolledToBottom: () => boolean; // Check if we are scrolled to bottom
 }
 ```
 
@@ -163,9 +164,16 @@ export interface ChatFeedProps {
 }
 ```
 
+## Custom components
+
+Most of the UI is customizable via injecting custom components. These are pure components, the library injects props to them so that you can customize pretty much anything.
+
 ## FAQ
 
-## Contributing!¡1 🔧
+1. Q: My chat is scrolling up/down automatically everytime I use setState on parent component.
+   A: Make sure to provide const expresions for custom components. Not inline functions.
+
+## Contributing 🔧
 
 Contributions are always welcomed and encouraged.
 
