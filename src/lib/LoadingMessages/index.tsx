@@ -16,7 +16,7 @@ export interface LoadingMessagesProps {
 const LoadingMessages: React.SFC<LoadingMessagesProps> = (props: LoadingMessagesProps) => {
   const { containerStyles } = props;
   return (
-    <div className="react-chat-ui__loading-messages" style={{ ...styles.containerStyles, ...containerStyles }}>
+    <div className="react-bell-chat__loading-messages" style={{ ...styles.containerStyles, ...containerStyles }}>
       <svg
         width="40px"
         height="40px"

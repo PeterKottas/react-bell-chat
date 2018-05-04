@@ -86,7 +86,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
         {
           id: 1,
           authorId: 2,
-          message: 'Hey! Evan here. react-chat-ui is pretty dooope.',
+          message: 'Hey! Evan here. react-bell-chat is pretty dooope.',
           createdOn: new Date(2018, 2, 28, 18, 12, 24),
           isSend: true
         },
@@ -175,17 +175,17 @@ class Chat extends React.Component<ChatProps, ChatState> {
   render() {
     return (
       <div className="container">
-        <h1 className="text-center">react-chat-ui</h1>
+        <h1 className="text-center">react-bell-chat</h1>
         <p className="text-center">
           <a
-            href="https://github.com/PeterKottas/react-chat-ui"
+            href="https://github.com/PeterKottas/react-bell-chat"
             target="_blank"
           >
             Github
           </a>
         </p>
         <div className="install">
-          <code>npm i -S react-chat-ui</code>
+          <code>npm i -S react-bell-chat</code>
         </div>
         <div className="chatfeed-wrapper">
           <ChatFeed

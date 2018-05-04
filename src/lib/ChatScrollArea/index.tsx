@@ -51,7 +51,7 @@ export class ChatScrollArea extends React.Component<ChatScrollAreaProps> {
             scrolledToBottom: () => this.scrollContainer.clientHeight + this.scrollContainer.scrollTop === this.scrollContainer.scrollHeight
           });
         }}
-        className="react-chat-ui__chat-history"
+        className="react-bell-chat__chat-history"
         style={{
           ...styles.chatHistory,
           ...(this.props.maxHeight !== undefined ? { maxHeight: this.props.maxHeight } : {}),

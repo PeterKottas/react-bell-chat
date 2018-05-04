@@ -19,7 +19,7 @@ The `ChatFeed` component is your one stop shop for all your chat needs. If you d
 
 ```javascript
 import React from 'react';
-import { ChatFeed, Message, ChatBubbleProps } from 'react-chat-ui';
+import { ChatFeed, Message, ChatBubbleProps } from 'react-bell-chat';
 import MyChatBubble from './MyChatBubble';
 
 class MyChat extends React.Component {

@@ -18,7 +18,7 @@ export interface IsTypingProps {
 
 const IsTyping = (props: IsTypingProps) => {
   return props.typingAuthors && props.typingAuthors.length > 0 && (
-    <div className="react-chat-ui__is-typing__container" style={styles.container}>
+    <div className="react-bell-chat__is-typing__container" style={styles.container}>
       {props.typingAuthors.map(a => a.name).join(', ').replace(/,(?!.*,)/gmi, ' and') + (props.typingAuthors.length === 1 ? ' is ' : ' are ') + 'typing'}
     </div>
   );

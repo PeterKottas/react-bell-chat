@@ -29,7 +29,7 @@ const LastSeenAvatar: React.SFC<LastSeenAvatarProps> = props => props.author && 
       ...styles.container,
       ...props.containerStyle
     }}
-    className="react-chat-ui__last-seen-avatar"
+    className="react-bell-chat__last-seen-avatar"
   >
     <span style={{pointerEvents: 'none'}}>{props.author.name[0].toUpperCase()}</span>
   </div>

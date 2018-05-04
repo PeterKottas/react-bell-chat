@@ -1,6 +1,6 @@
 ## Message
 
-The `Message` plain object is the standard object for handling message data in `react-chat-ui`.
+The `Message` plain object is the standard object for handling message data in `react-bell-chat`.
 
 #### Constructor
 

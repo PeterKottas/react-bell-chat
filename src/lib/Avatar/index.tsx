@@ -31,7 +31,7 @@ const Avatar: React.SFC<AvatarProps> = props => props.author && (
       ...props.containerStyle
     }}
     title={props.author.name}
-    className="react-chat-ui__avatar"
+    className="react-bell-chat__avatar"
   >
     <span style={{ pointerEvents: 'none' }}>{props.author.name.split(' ').map(part => part[0]).join('').toUpperCase().substr(0, 3)}</span>
   </div>

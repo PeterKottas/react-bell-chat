@@ -209,7 +209,7 @@ export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedSta
   render() {
     return (
       <div
-        id={'react-chat-ui__chat-panel ' + (this.props.className ? this.props.className : '')}
+        id={'react-bell-chat__chat-panel ' + (this.props.className ? this.props.className : '')}
         style={{
           ...styles.chatPanel
         }}
@@ -231,7 +231,7 @@ export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedSta
               ...(this.props.showRecipientLastSeenMessage && styles.showRecipientLastSeenMessageChatMessagesStyle),
               ...(this.props.showRecipientLastSeenMessage && this.props.showRecipientLastSeenMessageChatMessagesStyle),
             }}
-            className="react-chat-ui__chat-messages"
+            className="react-bell-chat__chat-messages"
           >
             {<this.props.customLoadingMessages isVisible={this.props.showLoadingMessages || this.state.isLoadingMessages} />}
             {this.renderMessages(this.props.messages)}

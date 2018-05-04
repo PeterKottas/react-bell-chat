@@ -22,7 +22,7 @@ bubbleStyles={{
 
 ```javascript
 import React from 'react';
-import { ChatBubble, Message } from 'react-chat-ui';
+import { ChatBubble, Message } from 'react-bell-chat';
 
 class MyChatBubble extends React.Component {
   render() {
