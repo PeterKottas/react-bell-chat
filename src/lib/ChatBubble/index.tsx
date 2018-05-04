@@ -6,9 +6,13 @@ import { LastSeenAvatarProps } from './../LastSeenAvatar';
 
 const defaultBubbleStyles: ChatBubbleStyles = {
   userBubble: {},
+  recipientBubble: {},
   chatBubble: {},
   text: {},
-  createdOn: {}
+  createdOn: {},
+  recipientCreatedOn: {},
+  loadingSpinnerColor: 'rgba(255, 255, 255, 0.55)',
+  isSendIconColor: '#cddc39'
 };
 
 export interface ChatBubbleStyles {
@@ -18,6 +22,8 @@ export interface ChatBubbleStyles {
   text?: React.CSSProperties;
   createdOn?: React.CSSProperties;
   recipientCreatedOn?: React.CSSProperties;
+  loadingSpinnerColor?: string;
+  isSendIconColor?: string;
 }
 
 export interface ChatBubbleProps {
@@ -32,8 +38,6 @@ export interface ChatBubbleProps {
   lastSeenByAuthors?: Author[];
   showRecipientLastSeenMessage?: boolean;
   customLastSeenAvatar?: (props: LastSeenAvatarProps) => JSX.Element;
-  loadingSpinnerColor?: string;
-  isSendIconColor?: string;
 }
 
 export interface ChatBubbleState {
@@ -41,11 +45,6 @@ export interface ChatBubbleState {
 }
 
 export default class ChatBubble extends React.Component<ChatBubbleProps, ChatBubbleState> {
-  public static defaultProps = {
-    loadingSpinnerColor: 'rgba(255, 255, 255, 0.55)',
-    isSendIconColor: '#cddc39'
-  };
-
   constructor(props: ChatBubbleProps) {
     super(props);
     this.state = {
@@ -112,7 +111,7 @@ export default class ChatBubble extends React.Component<ChatBubbleProps, ChatBub
                   style={{ background: 'none' }}
                 >
                   <path
-                    fill={this.props.isSendIconColor}
+                    fill={bubbleStyles.isSendIconColor ? bubbleStyles.isSendIconColor : defaultBubbleStyles.isSendIconColor}
                     {/* tslint:disable-next-line:max-line-length*/...{}}
                     d="M9,1.7L8.6,1.4C8.5,1.3,8.3,1.3,8.2,1.4L3.9,7C3.8,7.1,3.6,7.1,3.5,7c0,0,0,0,0,0L1.7,5.3c-0.1-0.1-0.3-0.1-0.4,0L1,5.6 C0.9,5.7,0.9,5.9,1,6l2.6,2.6c0.1,0.1,0.3,0.1,0.4,0L9,2.1C9.1,2,9.1,1.8,9,1.7z"
                   />
@@ -127,7 +126,12 @@ export default class ChatBubble extends React.Component<ChatBubbleProps, ChatBub
                   className="lds-eclipse"
                   style={{ background: 'none' }}
                 >
-                  <path stroke="none" d="M10 50A40 40 0 0 0 90 50A40 45 0 0 1 10 50" fill={this.props.loadingSpinnerColor} transform="rotate(78 50 52.5)">
+                  <path 
+                    stroke="none" 
+                    d="M10 50A40 40 0 0 0 90 50A40 45 0 0 1 10 50" 
+                    fill={bubbleStyles.loadingSpinnerColor ? bubbleStyles.loadingSpinnerColor : defaultBubbleStyles.loadingSpinnerColor}
+                    transform="rotate(78 50 52.5)"
+                  >
                     <animateTransform
                       attributeName="transform"
                       type="rotate"
