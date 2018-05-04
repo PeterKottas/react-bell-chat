@@ -4,6 +4,10 @@
 
 A library of React components for building chat UIs.
 
+# DEMO
+
+![Live demo](https://peterkottas.github.io/react-chat-ui/)
+
 [![NPM](https://nodei.co/npm/react-chat-ui.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/react-chat-ui/)
 
 ## Features
@@ -95,11 +99,6 @@ Contributions are always welcomed and encouraged. If you don't want to write a f
 
 ## Support
 
-If you'd like to support my development of `react-chat-ui`, you can donate via Litecoin or Etherium. But I also love when I get a shout-out on Twitter❤️
-
-* LTC: `LYExBx4bwSpAju6YpMXBLBCYVDvWV6n8fz`
-* ETH: `0xf9bf1a68732b1314f28050addd3ed13f2a187d9d`
-
 ## TODO
 
 * documentation
@@ -109,5 +108,5 @@ If you'd like to support my development of `react-chat-ui`, you can donate via L
 ## Development
 
 ```sh
-npm run dev
+npm run start
 ```
