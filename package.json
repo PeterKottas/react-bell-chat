@@ -1,8 +1,8 @@
 {
   "name": "react-bell-chat",
-  "version": "0.3.0",
+  "version": "1.0.0",
   "description": "A library of React components for building chat UIs",
-  "repository": "https://github.com/brandonmowat/react-bell-chat",
+  "repository": "https://github.com/PeterKottas/react-bell-chat",
   "main": "./lib/index.js",
   "typings": "src/lib/index.d.ts",
   "scripts": {
@@ -11,8 +11,15 @@
     "build:lib": "webpack --config ./webpack/webpack.config.js && webpack --config ./webpack/webpack.config.min.js",
     "build:gh-pages": "rimraf docs/ && set NODE_ENV=production && xcopy src\\demo\\dist\\index.html docs\\* /y /e /i /h && webpack --config ./webpack/webpack.config.gh-pages.js",
     "build": "npm run build:clean && npm run build:lib",
+    "build:prod": "set NODE_ENV=production && npm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-deploy": "npm run build && npm run build:gh-pages"
+    "build-deploy": "npm run build && npm run build:gh-pages",
+    "version:patch": "npm version patch",
+    "push:git": "git push --tags origin master --quiet",
+    "conventional-github-releaser": "conventional-github-releaser -p angular",
+    "commit:build": "git add . && git commit -m \"Deploy commit\" --quiet && npm run push:git || true",
+    "create:patch": "npm run version:patch && npm run push:git",
+    "deploy": ".env.bat && npm run build:gh-pages && npm run build:prod && npm run commit:build && npm publish && npm run conventional-github-releaser -p angular && npm run create:patch"
   },
   "keywords": [
     "react",
@@ -22,8 +29,8 @@
     "ui",
     "messenger"
   ],
-  "author": "Brandon Mowat",
-  "license": "ISC",
+  "author": "Peter Kottas",
+  "license": "MIT",
   "dependencies": {},
   "peerDependencies": {
     "prop-types": "*",

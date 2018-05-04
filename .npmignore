@@ -1,4 +1,6 @@
-src
-temp
-demo
-*.DS_Store
+/webpack
+/docs
+/docs/demo
+.env.bat
+/.vs
+/.vscode
