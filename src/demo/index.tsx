@@ -178,7 +178,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
         <h1 className="text-center">react-chat-ui</h1>
         <p className="text-center">
           <a
-            href="https://github.com/brandonmowat/react-chat-ui"
+            href="https://github.com/PeterKottas/react-chat-ui"
             target="_blank"
           >
             Github

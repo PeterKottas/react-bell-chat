@@ -1363,7 +1363,7 @@ var Chat = /** @class */ (function (_super) {
         return (React.createElement("div", { className: "container" },
             React.createElement("h1", { className: "text-center" }, "react-chat-ui"),
             React.createElement("p", { className: "text-center" },
-                React.createElement("a", { href: "https://github.com/brandonmowat/react-chat-ui", target: "_blank" }, "Github")),
+                React.createElement("a", { href: "https://github.com/PeterKottas/react-chat-ui", target: "_blank" }, "Github")),
             React.createElement("div", { className: "install" },
                 React.createElement("code", null, "npm i -S react-chat-ui")),
             React.createElement("div", { className: "chatfeed-wrapper" },
