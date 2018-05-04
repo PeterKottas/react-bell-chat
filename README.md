@@ -1,6 +1,4 @@
-![react-bell-chat logo](https://i.imgur.com/YhPrFWw.png)
-
-# 🙊 react-bell-chat
+# :bell: react-bell-chat
 
 A library of React components for building chat UIs.
 
