@@ -1022,7 +1022,10 @@ var ChatScrollArea = /** @class */ (function (_super) {
                         :
                             scrollContainer.scrollTop = top); },
                     scrolledToBottom: function () { return _this.scrollContainer.clientHeight + _this.scrollContainer.scrollTop === _this.scrollContainer.scrollHeight; },
-                    scrolledToLoadThreshold: function () { return _this.scrollContainer && _this.scrollContainer.scrollTop <= _this.props.loadOldMessagesThreshold; }
+                    scrolledToLoadThreshold: function () { return _this.scrollContainer && _this.scrollContainer.scrollTop <= _this.props.loadOldMessagesThreshold; },
+                    scrollTop: function () { return _this.scrollContainer && _this.scrollContainer.scrollTop; },
+                    scrollHeight: function () { return _this.scrollContainer && _this.scrollContainer.scrollHeight; },
+                    clientHeight: function () { return _this.scrollContainer && _this.scrollContainer.clientHeight; },
                 });
             }, className: "react-bell-chat__chat-history", style: __assign({}, styles.chatHistory, (this.props.maxHeight !== undefined ? { maxHeight: this.props.maxHeight } : {}), (this.props.minHeight !== undefined ? { minHeight: this.props.minHeight } : {}), this.props.containerStyles), onScroll: function (e) { return (_this.scrollContainer && _this.scrollContainer.scrollTop <= _this.props.loadOldMessagesThreshold) && _this.props.onLoadOldMessages(); } }, this.props.children));
     };
@@ -1378,12 +1381,12 @@ var Chat = /** @class */ (function (_super) {
                     // tslint:disable-next-line:no-console
                     onLoadOldMessages: function () { return new Promise(function (resolve) { return setTimeout(function () {
                         _this.setState(function (previousState) { return ({
-                            messages: [{
-                                    id: Number(new Date()),
-                                    createdOn: new Date(2017, 1, 1),
-                                    message: 'Old message',
-                                    authorId: Math.round(Math.random() + 1)
-                                }].concat(previousState.messages)
+                            messages: (new Array(10).fill(1)).map(function (e, i) { return ({
+                                id: Number(new Date()),
+                                createdOn: new Date(2017, 1, 1),
+                                message: 'Old message ' + (i + 1).toString(),
+                                authorId: Math.round(Math.random() + 1)
+                            }); }).concat(previousState.messages)
                         }); }, function () { return resolve(); });
                     }, 1000); }); }, hasOldMessages: this.state.hasOldMessages }),
                 React.createElement("form", { onSubmit: function (e) { return _this.onMessageSubmit(e); } },
@@ -20313,16 +20316,21 @@ var ChatFeed = /** @class */ (function (_super) {
     };
     ChatFeed.prototype.getSnapshotBeforeUpdate = function (prevProps, prevState) {
         var wasScrolledToBottom = this.scrollApi && this.scrollApi.scrolledToBottom();
-        if (wasScrolledToBottom) {
-            return {
-                wasScrolledToBottom: wasScrolledToBottom
-            };
-        }
-        return null;
+        var scrollHeight = this.scrollApi && this.scrollApi.scrollHeight();
+        var clientHeight = this.scrollApi && this.scrollApi.clientHeight();
+        return {
+            wasScrolledToBottom: wasScrolledToBottom,
+            scrollHeight: scrollHeight,
+            clientHeight: clientHeight
+        };
     };
     ChatFeed.prototype.componentDidUpdate = function (prevProps, prevState, snapshot) {
         if (this.props.messages.length !== prevProps.messages.length && snapshot && snapshot.wasScrolledToBottom) {
             this.scrollApi.scrollToBottom();
+        }
+        else if (this.props.messages.length !== prevProps.messages.length && snapshot) {
+            var scrollHeight = this.scrollApi && this.scrollApi.scrollHeight();
+            this.scrollApi.scrollTo(scrollHeight - snapshot.scrollHeight);
         }
     };
     ChatFeed.prototype.shallowDiffers = function (a, b) {
