@@ -1021,9 +1021,10 @@ var ChatScrollArea = /** @class */ (function (_super) {
                         })
                         :
                             scrollContainer.scrollTop = top); },
-                    scrolledToBottom: function () { return _this.scrollContainer.clientHeight + _this.scrollContainer.scrollTop === _this.scrollContainer.scrollHeight; }
+                    scrolledToBottom: function () { return _this.scrollContainer.clientHeight + _this.scrollContainer.scrollTop === _this.scrollContainer.scrollHeight; },
+                    scrolledToLoadThreshold: function () { return _this.scrollContainer && _this.scrollContainer.scrollTop <= _this.props.loadOldMessagesThreshold; }
                 });
-            }, className: "react-bell-chat__chat-history", style: __assign({}, styles.chatHistory, (this.props.maxHeight !== undefined ? { maxHeight: this.props.maxHeight } : {}), (this.props.minHeight !== undefined ? { minHeight: this.props.minHeight } : {}), this.props.containerStyles), onScroll: function (e) { return _this.scrollContainer && _this.scrollContainer.scrollTop <= _this.props.loadOldMessagesThreshold && _this.props.onLoadOldMessages(); } }, this.props.children));
+            }, className: "react-bell-chat__chat-history", style: __assign({}, styles.chatHistory, (this.props.maxHeight !== undefined ? { maxHeight: this.props.maxHeight } : {}), (this.props.minHeight !== undefined ? { minHeight: this.props.minHeight } : {}), this.props.containerStyles), onScroll: function (e) { return (_this.scrollContainer && _this.scrollContainer.scrollTop <= _this.props.loadOldMessagesThreshold) && _this.props.onLoadOldMessages(); } }, this.props.children));
     };
     return ChatScrollArea;
 }(React.Component));
@@ -20415,7 +20416,9 @@ var ChatFeed = /** @class */ (function (_super) {
                                 _this.setState({
                                     isLoadingMessages: false,
                                 }, function () {
-                                    _this.scrollApi.scrollTo(_this.props.loadOldMessagesThreshold + 1);
+                                    if (_this.scrollApi.scrolledToLoadThreshold()) {
+                                        _this.scrollApi.scrollTo(_this.props.loadOldMessagesThreshold + 1);
+                                    }
                                     resolve();
                                 });
                             })];
