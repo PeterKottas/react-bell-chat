@@ -141,6 +141,7 @@ interface ChatScrollAreaApi {
   scrollToBottom: (behavior?: ScrollBehavior) => void;
   scrollTo: (top: number) => void;
   scrolledToBottom: () => boolean; // Check if we are scrolled to bottom
+  scrolledToLoadThreshold: () => boolean; // Check if we are scrolled to threshold where we need to load messages
 }
 ```
 

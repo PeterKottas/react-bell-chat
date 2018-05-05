@@ -257,7 +257,9 @@ export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedSta
           this.setState({
             isLoadingMessages: false,
           }, () => {
-            this.scrollApi.scrollTo(this.props.loadOldMessagesThreshold + 1);
+            if (this.scrollApi.scrolledToLoadThreshold()) {
+              this.scrollApi.scrollTo(this.props.loadOldMessagesThreshold + 1);
+            }
             resolve();
           });
         });
