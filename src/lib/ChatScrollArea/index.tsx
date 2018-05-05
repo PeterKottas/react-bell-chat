@@ -21,6 +21,9 @@ export interface ChatScrollAreaProps {
 export interface ChatScrollAreaApi {
   scrollToBottom: (behavior?: ScrollBehavior) => void;
   scrollTo: (top: number) => void;
+  scrollTop: () => number;
+  scrollHeight: () => number;
+  clientHeight: () => number;
   scrolledToBottom: () => boolean;
   scrolledToLoadThreshold: () => boolean; // Check if we are scrolled to threshold where we need to load messages
 }
@@ -50,7 +53,10 @@ export class ChatScrollArea extends React.Component<ChatScrollAreaProps> {
               :
               scrollContainer.scrollTop = top),
             scrolledToBottom: () => this.scrollContainer.clientHeight + this.scrollContainer.scrollTop === this.scrollContainer.scrollHeight,
-            scrolledToLoadThreshold: () => this.scrollContainer && this.scrollContainer.scrollTop <= this.props.loadOldMessagesThreshold
+            scrolledToLoadThreshold: () => this.scrollContainer && this.scrollContainer.scrollTop <= this.props.loadOldMessagesThreshold,
+            scrollTop: () => this.scrollContainer && this.scrollContainer.scrollTop,
+            scrollHeight: () => this.scrollContainer && this.scrollContainer.scrollHeight,
+            clientHeight: () => this.scrollContainer && this.scrollContainer.clientHeight,
           });
         }}
         className="react-bell-chat__chat-history"

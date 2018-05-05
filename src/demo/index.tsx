@@ -203,12 +203,12 @@ class Chat extends React.Component<ChatProps, ChatState> {
             // tslint:disable-next-line:no-console
             onLoadOldMessages={() => new Promise(resolve => setTimeout(() => {
               this.setState(previousState => ({
-                messages: [{
+                messages: (new Array(10).fill(1)).map((e, i) => ({
                   id: Number(new Date()),
                   createdOn: new Date(2017, 1, 1),
-                  message: 'Old message',
+                  message: 'Old message ' + (i + 1).toString(),
                   authorId: Math.round(Math.random() + 1)
-                } as Message].concat(previousState.messages)
+                } as Message)).concat(previousState.messages)
               }), () => resolve());
             }, 1000))}
             hasOldMessages={this.state.hasOldMessages}

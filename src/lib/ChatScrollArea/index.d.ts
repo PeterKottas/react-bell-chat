@@ -12,6 +12,9 @@ export interface ChatScrollAreaProps {
 export interface ChatScrollAreaApi {
     scrollToBottom: (behavior?: ScrollBehavior) => void;
     scrollTo: (top: number) => void;
+    scrollTop: () => number;
+    scrollHeight: () => number;
+    clientHeight: () => number;
     scrolledToBottom: () => boolean;
     scrolledToLoadThreshold: () => boolean;
 }

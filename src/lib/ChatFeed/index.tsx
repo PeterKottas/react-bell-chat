@@ -77,6 +77,8 @@ const DefaultScrollAreaFunc = props => <ChatScrollArea {...props} />;
 
 export interface ChatFeedSnapshot {
   wasScrolledToBottom: boolean;
+  scrollHeight: number;
+  clientHeight: number;
 }
 
 // React component to render a complete chat feed
@@ -121,17 +123,22 @@ export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedSta
 
   getSnapshotBeforeUpdate(prevProps: ChatFeedProps, prevState: ChatFeedState) {
     const wasScrolledToBottom = this.scrollApi && this.scrollApi.scrolledToBottom();
-    if (wasScrolledToBottom) {
-      return {
-        wasScrolledToBottom
-      };
-    }
-    return null;
+    const scrollHeight = this.scrollApi && this.scrollApi.scrollHeight();
+    const clientHeight = this.scrollApi && this.scrollApi.clientHeight();
+
+    return {
+      wasScrolledToBottom,
+      scrollHeight,
+      clientHeight
+    };
   }
 
   componentDidUpdate(prevProps: ChatFeedProps, prevState: ChatFeedState, snapshot: ChatFeedSnapshot) {
     if (this.props.messages.length !== prevProps.messages.length && snapshot && snapshot.wasScrolledToBottom) {
       this.scrollApi.scrollToBottom();
+    } else if (this.props.messages.length !== prevProps.messages.length && snapshot) {
+      const scrollHeight = this.scrollApi && this.scrollApi.scrollHeight();
+      this.scrollApi.scrollTo(scrollHeight - snapshot.scrollHeight);
     }
   }
 

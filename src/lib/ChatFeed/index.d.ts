@@ -47,6 +47,8 @@ export interface ChatFeedApi {
 }
 export interface ChatFeedSnapshot {
     wasScrolledToBottom: boolean;
+    scrollHeight: number;
+    clientHeight: number;
 }
 export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedState> implements ChatFeedApi {
     static defaultProps: ChatFeedProps;
@@ -57,6 +59,8 @@ export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedSta
     componentDidMount(): void;
     getSnapshotBeforeUpdate(prevProps: ChatFeedProps, prevState: ChatFeedState): {
         wasScrolledToBottom: boolean;
+        scrollHeight: number;
+        clientHeight: number;
     };
     componentDidUpdate(prevProps: ChatFeedProps, prevState: ChatFeedState, snapshot: ChatFeedSnapshot): void;
     shallowDiffers(a: object, b: object): boolean;
