@@ -33,7 +33,12 @@ const Avatar: React.SFC<AvatarProps> = props => props.author && (
     title={props.author.name}
     className="react-bell-chat__avatar"
   >
-    <span style={{ pointerEvents: 'none' }}>{props.author.name.split(' ').map(part => part[0]).join('').toUpperCase().substr(0, 3)}</span>
+    <span style={{ pointerEvents: 'none' }}>{
+      props.author.avatarName ?
+        props.author.avatarName
+        :
+        props.author.name.split(' ').map(part => part[0]).join('').toUpperCase().substr(0, 3)}
+    </span>
   </div>
 );
 

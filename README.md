@@ -96,6 +96,34 @@ this.state = {
 //...
 ```
 
+Complete props for author:
+
+typescript
+```
+export interface Author {
+    id: number;
+    name: string;
+    avatarName?: string;
+    lastSeenAvatarName?: string;
+    isTyping?: boolean;
+    lastSeenMessageId?: number;
+    bgImageUrl?: number;
+}
+```
+
+Complete props for message:
+
+typescript
+```
+export interface Message {
+  id?: number;
+  authorId: number;
+  message: string;
+  createdOn?: Date;
+  isSend?: boolean;
+}
+```
+
 ## API
 
 Api is obtained as ref of the ChatFeed component. It's divided in 2 parts, feedApi and scrollApi. Ref gives you and object like this:
