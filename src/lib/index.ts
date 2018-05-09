@@ -6,6 +6,7 @@ import LastSeenAvatar, { LastSeenAvatarProps } from './LastSeenAvatar/';
 import BubbleGroup, { BubbleGroupProps } from './BubbleGroup';
 import ChatFeed, { ChatFeedProps, ChatFeedApi } from './ChatFeed/';
 import ChatInput, { ChatInputProps } from './ChatInput/';
+import SystemChatBubble from './SystemChatBubble/';
 import DateRow, { DateRowProps } from './DateRow/';
 import LoadingMessages, { LoadingMessagesProps } from './LoadingMessages/';
 import Message from './Message/';
@@ -23,6 +24,7 @@ export {
   DateRowProps,
   ChatBubble,
   ChatBubbleProps,
+  SystemChatBubble,
   BubbleGroup,
   BubbleGroupProps,
   Message,

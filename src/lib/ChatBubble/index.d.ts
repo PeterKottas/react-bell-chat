@@ -3,6 +3,8 @@ import * as React from 'react';
 import Message from '../Message';
 import { Author } from '../Author';
 import { LastSeenAvatarProps } from './../LastSeenAvatar';
+declare const defaultBubbleStyles: ChatBubbleStyles;
+export { defaultBubbleStyles };
 export interface ChatBubbleStyles {
     userBubble?: React.CSSProperties;
     recipientBubble?: React.CSSProperties;
@@ -12,6 +14,7 @@ export interface ChatBubbleStyles {
     recipientCreatedOn?: React.CSSProperties;
     loadingSpinnerColor?: string;
     isSendIconColor?: string;
+    systemChatBubbleContainerStyle?: React.CSSProperties;
 }
 export interface ChatBubbleProps {
     message: Message;

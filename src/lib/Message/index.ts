@@ -5,7 +5,7 @@
 
 export interface Message {
   id?: number;
-  authorId: number;
+  authorId?: number;
   message: string;
   createdOn?: Date;
   isSend?: boolean;

@@ -306,6 +306,22 @@ class Chat extends React.Component<ChatProps, ChatState> {
             >
               Simulate message
             </button>
+            <button
+              style={{
+                ...styles.button,
+              }}
+              onClick={() => {
+                this.setState({
+                  messages: this.state.messages.concat([{
+                    id: Number(new Date()),
+                    createdOn: new Date(),
+                    message: 'System message',
+                  }])
+                });
+              }}
+            >
+              System message
+            </button>
           </div>
           <div
             style={{ display: 'flex', justifyContent: 'space-around', marginTop: 10 }}

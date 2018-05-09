@@ -30,6 +30,7 @@ export interface ChatFeedProps {
     showIsTypingChatMessagesStyle?: React.CSSProperties;
     customLoadingMessages?: (props: LoadingMessagesProps) => JSX.Element;
     customChatBubble?: (props: ChatBubbleProps) => JSX.Element;
+    customSystemChatBubble?: (props: ChatBubbleProps) => JSX.Element;
     customAvatar?: (props: AvatarProps) => JSX.Element;
     customScrollArea?: (props: ChatScrollAreaProps) => JSX.Element;
     customIsTyping?: (props: ChatScrollAreaProps) => JSX.Element;

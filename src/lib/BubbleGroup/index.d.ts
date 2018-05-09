@@ -16,6 +16,7 @@ export interface BubbleGroupProps {
     customAvatar?: (props: AvatarProps) => JSX.Element;
     customLastSeenAvatar?: (props: LastSeenAvatarProps) => JSX.Element;
     customChatBubble?: (props: ChatBubbleProps) => JSX.Element;
+    customSystemChatBubble?: (props: ChatBubbleProps) => JSX.Element;
     showRecipientLastSeenMessage?: boolean;
 }
 export default class BubbleGroup extends React.Component<BubbleGroupProps> {

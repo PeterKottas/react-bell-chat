@@ -1,5 +1,6 @@
 import * as React from 'react';
 import DefaultChatBubble, { ChatBubbleProps, ChatBubbleStyles } from '../ChatBubble';
+import DefaultSystemChatBubble from '../SystemChatBubble';
 import styles from './styles';
 import { Message } from '../';
 import { Author } from '../Author';
@@ -17,8 +18,9 @@ export interface BubbleGroupProps {
   customAvatar?: (props: AvatarProps) => JSX.Element;
   customLastSeenAvatar?: (props: LastSeenAvatarProps) => JSX.Element;
   customChatBubble?: (props: ChatBubbleProps) => JSX.Element;
+  customSystemChatBubble?: (props: ChatBubbleProps) => JSX.Element;
   showRecipientLastSeenMessage?: boolean;
-};
+}
 
 export default class BubbleGroup extends React.Component<BubbleGroupProps> {
   public static defaultProps: BubbleGroupProps = {
@@ -26,7 +28,7 @@ export default class BubbleGroup extends React.Component<BubbleGroupProps> {
     author: undefined,
     customAvatar: Avatar,
     showRecipientLastSeenMessage: false
-  }
+  };
 
   constructor(props: BubbleGroupProps) {
     super(props);
@@ -38,25 +40,41 @@ export default class BubbleGroup extends React.Component<BubbleGroupProps> {
       bubbleStyles,
       showRecipientAvatar,
       customChatBubble,
+      customSystemChatBubble,
+      showRecipientLastSeenMessage,
+      customLastSeenAvatar
     } = this.props;
     const ChatBubble = customChatBubble || DefaultChatBubble;
+    const SystemChatBubble = customSystemChatBubble || DefaultSystemChatBubble;
 
-    const messageNodes = messages.map((message, i) => (
-      <ChatBubble
-        key={i}
-        yourAuthorId={this.props.yourAuthorId}
-        author={author}
-        message={message}
-        bubblesCentered={bubblesCentered}
-        bubbleStyles={bubbleStyles}
-        isFirstInGroup={i === 0}
-        isLastInGroup={i === messages.length - 1 && messages.length > 1}
-        isCenterInGroup={i < messages.length - 1 && messages.length > 1}
-        lastSeenByAuthors={this.props.authors && this.props.authors.filter(a => a.lastSeenMessageId !== undefined && a.lastSeenMessageId === message.id)}
-        showRecipientLastSeenMessage={this.props.showRecipientLastSeenMessage}
-        customLastSeenAvatar={this.props.customLastSeenAvatar}
-      />
-    ));
+    const messageNodes = messages.map((message, i) => {
+      const props = {
+        key: i,
+        yourAuthorId: this.props.yourAuthorId,
+        author,
+        message,
+        bubblesCentered,
+        bubbleStyles,
+        isFirstInGroup: i === 0,
+        isLastInGroup: i === messages.length - 1 && messages.length > 1,
+        isCenterInGroup: i < messages.length - 1 && messages.length > 1,
+        lastSeenByAuthors: this.props.authors && this.props.authors.filter(a => a.lastSeenMessageId !== undefined && a.lastSeenMessageId === message.id),
+        showRecipientLastSeenMessage,
+        customLastSeenAvatar
+      };
+      return message.authorId !== undefined ?
+        (
+          <ChatBubble
+            {...props}
+          />
+        )
+        :
+        (
+          <SystemChatBubble
+            {...props}
+          />
+        );
+    });
 
     const youAreAuthor = author && this.props.yourAuthorId === author.id;
 

@@ -117,7 +117,7 @@ typescript
 ```
 export interface Message {
   id?: number;
-  authorId: number;
+  authorId?: number; // If undefined, message is considered to be "System message"
   message: string;
   createdOn?: Date;
   isSend?: boolean;
@@ -180,6 +180,7 @@ export interface ChatFeedProps {
   // Custom components
   customLoadingMessages?: (props: LoadingMessagesProps) => JSX.Element;
   customChatBubble?: (props: ChatBubbleProps) => JSX.Element;
+  customSystemChatBubble?: (props: ChatBubbleProps) => JSX.Element;
   customAvatar?: (props: AvatarProps) => JSX.Element;
   customScrollArea?: (props: ChatScrollAreaProps) => JSX.Element;
   customIsTyping?: (props: ChatScrollAreaProps) => JSX.Element;
@@ -199,9 +200,9 @@ Most of the UI is customizable via injecting custom components. These are pure c
 
 ## FAQ
 
-Q: My chat is scrolling up/down automatically everytime I use setState on parent component.
+Q: My chat is scrolling up/down automatically every time I use setState on parent component.
 
-A: Make sure to provide const expresions for custom components. Not inline functions.
+A: Make sure to provide const expressions for custom components. Not inline functions.
 
 ## Contributing 🔧
 

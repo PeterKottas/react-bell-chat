@@ -16,6 +16,7 @@ import LastSeenAvatar, { LastSeenAvatarProps } from '../LastSeenAvatar';
 import { groupBy } from '../utils/utils';
 import DateRow, { DateRowProps } from '../DateRow';
 import LoadingMessages, { LoadingMessagesProps } from '../LoadingMessages';
+import SystemChatBubble from '../SystemChatBubble';
 
 // Model for ChatFeed props.
 
@@ -51,6 +52,7 @@ export interface ChatFeedProps {
   // Custom components
   customLoadingMessages?: (props: LoadingMessagesProps) => JSX.Element;
   customChatBubble?: (props: ChatBubbleProps) => JSX.Element;
+  customSystemChatBubble?: (props: ChatBubbleProps) => JSX.Element;
   customAvatar?: (props: AvatarProps) => JSX.Element;
   customScrollArea?: (props: ChatScrollAreaProps) => JSX.Element;
   customIsTyping?: (props: ChatScrollAreaProps) => JSX.Element;
@@ -93,7 +95,8 @@ export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedSta
     customDateRow: DateRow,
     customLoadingMessages: LoadingMessages,
     yourAuthorId: 0,
-    loadOldMessagesThreshold: 50
+    loadOldMessagesThreshold: 50,
+    customSystemChatBubble: SystemChatBubble
   };
 
   public scrollApi: ChatScrollAreaApi;
@@ -193,6 +196,7 @@ export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedSta
               showRecipientLastSeenMessage={this.props.showRecipientLastSeenMessage}
               customAvatar={this.props.customAvatar}
               customLastSeenAvatar={this.props.customLastSeenAvatar}
+              customSystemChatBubble={this.props.customSystemChatBubble}
             />
           );
         }

@@ -12,9 +12,10 @@ const defaultBubbleStyles: ChatBubbleStyles = {
   createdOn: {},
   recipientCreatedOn: {},
   loadingSpinnerColor: 'rgba(255, 255, 255, 0.55)',
-  isSendIconColor: '#cddc39'
+  isSendIconColor: '#cddc39',
+  systemChatBubbleContainerStyle: {}
 };
-
+export { defaultBubbleStyles };
 export interface ChatBubbleStyles {
   userBubble?: React.CSSProperties;
   recipientBubble?: React.CSSProperties;
@@ -24,6 +25,7 @@ export interface ChatBubbleStyles {
   recipientCreatedOn?: React.CSSProperties;
   loadingSpinnerColor?: string;
   isSendIconColor?: string;
+  systemChatBubbleContainerStyle?: React.CSSProperties;
 }
 
 export interface ChatBubbleProps {
@@ -79,6 +81,7 @@ export default class ChatBubble extends React.Component<ChatBubbleProps, ChatBub
         style={{
           ...styles.chatBubbleWrapper,
         }}
+        className="react-bell-chat__chat-bubble"
       >
         <div style={chatBubbleStyles}>
           <p style={{ ...styles.p, ...text }}>{this.props.message.message}</p>
@@ -126,9 +129,9 @@ export default class ChatBubble extends React.Component<ChatBubbleProps, ChatBub
                   className="lds-eclipse"
                   style={{ background: 'none' }}
                 >
-                  <path 
-                    stroke="none" 
-                    d="M10 50A40 40 0 0 0 90 50A40 45 0 0 1 10 50" 
+                  <path
+                    stroke="none"
+                    d="M10 50A40 40 0 0 0 90 50A40 45 0 0 1 10 50"
                     fill={bubbleStyles.loadingSpinnerColor ? bubbleStyles.loadingSpinnerColor : defaultBubbleStyles.loadingSpinnerColor}
                     transform="rotate(78 50 52.5)"
                   >
