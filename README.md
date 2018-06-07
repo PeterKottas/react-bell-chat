@@ -10,7 +10,7 @@ A library of React components for building chat UIs.
 
 ## Features
 
-* Chat like scroll behaviour (eg. automatic scroll to bottom)
+* Chat like scroll behavior (eg. automatic scroll to bottom)
 * Load more messages on scrolling to the top (with custom threshold)
 * SUPER easy to use
 * Customize anything
