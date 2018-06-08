@@ -139,7 +139,7 @@ export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedSta
   componentDidUpdate(prevProps: ChatFeedProps, prevState: ChatFeedState, snapshot: ChatFeedSnapshot) {
     if (this.props.messages.length !== prevProps.messages.length && snapshot && snapshot.wasScrolledToBottom) {
       this.scrollApi.scrollToBottom();
-    } else if (this.props.messages.length !== prevProps.messages.length && snapshot) {
+    } else if (this.props.messages.length !== prevProps.messages.length && snapshot && prevState.isLoadingMessages) {
       const scrollHeight = this.scrollApi && this.scrollApi.scrollHeight();
       this.scrollApi.scrollTo(scrollHeight - snapshot.scrollHeight);
     }
