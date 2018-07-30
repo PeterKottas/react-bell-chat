@@ -20228,7 +20228,8 @@ var styles = {
         fontSize: 16,
         fontWeight: 300,
         margin: 0,
-        marginRight: 30
+        marginRight: 30,
+        whiteSpace: 'pre'
     },
     firstChatBubbleInGroup: {
         borderTopRightRadius: 0
