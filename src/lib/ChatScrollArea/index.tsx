@@ -66,7 +66,7 @@ export class ChatScrollArea extends React.Component<ChatScrollAreaProps> {
           ...(this.props.minHeight !== undefined ? { minHeight: this.props.minHeight } : {}),
           ...this.props.containerStyles
         }}
-        onScroll={e => (this.scrollContainer && this.scrollContainer.scrollTop <= this.props.loadOldMessagesThreshold) && this.props.onLoadOldMessages()}
+        onScroll={() => (this.scrollContainer && this.scrollContainer.scrollTop <= this.props.loadOldMessagesThreshold) && this.props.onLoadOldMessages()}
       >
         {this.props.children}
       </div>

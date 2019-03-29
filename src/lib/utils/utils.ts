@@ -2,7 +2,7 @@ const groupBy = <T>(array: Array<T>, groupingKeyFn: (item: T) => string): { [key
   if (typeof groupingKeyFn !== 'function') {
     throw new Error("groupBy take a function as only parameter");
   }
-  return array.reduce((result, item) => {
+  return array.reduce((result: any, item: any) => {
     let key = groupingKeyFn(item);
     if (!result[key])
       result[key] = [];

@@ -2,7 +2,7 @@ import * as React from 'react';
 import DefaultChatBubble, { ChatBubbleProps, ChatBubbleStyles } from '../ChatBubble';
 import DefaultSystemChatBubble from '../SystemChatBubble';
 import styles from './styles';
-import { Message } from '../';
+import { Message, IsTypingProps } from '../';
 import { Author } from '../Author';
 import Avatar, { AvatarProps } from '../Avatar';
 import { LastSeenAvatarProps } from '../LastSeenAvatar';
@@ -18,6 +18,7 @@ export interface BubbleGroupProps {
   customAvatar?: (props: AvatarProps) => JSX.Element;
   customLastSeenAvatar?: (props: LastSeenAvatarProps) => JSX.Element;
   customChatBubble?: (props: ChatBubbleProps) => JSX.Element;
+  customIsTyping?: (props: IsTypingProps) => JSX.Element;
   customSystemChatBubble?: (props: ChatBubbleProps) => JSX.Element;
   showRecipientLastSeenMessage?: boolean;
 }
@@ -42,7 +43,8 @@ export default class BubbleGroup extends React.Component<BubbleGroupProps> {
       customChatBubble,
       customSystemChatBubble,
       showRecipientLastSeenMessage,
-      customLastSeenAvatar
+      customLastSeenAvatar,
+      customIsTyping,
     } = this.props;
     const ChatBubble = customChatBubble || DefaultChatBubble;
     const SystemChatBubble = customSystemChatBubble || DefaultSystemChatBubble;
@@ -60,7 +62,8 @@ export default class BubbleGroup extends React.Component<BubbleGroupProps> {
         isCenterInGroup: i < messages.length - 1 && messages.length > 1,
         lastSeenByAuthors: this.props.authors && this.props.authors.filter(a => a.lastSeenMessageId !== undefined && a.lastSeenMessageId === message.id),
         showRecipientLastSeenMessage,
-        customLastSeenAvatar
+        customLastSeenAvatar,
+        customIsTyping
       };
       return message.authorId !== undefined ?
         (

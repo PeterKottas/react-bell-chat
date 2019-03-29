@@ -10,7 +10,7 @@ import styles from './styles';
 import { Author } from '../Author';
 import { ChatBubbleStyles } from '../ChatBubble/';
 import Avatar, { AvatarProps } from '../Avatar';
-import IsTyping from '../IsTyping';
+import IsTyping, { IsTypingProps } from '../IsTyping';
 import ChatScrollArea, { ChatScrollAreaProps, ChatScrollAreaApi } from '../ChatScrollArea';
 import LastSeenAvatar, { LastSeenAvatarProps } from '../LastSeenAvatar';
 import { groupBy } from '../utils/utils';
@@ -55,7 +55,7 @@ export interface ChatFeedProps {
   customSystemChatBubble?: (props: ChatBubbleProps) => JSX.Element;
   customAvatar?: (props: AvatarProps) => JSX.Element;
   customScrollArea?: (props: ChatScrollAreaProps) => JSX.Element;
-  customIsTyping?: (props: ChatScrollAreaProps) => JSX.Element;
+  customIsTyping?: (props: IsTypingProps) => JSX.Element;
   customLastSeenAvatar?: (props: LastSeenAvatarProps) => JSX.Element;
   customDateRow?: (props: DateRowProps) => JSX.Element;
 
@@ -74,8 +74,9 @@ export interface ChatFeedApi {
   scrollApi: ChatScrollAreaApi;
 }
 
-const DefaultChatBubbleFunc = props => <DefaultChatBubble {...props} />;
-const DefaultScrollAreaFunc = props => <ChatScrollArea {...props} />;
+const DefaultChatBubbleFunc = (props: any) => <DefaultChatBubble {...props} />;
+const DefaultScrollAreaFunc = (props: any) => <ChatScrollArea {...props} />;
+const DefaultIsTyping = (props: any) => <IsTyping {...props} />;
 
 export interface ChatFeedSnapshot {
   wasScrolledToBottom: boolean;
@@ -93,6 +94,7 @@ export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedSta
     customScrollArea: DefaultScrollAreaFunc,
     customLastSeenAvatar: LastSeenAvatar,
     customDateRow: DateRow,
+    customIsTyping: DefaultIsTyping,
     customLoadingMessages: LoadingMessages,
     yourAuthorId: 0,
     loadOldMessagesThreshold: 50,
@@ -122,9 +124,12 @@ export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedSta
 
   componentDidMount() {
     this.scrollApi && this.scrollApi.scrollToBottom();
+    if (this.onLoadOldMessages && this.props.hasOldMessages) {
+      this.onLoadOldMessages();
+    }
   }
 
-  getSnapshotBeforeUpdate(prevProps: ChatFeedProps, prevState: ChatFeedState) {
+  getSnapshotBeforeUpdate() {
     const wasScrolledToBottom = this.scrollApi && this.scrollApi.scrolledToBottom();
     const scrollHeight = this.scrollApi && this.scrollApi.scrollHeight();
     const clientHeight = this.scrollApi && this.scrollApi.clientHeight();
@@ -145,7 +150,7 @@ export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedSta
     }
   }
 
-  shallowDiffers(a: object, b: object) {
+  shallowDiffers(a: any, b: any) {
     for (let i in a) {
       if (!(i in b)) {
         return true;
@@ -170,7 +175,7 @@ export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedSta
     let messageNodes: JSX.Element[] = [];
     let jsxKey = 0;
     Object.keys(groups).forEach(key => {
-      let group = [];
+      let group: Message[] = [];
       const messagesGroup = groups[key];
       if (messagesGroup[0] && messagesGroup[0].createdOn && this.props.showDateRow) {
         messageNodes.push(<this.props.customDateRow key={key} date={messagesGroup[0].createdOn} />);
@@ -195,6 +200,7 @@ export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedSta
               bubbleStyles={bubbleStyles}
               showRecipientLastSeenMessage={this.props.showRecipientLastSeenMessage}
               customAvatar={this.props.customAvatar}
+              customIsTyping={this.props.customIsTyping}
               customLastSeenAvatar={this.props.customLastSeenAvatar}
               customSystemChatBubble={this.props.customSystemChatBubble}
             />
@@ -211,7 +217,7 @@ export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedSta
     if (!typingAuthors || typingAuthors.length === 0) {
       return null;
     }
-    return <IsTyping typingAuthors={typingAuthors} />;
+    return this.props.customIsTyping({typingAuthors});
   }
 
   /**
