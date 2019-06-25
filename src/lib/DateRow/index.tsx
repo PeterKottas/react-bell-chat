@@ -1,25 +1,36 @@
 import * as React from 'react';
 
-const styles = {
+export interface DateRowStyles {
+  container?: React.CSSProperties;
+}
+
+const dateRowStyles: DateRowStyles = {
   container: {
     textAlign: 'center',
     fontSize: 12,
     color: 'rgba(0, 0, 0, 0.55)'
-  } as React.CSSProperties,
+  },
 };
 
 export interface DateRowProps {
   date: Date;
-  containerStyles?: React.CSSProperties;
+  styles?: DateRowStyles;
 }
 
 const DateRow = (props: DateRowProps) => {
+  let { styles } = props;
+  if (!styles) {
+    styles = {};
+  }
+  const {
+    container
+  } = styles;
   return props.date && (
     <div
       className="react-bell-chat__date-row"
       style={{
-        ...styles.container,
-        ...props.containerStyles
+        ...dateRowStyles.container,
+        ...container
       }}
       title={props.date.toLocaleDateString([], { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
     >

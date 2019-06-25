@@ -1,10 +1,13 @@
 /// <reference types="react" />
 import * as React from 'react';
+export interface ChatScrollAreaStyles {
+    container?: React.CSSProperties;
+}
 export interface ChatScrollAreaProps {
     maxHeight?: string | number;
     minHeight?: string | number;
     children?: JSX.Element | JSX.Element[];
-    containerStyles?: React.CSSProperties;
+    styles?: ChatScrollAreaStyles;
     apiRef?: (api: ChatScrollAreaApi) => void;
     loadOldMessagesThreshold: number;
     onLoadOldMessages: () => Promise<void>;

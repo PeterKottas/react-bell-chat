@@ -1,11 +1,15 @@
 import * as React from 'react';
-import DefaultChatBubble, { ChatBubbleProps, ChatBubbleStyles } from '../ChatBubble';
+import DefaultChatBubble, {
+  ChatBubbleProps,
+  ChatBubbleStyles
+} from '../ChatBubble';
 import DefaultSystemChatBubble from '../SystemChatBubble';
-import styles from './styles';
+import bubbleGroupStyles, { BubbleGroupStyles } from './styles';
 import { Message } from '../';
 import { Author } from '../Author';
 import Avatar, { AvatarProps } from '../Avatar';
-import { LastSeenAvatarProps } from '../LastSeenAvatar';
+import { LastSeenAvatarProps, LastSeenAvatarStyles } from '../LastSeenAvatar';
+import { AvatarStyles } from './../Avatar/index';
 
 export interface BubbleGroupProps {
   yourAuthorId?: number;
@@ -14,7 +18,12 @@ export interface BubbleGroupProps {
   authors?: Author[];
   showRecipientAvatar?: boolean;
   bubblesCentered?: boolean;
+
+  styles?: BubbleGroupStyles;
   bubbleStyles?: ChatBubbleStyles;
+  avatarStyles?: AvatarStyles;
+  lastSeenAvatarStyles?: LastSeenAvatarStyles;
+
   customAvatar?: (props: AvatarProps) => JSX.Element;
   customLastSeenAvatar?: (props: LastSeenAvatarProps) => JSX.Element;
   customChatBubble?: (props: ChatBubbleProps) => JSX.Element;
@@ -22,7 +31,7 @@ export interface BubbleGroupProps {
   showRecipientLastSeenMessage?: boolean;
 }
 
-export default class BubbleGroup extends React.Component<BubbleGroupProps> {
+export default class BubbleGroup extends React.PureComponent<BubbleGroupProps> {
   public static defaultProps: BubbleGroupProps = {
     messages: [],
     author: undefined,
@@ -35,9 +44,20 @@ export default class BubbleGroup extends React.Component<BubbleGroupProps> {
   }
 
   renderGroup(messages: Message[], author: Author) {
+    let { styles } = this.props;
+    if (!styles) {
+      styles = {};
+    }
+    const {
+      chatBubbleWrapper,
+    } = styles;
     const {
       bubblesCentered,
+
       bubbleStyles,
+      lastSeenAvatarStyles,
+      avatarStyles,
+
       showRecipientAvatar,
       customChatBubble,
       customSystemChatBubble,
@@ -48,13 +68,13 @@ export default class BubbleGroup extends React.Component<BubbleGroupProps> {
     const SystemChatBubble = customSystemChatBubble || DefaultSystemChatBubble;
 
     const messageNodes = messages.map((message, i) => {
-      const props = {
-        key: i,
+      const props: ChatBubbleProps = {
         yourAuthorId: this.props.yourAuthorId,
+        lastSeenAvatarStyles,
         author,
         message,
         bubblesCentered,
-        bubbleStyles,
+        styles: bubbleStyles,
         isFirstInGroup: i === 0,
         isLastInGroup: i === messages.length - 1 && messages.length > 1,
         isCenterInGroup: i < messages.length - 1 && messages.length > 1,
@@ -65,12 +85,14 @@ export default class BubbleGroup extends React.Component<BubbleGroupProps> {
       return message.authorId !== undefined ?
         (
           <ChatBubble
+            key={i}
             {...props}
           />
         )
         :
         (
           <SystemChatBubble
+            key={i}
             {...props}
           />
         );
@@ -79,10 +101,13 @@ export default class BubbleGroup extends React.Component<BubbleGroupProps> {
     const youAreAuthor = author && this.props.yourAuthorId === author.id;
 
     return (
-      <div style={styles.chatBubbleWrapper}>
-        {!youAreAuthor && showRecipientAvatar && author && this.props.customAvatar &&
-          this.props.customAvatar({ author: this.props.author })
-        }
+      <div style={{...bubbleGroupStyles.chatBubbleWrapper, ...chatBubbleWrapper}}>
+        {!youAreAuthor && showRecipientAvatar && author && this.props.customAvatar && (
+          <this.props.customAvatar
+            author={this.props.author}
+            styles={avatarStyles}
+          />
+        )}
         {messageNodes}
       </div>
     );

@@ -1,22 +1,34 @@
 import * as React from 'react';
 
-const styles = {
-  containerStyles: {
+const loadingMessagesStyles: LoadingMessagesStyle = {
+  containerStyle: {
     display: 'flex',
     marginBottom: 10
   },
+  spinnerColor: 'rgb(0, 132, 255)'
 };
 
-export interface LoadingMessagesProps {
-  containerStyles?: object;
+export interface LoadingMessagesStyle {
+  containerStyle?: React.CSSProperties;
   spinnerColor?: string;
+}
+
+export interface LoadingMessagesProps {
+  styles?: LoadingMessagesStyle;
   isVisible: boolean;
 }
 
-const LoadingMessages: React.SFC<LoadingMessagesProps> = (props: LoadingMessagesProps) => {
-  const { containerStyles } = props;
+const LoadingMessages: React.SFC<LoadingMessagesProps> = props => {
+  let { styles } = props;
+  if (!styles) {
+    styles = {};
+  }
+  const {
+    containerStyle,
+    spinnerColor
+  } = styles;
   return (
-    <div className="react-bell-chat__loading-messages" style={{ ...styles.containerStyles, ...containerStyles }}>
+    <div className="react-bell-chat__loading-messages" style={{ ...loadingMessagesStyles.containerStyle, ...containerStyle }}>
       <svg
         width="40px"
         height="40px"
@@ -26,7 +38,8 @@ const LoadingMessages: React.SFC<LoadingMessagesProps> = (props: LoadingMessages
         style={{ 
           background: 'none',
           margin: 'auto', 
-          fill: props.spinnerColor, opacity: props.isVisible ? 1 : 0,
+          fill: spinnerColor ? spinnerColor : loadingMessagesStyles.spinnerColor,
+          opacity: props.isVisible ? 1 : 0,
           transition: '0.3s all ease-in-out'
         }}
       >
@@ -51,7 +64,5 @@ const LoadingMessages: React.SFC<LoadingMessagesProps> = (props: LoadingMessages
     </div>
   );
 };
-LoadingMessages.defaultProps = {
-  spinnerColor: 'rgb(0, 132, 255)'
-};
+
 export default LoadingMessages;

@@ -496,86 +496,6 @@ module.exports = emptyObject;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var React = __webpack_require__(0);
-var styles_1 = __webpack_require__(35);
-var defaultBubbleStyles = {
-    userBubble: {},
-    recipientBubble: {},
-    chatBubble: {},
-    text: {},
-    createdOn: {},
-    recipientCreatedOn: {},
-    loadingSpinnerColor: 'rgba(255, 255, 255, 0.55)',
-    isSendIconColor: '#cddc39',
-    systemChatBubbleContainerStyle: {}
-};
-exports.defaultBubbleStyles = defaultBubbleStyles;
-var ChatBubble = /** @class */ (function (_super) {
-    __extends(ChatBubble, _super);
-    function ChatBubble(props) {
-        var _this = _super.call(this, props) || this;
-        _this.state = {
-            mouseOverLastSeenContainer: false
-        };
-        return _this;
-    }
-    ChatBubble.prototype.render = function () {
-        var _this = this;
-        if (!this.props.message) {
-            return null;
-        }
-        var yourAuthorId = this.props.yourAuthorId;
-        var bubbleStyles = this.props.bubbleStyles;
-        bubbleStyles = bubbleStyles || defaultBubbleStyles;
-        var userBubble = bubbleStyles.userBubble, chatBubble = bubbleStyles.chatBubble, text = bubbleStyles.text, recipientBubble = bubbleStyles.recipientBubble;
-        var youAreAuthor = this.props.message.authorId === yourAuthorId;
-        // message.id 0 is reserved for blue
-        var chatBubbleStyles = __assign({}, styles_1.default.chatBubble, (youAreAuthor ? {} : styles_1.default.recipientChatBubble), (youAreAuthor ? styles_1.default.chatBubbleOrientationNormal : styles_1.default.recipientChatBubbleOrientationNormal), (this.props.isFirstInGroup && (youAreAuthor ? styles_1.default.firstChatBubbleInGroup : styles_1.default.recipientFirstChatBubbleInGroup)), (this.props.isLastInGroup && (youAreAuthor ? styles_1.default.lastChatBubbleInGroup : styles_1.default.recipientLastChatBubbleInGroup)), (this.props.isCenterInGroup && (youAreAuthor ? styles_1.default.centerChatBubbleInGroup : styles_1.default.recipientCenterChatBubbleInGroup)), chatBubble, (youAreAuthor ? userBubble : recipientBubble));
-        return (React.createElement("div", { style: __assign({}, styles_1.default.chatBubbleWrapper), className: "react-bell-chat__chat-bubble" },
-            React.createElement("div", { style: chatBubbleStyles },
-                React.createElement("p", { style: __assign({}, styles_1.default.p, text) }, this.props.message.message),
-                this.props.message.createdOn && (React.createElement("span", { className: "react-bell-chat__chat-bubble__created-on", style: __assign({}, styles_1.default.createdOn, (youAreAuthor ? bubbleStyles.createdOn : bubbleStyles.recipientCreatedOn)), title: this.props.message.createdOn.toLocaleString() }, this.props.message.createdOn.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }))),
-                this.props.message.isSend !== undefined && youAreAuthor && (React.createElement("span", { className: "react-bell-chat__chat-bubble__is-send", style: __assign({}, styles_1.default.isSend), title: this.props.message.isSend ? 'Send' : 'Sending' }, this.props.message.isSend ?
-                    React.createElement("svg", { width: "10px", height: "10px", xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 10 10", preserveAspectRatio: "xMidYMid", style: { background: 'none' } },
-                        React.createElement("path", __assign({ fill: bubbleStyles.isSendIconColor ? bubbleStyles.isSendIconColor : defaultBubbleStyles.isSendIconColor }, {}, { d: "M9,1.7L8.6,1.4C8.5,1.3,8.3,1.3,8.2,1.4L3.9,7C3.8,7.1,3.6,7.1,3.5,7c0,0,0,0,0,0L1.7,5.3c-0.1-0.1-0.3-0.1-0.4,0L1,5.6 C0.9,5.7,0.9,5.9,1,6l2.6,2.6c0.1,0.1,0.3,0.1,0.4,0L9,2.1C9.1,2,9.1,1.8,9,1.7z" })))
-                    :
-                        React.createElement("svg", { width: "10px", height: "10px", xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 100 100", preserveAspectRatio: "xMidYMid", className: "lds-eclipse", style: { background: 'none' } },
-                            React.createElement("path", { stroke: "none", d: "M10 50A40 40 0 0 0 90 50A40 45 0 0 1 10 50", fill: bubbleStyles.loadingSpinnerColor ? bubbleStyles.loadingSpinnerColor : defaultBubbleStyles.loadingSpinnerColor, transform: "rotate(78 50 52.5)" },
-                                React.createElement("animateTransform", { attributeName: "transform", type: "rotate", calcMode: "linear", values: "0 50 52.5;360 50 52.5", keyTimes: "0;1", dur: "1s", begin: "0s", repeatCount: "indefinite" })))))),
-            this.props.showRecipientLastSeenMessage && this.props.lastSeenByAuthors &&
-                this.props.lastSeenByAuthors.length > 0 && this.props.customLastSeenAvatar &&
-                (React.createElement("div", { className: "react-bell-chat__chat-bubble__last-seen-by__container", style: styles_1.default.lastSeenByContainer, onMouseEnter: function () { return _this.setState({ mouseOverLastSeenContainer: true }); }, onMouseLeave: function () { return _this.setState({ mouseOverLastSeenContainer: false }); }, title: 'Last seen by ' + this.props.lastSeenByAuthors.map(function (a) { return a.name; }).join(', ').replace(/,(?!.*,)/gmi, ' and') }, this.props.lastSeenByAuthors.map(function (a, i) { return (React.createElement(_this.props.customLastSeenAvatar, { key: i, author: a, containerStyle: __assign({}, (i > 0 && !_this.state.mouseOverLastSeenContainer ? { marginTop: -12 } : { marginTop: -4 }), { zIndex: 100 + i }) })); })))));
-    };
-    return ChatBubble;
-}(React.Component));
-exports.default = ChatBubble;
-
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/**
  * Copyright (c) 2014-present, Facebook, Inc.
  *
@@ -641,6 +561,120 @@ module.exports = warning;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
 
 /***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(0);
+var styles_1 = __webpack_require__(35);
+var ChatBubble = /** @class */ (function (_super) {
+    __extends(ChatBubble, _super);
+    function ChatBubble(props) {
+        var _this = _super.call(this, props) || this;
+        _this.state = {
+            mouseOverLastSeenContainer: false
+        };
+        return _this;
+    }
+    ChatBubble.prototype.render = function () {
+        var _this = this;
+        if (!this.props.message) {
+            return null;
+        }
+        var _a = this.props, lastSeenAvatarStyles = _a.lastSeenAvatarStyles, yourAuthorId = _a.yourAuthorId, styles = _a.styles;
+        if (!styles) {
+            styles = {};
+        }
+        var userChatBubble = styles.userChatBubble, chatBubble = styles.chatBubble, text = styles.text, userText = styles.userText, recipientText = styles.recipientText, recipientChatBubble = styles.recipientChatBubble, firstChatBubbleInGroup = styles.firstChatBubbleInGroup, userFirstChatBubbleInGroup = styles.userFirstChatBubbleInGroup, recipientFirstChatBubbleInGroup = styles.recipientFirstChatBubbleInGroup, centerChatBubbleInGroup = styles.centerChatBubbleInGroup, userCenterChatBubbleInGroup = styles.userCenterChatBubbleInGroup, recipientCenterChatBubbleInGroup = styles.recipientCenterChatBubbleInGroup, lastChatBubbleInGroup = styles.lastChatBubbleInGroup, userLastChatBubbleInGroup = styles.userLastChatBubbleInGroup, recipientLastChatBubbleInGroup = styles.recipientLastChatBubbleInGroup, userChatBubbleOrientationNormal = styles.userChatBubbleOrientationNormal, recipientChatBubbleOrientationNormal = styles.recipientChatBubbleOrientationNormal, chatBubbleWrapper = styles.chatBubbleWrapper, createdOn = styles.createdOn, userCreatedOn = styles.userCreatedOn, recipientCreatedOn = styles.recipientCreatedOn, isSendIconColor = styles.isSendIconColor, loadingSpinnerColor = styles.loadingSpinnerColor, lastSeenByContainer = styles.lastSeenByContainer;
+        var youAreAuthor = this.props.message.authorId === yourAuthorId;
+        // message.id 0 is reserved for blue
+        var finalChatBubbleStyles = __assign({}, styles_1.default.chatBubble, chatBubble, (youAreAuthor
+            ? styles_1.default.userChatBubble
+            : styles_1.default.recipientChatBubble), (youAreAuthor ? userChatBubble : recipientChatBubble), (youAreAuthor
+            ? styles_1.default.userChatBubbleOrientationNormal
+            : styles_1.default.recipientChatBubbleOrientationNormal), (youAreAuthor
+            ? userChatBubbleOrientationNormal
+            : recipientChatBubbleOrientationNormal), (this.props.isFirstInGroup && styles_1.default.firstChatBubbleInGroup), (this.props.isFirstInGroup &&
+            (youAreAuthor
+                ? styles_1.default.userFirstChatBubbleInGroup
+                : styles_1.default.recipientFirstChatBubbleInGroup)), (this.props.isCenterInGroup &&
+            styles_1.default.centerChatBubbleInGroup), (this.props.isCenterInGroup &&
+            (youAreAuthor
+                ? styles_1.default.userCenterChatBubbleInGroup
+                : styles_1.default.recipientCenterChatBubbleInGroup)), (this.props.isLastInGroup && styles_1.default.lastChatBubbleInGroup), (this.props.isLastInGroup &&
+            (youAreAuthor
+                ? styles_1.default.userLastChatBubbleInGroup
+                : styles_1.default.recipientLastChatBubbleInGroup)), (this.props.isFirstInGroup && firstChatBubbleInGroup), (this.props.isFirstInGroup &&
+            (youAreAuthor
+                ? userFirstChatBubbleInGroup
+                : recipientFirstChatBubbleInGroup)), (this.props.isCenterInGroup && centerChatBubbleInGroup), (this.props.isCenterInGroup &&
+            (youAreAuthor
+                ? userCenterChatBubbleInGroup
+                : recipientCenterChatBubbleInGroup)), (this.props.isLastInGroup && lastChatBubbleInGroup), (this.props.isLastInGroup &&
+            (youAreAuthor
+                ? userLastChatBubbleInGroup
+                : recipientLastChatBubbleInGroup)));
+        return (React.createElement("div", { style: __assign({}, styles_1.default.chatBubbleWrapper, chatBubbleWrapper) },
+            React.createElement("div", { style: __assign({}, finalChatBubbleStyles) },
+                React.createElement("span", { style: __assign({}, styles_1.default.text, text, (youAreAuthor ? userText : recipientText)) }, this.props.message.message),
+                this.props.message.createdOn && (React.createElement("span", { style: __assign({}, styles_1.default.createdOn, createdOn, (youAreAuthor
+                        ? styles_1.default.userCreatedOn
+                        : styles_1.default.recipientCreatedOn), (youAreAuthor ? userCreatedOn : recipientCreatedOn)) }, this.props.message.createdOn.toLocaleTimeString([], {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true
+                }))),
+                this.props.message.isSend !== undefined && youAreAuthor && (React.createElement("span", { style: __assign({}, styles_1.default.isSend) }, this.props.message.isSend ? (React.createElement("svg", { width: "10px", height: "10px", xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 10 10", preserveAspectRatio: "xMidYMid", style: { background: 'none' } },
+                    React.createElement("path", __assign({ fill: isSendIconColor
+                            ? isSendIconColor
+                            : styles_1.default.isSendIconColor }, {}, { d: "M9,1.7L8.6,1.4C8.5,1.3,8.3,1.3,8.2,1.4L3.9,7C3.8,7.1,3.6,7.1,3.5,7c0,0,0,0,0,0L1.7,5.3c-0.1-0.1-0.3-0.1-0.4,0L1,5.6 C0.9,5.7,0.9,5.9,1,6l2.6,2.6c0.1,0.1,0.3,0.1,0.4,0L9,2.1C9.1,2,9.1,1.8,9,1.7z" })))) : (React.createElement("svg", { width: "10px", height: "10px", xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 100 100", preserveAspectRatio: "xMidYMid", className: "lds-eclipse", style: { background: 'none' } },
+                    React.createElement("path", { stroke: "none", d: "M10 50A40 40 0 0 0 90 50A40 45 0 0 1 10 50", fill: loadingSpinnerColor
+                            ? loadingSpinnerColor
+                            : styles_1.default.loadingSpinnerColor, transform: "rotate(78 50 52.5)" },
+                        React.createElement("animateTransform", { attributeName: "transform", type: "rotate", calcMode: "linear", values: "0 50 52.5;360 50 52.5", keyTimes: "0;1", dur: "1s", begin: "0s", repeatCount: "indefinite" }))))))),
+            this.props.showRecipientLastSeenMessage &&
+                this.props.lastSeenByAuthors &&
+                this.props.lastSeenByAuthors.length > 0 &&
+                this.props.customLastSeenAvatar && (React.createElement("div", { className: "react-bell-chat__chat-bubble__last-seen-by__container", style: __assign({}, styles_1.default.lastSeenByContainer, lastSeenByContainer), onMouseEnter: function () {
+                    return _this.setState({ mouseOverLastSeenContainer: true });
+                }, onMouseLeave: function () {
+                    return _this.setState({ mouseOverLastSeenContainer: false });
+                }, title: 'Last seen by ' +
+                    this.props.lastSeenByAuthors
+                        .map(function (a) { return a.name; })
+                        .join(', ')
+                        .replace(/,(?!.*,)/gim, ' and') }, this.props.lastSeenByAuthors.map(function (a, i) { return (React.createElement(_this.props.customLastSeenAvatar, { key: i, author: a, styles: __assign({}, lastSeenAvatarStyles, { container: __assign({}, (lastSeenAvatarStyles
+                        ? (lastSeenAvatarStyles.container)
+                        : {}), (i > 0 && !_this.state.mouseOverLastSeenContainer
+                        ? { marginTop: -12 }
+                        : { marginTop: -4 })) }) })); })))));
+    };
+    return ChatBubble;
+}(React.Component));
+exports.default = ChatBubble;
+
+
+/***/ }),
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -670,13 +704,22 @@ var styles = {
         borderRadius: 20,
         textAlign: 'center',
         borderTopRightRadius: 5
+    },
+    text: {
+        pointerEvents: 'none'
     }
 };
-var Avatar = function (props) { return props.author && (React.createElement("div", { style: __assign({}, styles.container, props.containerStyle), title: props.author.name, className: "react-bell-chat__avatar" },
-    React.createElement("span", { style: { pointerEvents: 'none' } }, props.author.avatarName ?
-        props.author.avatarName
-        :
-            props.author.name.split(' ').map(function (part) { return part[0]; }).join('').toUpperCase().substr(0, 3)))); };
+var Avatar = function (props) {
+    return props.author && (React.createElement("div", { style: __assign({}, styles.container, (props.styles && props.styles.container)), title: props.author.name, className: "react-bell-chat__avatar" },
+        React.createElement("span", { style: __assign({}, styles.text, (props.styles && props.styles.text)) }, props.author.avatarName
+            ? props.author.avatarName
+            : props.author.name
+                .split(' ')
+                .map(function (part) { return part[0]; })
+                .join('')
+                .toUpperCase()
+                .substr(0, 3))));
+};
 exports.default = Avatar;
 
 
@@ -696,20 +739,22 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var ChatBubble_1 = __webpack_require__(6);
-var styles = {
-    container: {
+var systemChatBubbleStyles = {
+    systemChatBubbleContainer: {
         textAlign: 'center',
         fontSize: 12,
         color: 'rgba(0, 0, 0, 0.55)'
     },
 };
 var SystemChatBubble = function (props) {
-    var bubbleStyles = props.bubbleStyles;
-    bubbleStyles = bubbleStyles || ChatBubble_1.defaultBubbleStyles;
+    var styles = props.styles;
+    if (!styles) {
+        styles = {};
+    }
+    var systemChatBubbleContainer = styles.systemChatBubbleContainer, systemChatBubbleText = styles.systemChatBubbleText;
     var time = props.message.createdOn && props.message.createdOn.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
-    return props.message && (React.createElement("div", { className: "react-bell-chat__chat-bubble react-bell-chat__chat-bubble--system", style: __assign({}, styles.container, bubbleStyles.systemChatBubbleContainerStyle) },
-        time && (React.createElement("span", { className: "react-bell-chat__chat-bubble--system__created-on", title: props.message.createdOn.toLocaleString() },
+    return props.message && (React.createElement("div", { className: "react-bell-chat__chat-bubble react-bell-chat__chat-bubble--system", style: __assign({}, systemChatBubbleStyles.systemChatBubbleContainer, systemChatBubbleContainer) },
+        time && (React.createElement("span", { className: "react-bell-chat__chat-bubble--system__created-on", title: props.message.createdOn.toLocaleString(), style: __assign({}, systemChatBubbleStyles.systemChatBubbleText, systemChatBubbleText) },
             time,
             ":",
             ' ')),
@@ -734,7 +779,7 @@ exports.default = SystemChatBubble;
 
 if (process.env.NODE_ENV !== 'production') {
   var invariant = __webpack_require__(2);
-  var warning = __webpack_require__(7);
+  var warning = __webpack_require__(6);
   var ReactPropTypesSecret = __webpack_require__(24);
   var loggedTypeFailures = {};
 }
@@ -986,20 +1031,39 @@ module.exports = containsNode;
 
 "use strict";
 
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var styles = {
+var isTypingStyles = {
     container: {
         position: 'absolute',
         bottom: 2,
         left: 0,
         right: 0,
         color: 'rgb(204, 204, 204)',
-        textAlign: 'center',
+        textAlign: 'center'
     }
 };
 var IsTyping = function (props) {
-    return props.typingAuthors && props.typingAuthors.length > 0 && (React.createElement("div", { className: "react-bell-chat__is-typing__container", style: styles.container }, props.typingAuthors.map(function (a) { return a.name; }).join(', ').replace(/,(?!.*,)/gmi, ' and') + (props.typingAuthors.length === 1 ? ' is ' : ' are ') + 'typing'));
+    var styles = props.styles;
+    if (!styles) {
+        styles = {};
+    }
+    var container = styles.container;
+    return (props.typingAuthors &&
+        props.typingAuthors.length > 0 && (React.createElement("div", { className: "react-bell-chat__is-typing__container", style: __assign({}, isTypingStyles.container, container) }, props.typingAuthors
+        .map(function (a) { return a.name; })
+        .join(', ')
+        .replace(/,(?!.*,)/gim, ' and') +
+        (props.typingAuthors.length === 1 ? ' is ' : ' are ') +
+        'typing')));
 };
 exports.default = IsTyping;
 
@@ -1030,8 +1094,8 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var styles = {
-    chatHistory: {
+var chatScrollAreaStyles = {
+    container: {
         overflow: 'auto',
         padding: '0 10px',
     }
@@ -1043,6 +1107,11 @@ var ChatScrollArea = /** @class */ (function (_super) {
     }
     ChatScrollArea.prototype.render = function () {
         var _this = this;
+        var styles = this.props.styles;
+        if (!styles) {
+            styles = {};
+        }
+        var container = styles.container;
         return (React.createElement("div", { ref: function (scrollContainer) {
                 _this.scrollContainer = scrollContainer;
                 _this.props.apiRef && _this.props.apiRef({
@@ -1067,7 +1136,7 @@ var ChatScrollArea = /** @class */ (function (_super) {
                     scrollHeight: function () { return _this.scrollContainer && _this.scrollContainer.scrollHeight; },
                     clientHeight: function () { return _this.scrollContainer && _this.scrollContainer.clientHeight; },
                 });
-            }, className: "react-bell-chat__chat-history", style: __assign({}, styles.chatHistory, (this.props.maxHeight !== undefined ? { maxHeight: this.props.maxHeight } : {}), (this.props.minHeight !== undefined ? { minHeight: this.props.minHeight } : {}), this.props.containerStyles), onScroll: function (e) { return (_this.scrollContainer && _this.scrollContainer.scrollTop <= _this.props.loadOldMessagesThreshold) && _this.props.onLoadOldMessages(); } }, this.props.children));
+            }, className: "react-bell-chat__chat-history", style: __assign({}, chatScrollAreaStyles.container, (this.props.maxHeight !== undefined ? { maxHeight: this.props.maxHeight } : {}), (this.props.minHeight !== undefined ? { minHeight: this.props.minHeight } : {}), container), onScroll: function (e) { return (_this.scrollContainer && _this.scrollContainer.scrollTop <= _this.props.loadOldMessagesThreshold) && _this.props.onLoadOldMessages(); } }, this.props.children));
     };
     return ChatScrollArea;
 }(React.Component));
@@ -1091,7 +1160,7 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var styles = {
+var lastSeenAvatarStyles = {
     container: {
         width: 20,
         height: 20,
@@ -1105,13 +1174,22 @@ var styles = {
         transition: '0.3s all ease-in-out',
         display: 'block',
         position: 'relative'
+    },
+    text: {
+        pointerEvents: 'none'
     }
 };
-var LastSeenAvatar = function (props) { return props.author && (React.createElement("div", { style: __assign({}, styles.container, props.containerStyle), className: "react-bell-chat__last-seen-avatar" },
-    React.createElement("span", { style: { pointerEvents: 'none' } }, props.author.lastSeenAvatarName ?
-        props.author.lastSeenAvatarName
-        :
-            props.author.name[0].toUpperCase()))); };
+var LastSeenAvatar = function (props) {
+    var styles = props.styles;
+    if (!styles) {
+        styles = {};
+    }
+    var container = styles.container, text = styles.text;
+    return (props.author && (React.createElement("div", { style: __assign({}, lastSeenAvatarStyles.container, container), className: "react-bell-chat__last-seen-avatar" },
+        React.createElement("span", { style: __assign({}, lastSeenAvatarStyles.text, text) }, props.author.lastSeenAvatarName
+            ? props.author.lastSeenAvatarName
+            : props.author.name[0].toUpperCase()))));
+};
 exports.default = LastSeenAvatar;
 
 
@@ -1141,7 +1219,7 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var ChatBubble_1 = __webpack_require__(6);
+var ChatBubble_1 = __webpack_require__(7);
 var SystemChatBubble_1 = __webpack_require__(9);
 var styles_1 = __webpack_require__(36);
 var Avatar_1 = __webpack_require__(8);
@@ -1152,17 +1230,22 @@ var BubbleGroup = /** @class */ (function (_super) {
     }
     BubbleGroup.prototype.renderGroup = function (messages, author) {
         var _this = this;
-        var _a = this.props, bubblesCentered = _a.bubblesCentered, bubbleStyles = _a.bubbleStyles, showRecipientAvatar = _a.showRecipientAvatar, customChatBubble = _a.customChatBubble, customSystemChatBubble = _a.customSystemChatBubble, showRecipientLastSeenMessage = _a.showRecipientLastSeenMessage, customLastSeenAvatar = _a.customLastSeenAvatar;
+        var styles = this.props.styles;
+        if (!styles) {
+            styles = {};
+        }
+        var chatBubbleWrapper = styles.chatBubbleWrapper;
+        var _a = this.props, bubblesCentered = _a.bubblesCentered, bubbleStyles = _a.bubbleStyles, lastSeenAvatarStyles = _a.lastSeenAvatarStyles, avatarStyles = _a.avatarStyles, showRecipientAvatar = _a.showRecipientAvatar, customChatBubble = _a.customChatBubble, customSystemChatBubble = _a.customSystemChatBubble, showRecipientLastSeenMessage = _a.showRecipientLastSeenMessage, customLastSeenAvatar = _a.customLastSeenAvatar;
         var ChatBubble = customChatBubble || ChatBubble_1.default;
         var SystemChatBubble = customSystemChatBubble || SystemChatBubble_1.default;
         var messageNodes = messages.map(function (message, i) {
             var props = {
-                key: i,
                 yourAuthorId: _this.props.yourAuthorId,
+                lastSeenAvatarStyles: lastSeenAvatarStyles,
                 author: author,
                 message: message,
                 bubblesCentered: bubblesCentered,
-                bubbleStyles: bubbleStyles,
+                styles: bubbleStyles,
                 isFirstInGroup: i === 0,
                 isLastInGroup: i === messages.length - 1 && messages.length > 1,
                 isCenterInGroup: i < messages.length - 1 && messages.length > 1,
@@ -1171,14 +1254,13 @@ var BubbleGroup = /** @class */ (function (_super) {
                 customLastSeenAvatar: customLastSeenAvatar
             };
             return message.authorId !== undefined ?
-                (React.createElement(ChatBubble, __assign({}, props)))
+                (React.createElement(ChatBubble, __assign({ key: i }, props)))
                 :
-                    (React.createElement(SystemChatBubble, __assign({}, props)));
+                    (React.createElement(SystemChatBubble, __assign({ key: i }, props)));
         });
         var youAreAuthor = author && this.props.yourAuthorId === author.id;
-        return (React.createElement("div", { style: styles_1.default.chatBubbleWrapper },
-            !youAreAuthor && showRecipientAvatar && author && this.props.customAvatar &&
-                this.props.customAvatar({ author: this.props.author }),
+        return (React.createElement("div", { style: __assign({}, styles_1.default.chatBubbleWrapper, chatBubbleWrapper) },
+            !youAreAuthor && showRecipientAvatar && author && this.props.customAvatar && (React.createElement(this.props.customAvatar, { author: this.props.author, styles: avatarStyles })),
             messageNodes));
     };
     BubbleGroup.prototype.render = function () {
@@ -1192,7 +1274,7 @@ var BubbleGroup = /** @class */ (function (_super) {
         showRecipientLastSeenMessage: false
     };
     return BubbleGroup;
-}(React.Component));
+}(React.PureComponent));
 exports.default = BubbleGroup;
 
 
@@ -1212,7 +1294,7 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var styles = {
+var dateRowStyles = {
     container: {
         textAlign: 'center',
         fontSize: 12,
@@ -1220,7 +1302,12 @@ var styles = {
     },
 };
 var DateRow = function (props) {
-    return props.date && (React.createElement("div", { className: "react-bell-chat__date-row", style: __assign({}, styles.container, props.containerStyles), title: props.date.toLocaleDateString([], { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }, props.date.toLocaleDateString()));
+    var styles = props.styles;
+    if (!styles) {
+        styles = {};
+    }
+    var container = styles.container;
+    return props.date && (React.createElement("div", { className: "react-bell-chat__date-row", style: __assign({}, dateRowStyles.container, container), title: props.date.toLocaleDateString([], { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }, props.date.toLocaleDateString()));
 };
 exports.default = DateRow;
 
@@ -1241,27 +1328,30 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var styles = {
-    containerStyles: {
+var loadingMessagesStyles = {
+    containerStyle: {
         display: 'flex',
         marginBottom: 10
     },
+    spinnerColor: 'rgb(0, 132, 255)'
 };
 var LoadingMessages = function (props) {
-    var containerStyles = props.containerStyles;
-    return (React.createElement("div", { className: "react-bell-chat__loading-messages", style: __assign({}, styles.containerStyles, containerStyles) },
+    var styles = props.styles;
+    if (!styles) {
+        styles = {};
+    }
+    var containerStyle = styles.containerStyle, spinnerColor = styles.spinnerColor;
+    return (React.createElement("div", { className: "react-bell-chat__loading-messages", style: __assign({}, loadingMessagesStyles.containerStyle, containerStyle) },
         React.createElement("svg", { width: "40px", height: "40px", xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 100 100", preserveAspectRatio: "xMidYMid", style: {
                 background: 'none',
                 margin: 'auto',
-                fill: props.spinnerColor, opacity: props.isVisible ? 1 : 0,
+                fill: spinnerColor ? spinnerColor : loadingMessagesStyles.spinnerColor,
+                opacity: props.isVisible ? 1 : 0,
                 transition: '0.3s all ease-in-out'
             } },
             React.createElement("title", null, "Loading messages"),
             React.createElement("path", { stroke: "none", d: "M10 50A40 40 0 0 0 90 50A40 46 0 0 1 10 50", transform: "rotate(42 50 53)" },
                 React.createElement("animateTransform", { attributeName: "transform", type: "rotate", calcMode: "linear", values: "0 50 53;360 50 53", keyTimes: "0;1", dur: "1s", begin: "0s", repeatCount: "indefinite" })))));
-};
-LoadingMessages.defaultProps = {
-    spinnerColor: 'rgb(0, 132, 255)'
 };
 exports.default = LoadingMessages;
 
@@ -1443,7 +1533,7 @@ var Chat = /** @class */ (function (_super) {
             React.createElement("p", { className: "text-center" },
                 React.createElement("a", { href: "https://github.com/PeterKottas/react-bell-chat", target: "_blank" }, "Github")),
             React.createElement("div", { className: "install" },
-                React.createElement("code", null, "npm i -S react-bell-chat")),
+                React.createElement("code", null, "yarn add react-bell-chat")),
             React.createElement("div", { className: "chatfeed-wrapper" },
                 React.createElement(lib_1.ChatFeed, { yourAuthorId: 0, authors: this.state.authors, customChatBubble: this.state.useCustomBubble && customBubble, maxHeight: 350, messages: this.state.messages, showRecipientAvatar: this.state.showAvatar, ref: function (e) { return _this.chat = e; }, showIsTyping: this.state.showIsTyping, showRecipientLastSeenMessage: this.state.showLastSeen, showDateRow: this.state.showDateRow, showLoadingMessages: this.state.showLoadingMessages, 
                     // tslint:disable-next-line:no-console
@@ -1569,7 +1659,7 @@ if (process.env.NODE_ENV !== "production") {
 var _assign = __webpack_require__(4);
 var invariant = __webpack_require__(2);
 var emptyObject = __webpack_require__(5);
-var warning = __webpack_require__(7);
+var warning = __webpack_require__(6);
 var emptyFunction = __webpack_require__(3);
 var checkPropTypes = __webpack_require__(10);
 
@@ -3364,7 +3454,7 @@ if (process.env.NODE_ENV !== "production") {
 
 var invariant = __webpack_require__(2);
 var React = __webpack_require__(0);
-var warning = __webpack_require__(7);
+var warning = __webpack_require__(6);
 var ExecutionEnvironment = __webpack_require__(11);
 var _assign = __webpack_require__(4);
 var emptyFunction = __webpack_require__(3);
@@ -20165,7 +20255,7 @@ module.exports = camelize;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var _1 = __webpack_require__(6);
+var _1 = __webpack_require__(7);
 exports.ChatBubble = _1.default;
 var _2 = __webpack_require__(8);
 exports.Avatar = _2.default;
@@ -20212,18 +20302,19 @@ var styles = {
         paddingTop: 8,
         paddingBottom: 10,
         paddingLeft: 14,
-        paddingRight: 14,
+        paddingRight: 14
+        // boxShadow: 'rgba(0, 0, 0, 0.3) 2px 2px 2px'
     },
-    chatBubbleOrientationNormal: {
-        marginRight: 0,
-    },
-    recipientChatBubble: {
-        backgroundColor: '#ccc',
+    userChatBubbleOrientationNormal: {
+        marginRight: 0
     },
     recipientChatBubbleOrientationNormal: {
-        marginLeft: 0,
+        marginLeft: 0
     },
-    p: {
+    recipientChatBubble: {
+        backgroundColor: '#ccc'
+    },
+    text: {
         color: '#FFFFFF',
         fontSize: 16,
         fontWeight: 300,
@@ -20231,19 +20322,19 @@ var styles = {
         marginRight: 30,
         whiteSpace: 'pre'
     },
-    firstChatBubbleInGroup: {
+    userFirstChatBubbleInGroup: {
         borderTopRightRadius: 0
     },
     recipientFirstChatBubbleInGroup: {
         borderTopLeftRadius: 0
     },
-    lastChatBubbleInGroup: {
+    userLastChatBubbleInGroup: {
         borderTopRightRadius: 0
     },
     recipientLastChatBubbleInGroup: {
         borderTopLeftRadius: 0
     },
-    centerChatBubbleInGroup: {
+    userCenterChatBubbleInGroup: {
         borderTopRightRadius: 0,
         borderBottomRightRadius: 0
     },
@@ -20270,7 +20361,9 @@ var styles = {
         top: 0,
         width: 20,
         height: '100%',
-    }
+    },
+    loadingSpinnerColor: 'rgba(255, 255, 255, 0.55)',
+    isSendIconColor: '#cddc39',
 };
 exports.default = styles;
 
@@ -20286,14 +20379,14 @@ exports.default = {
     chatBubbleWrapper: {
         marginTop: 10,
         marginBottom: 10,
-        position: 'relative',
+        position: 'relative'
     },
     bubbleGroupHeader: {
         margin: 0,
         fontSize: 14,
         fontWeight: 400,
-        color: '#999',
-    },
+        color: '#999'
+    }
 };
 
 
@@ -20362,7 +20455,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
 var BubbleGroup_1 = __webpack_require__(18);
-var ChatBubble_1 = __webpack_require__(6);
+var ChatBubble_1 = __webpack_require__(7);
 var styles_1 = __webpack_require__(38);
 var Avatar_1 = __webpack_require__(8);
 var IsTyping_1 = __webpack_require__(15);
@@ -20406,10 +20499,14 @@ var ChatFeed = /** @class */ (function (_super) {
         };
     };
     ChatFeed.prototype.componentDidUpdate = function (prevProps, prevState, snapshot) {
-        if (this.props.messages.length !== prevProps.messages.length && snapshot && snapshot.wasScrolledToBottom) {
+        if (this.props.messages.length !== prevProps.messages.length &&
+            snapshot &&
+            snapshot.wasScrolledToBottom) {
             this.scrollApi.scrollToBottom();
         }
-        else if (this.props.messages.length !== prevProps.messages.length && snapshot && prevState.isLoadingMessages) {
+        else if (this.props.messages.length !== prevProps.messages.length &&
+            snapshot &&
+            prevState.isLoadingMessages) {
             var scrollHeight = this.scrollApi && this.scrollApi.scrollHeight();
             this.scrollApi.scrollTo(scrollHeight - snapshot.scrollHeight);
         }
@@ -20432,7 +20529,12 @@ var ChatFeed = /** @class */ (function (_super) {
      */
     ChatFeed.prototype.renderMessages = function (messages) {
         var _this = this;
-        var _a = this.props, bubbleStyles = _a.bubbleStyles, customChatBubble = _a.customChatBubble, showRecipientAvatar = _a.showRecipientAvatar;
+        var styles = this.props.styles;
+        if (!styles) {
+            styles = {};
+        }
+        var bubbleStyles = styles.bubbleStyles, dateRowStyles = styles.dateRowStyles, avatarStyles = styles.avatarStyles, lastSeenAvatarStyles = styles.lastSeenAvatarStyles;
+        var _a = this.props, customChatBubble = _a.customChatBubble, showRecipientAvatar = _a.showRecipientAvatar;
         // First group by days
         var groups = utils_1.groupBy(messages, function (item) { return item.createdOn && item.createdOn.toDateString(); });
         var messageNodes = [];
@@ -20440,18 +20542,22 @@ var ChatFeed = /** @class */ (function (_super) {
         Object.keys(groups).forEach(function (key) {
             var group = [];
             var messagesGroup = groups[key];
-            if (messagesGroup[0] && messagesGroup[0].createdOn && _this.props.showDateRow) {
-                messageNodes.push(React.createElement(_this.props.customDateRow, { key: key, date: messagesGroup[0].createdOn }));
+            if (messagesGroup[0] &&
+                messagesGroup[0].createdOn &&
+                _this.props.showDateRow) {
+                messageNodes.push(React.createElement(_this.props.customDateRow, { key: key, date: messagesGroup[0].createdOn, styles: dateRowStyles }));
             }
             messageNodes = messageNodes.concat(messagesGroup.map(function (message, index) {
                 group.push(message);
                 // Find diff in message type or no more messages
-                if (!messagesGroup[index + 1] || messagesGroup[index + 1].authorId !== message.authorId) {
+                if (!messagesGroup[index + 1] ||
+                    messagesGroup[index + 1].authorId !== message.authorId) {
                     var messageGroup = group;
-                    var author = _this.props.authors && _this.props.authors.filter(function (a) { return a.id === message.authorId; })[0];
+                    var author = _this.props.authors &&
+                        _this.props.authors.filter(function (a) { return a.id === message.authorId; })[0];
                     group = [];
                     jsxKey++;
-                    return (React.createElement(BubbleGroup_1.default, { key: jsxKey, yourAuthorId: _this.props.yourAuthorId, messages: messageGroup, author: author, authors: _this.props.authors, showRecipientAvatar: showRecipientAvatar, customChatBubble: customChatBubble, bubbleStyles: bubbleStyles, showRecipientLastSeenMessage: _this.props.showRecipientLastSeenMessage, customAvatar: _this.props.customAvatar, customLastSeenAvatar: _this.props.customLastSeenAvatar, customSystemChatBubble: _this.props.customSystemChatBubble }));
+                    return (React.createElement(BubbleGroup_1.default, { key: jsxKey, yourAuthorId: _this.props.yourAuthorId, messages: messageGroup, author: author, authors: _this.props.authors, showRecipientAvatar: showRecipientAvatar, customChatBubble: customChatBubble, bubbleStyles: bubbleStyles, avatarStyles: avatarStyles, lastSeenAvatarStyles: lastSeenAvatarStyles, showRecipientLastSeenMessage: _this.props.showRecipientLastSeenMessage, customAvatar: _this.props.customAvatar, customLastSeenAvatar: _this.props.customLastSeenAvatar, customSystemChatBubble: _this.props.customSystemChatBubble }));
                 }
                 return null;
             }));
@@ -20460,21 +20566,39 @@ var ChatFeed = /** @class */ (function (_super) {
     };
     ChatFeed.prototype.renderIsTyping = function () {
         var _this = this;
-        var typingAuthors = this.props.authors && this.props.authors.filter(function (a) { return a.isTyping && a.id !== _this.props.yourAuthorId; });
+        var styles = this.props.styles;
+        if (!styles) {
+            styles = {};
+        }
+        var isTypingStyles = styles.isTypingStyles;
+        var typingAuthors = this.props.authors &&
+            this.props.authors.filter(function (a) { return a.isTyping && a.id !== _this.props.yourAuthorId; });
         if (!typingAuthors || typingAuthors.length === 0) {
             return null;
         }
-        return React.createElement(IsTyping_1.default, { typingAuthors: typingAuthors });
+        return React.createElement(IsTyping_1.default, { typingAuthors: typingAuthors, styles: isTypingStyles });
     };
     /**
      * render : renders our chat feed
      */
     ChatFeed.prototype.render = function () {
         var _this = this;
-        return (React.createElement("div", { id: 'react-bell-chat__chat-panel ' + (this.props.className ? this.props.className : ''), style: __assign({}, styles_1.default.chatPanel) },
-            React.createElement(this.props.customScrollArea, { minHeight: this.props.minHeight, maxHeight: this.props.maxHeight, apiRef: function (e) { return _this.scrollApi = e; }, loadOldMessagesThreshold: this.props.loadOldMessagesThreshold, onLoadOldMessages: this.onLoadOldMessages },
-                React.createElement("div", { style: __assign({}, styles_1.default.chatMessages, (this.props.showRecipientAvatar && styles_1.default.showRecipientAvatarChatMessagesStyle), (this.props.showRecipientAvatar && this.props.showRecipientAvatarChatMessagesStyle), (this.props.showIsTyping && styles_1.default.showIsTypingChatMessagesStyle), (this.props.showIsTyping && this.props.showIsTypingChatMessagesStyle), (this.props.showRecipientLastSeenMessage && styles_1.default.showRecipientLastSeenMessageChatMessagesStyle), (this.props.showRecipientLastSeenMessage && this.props.showRecipientLastSeenMessageChatMessagesStyle)), className: "react-bell-chat__chat-messages" },
-                    React.createElement(this.props.customLoadingMessages, { isVisible: this.props.showLoadingMessages || this.state.isLoadingMessages }),
+        var styles = this.props.styles;
+        if (!styles) {
+            styles = {};
+        }
+        var loadingMessagesStyle = styles.loadingMessagesStyle, chatFeedStyles = styles.chatFeedStyles, chatScrollArea = styles.chatScrollArea;
+        return (React.createElement("div", { id: 'react-bell-chat__chat-panel ' +
+                (this.props.className ? this.props.className : ''), style: __assign({}, styles_1.default.chatPanel, (chatFeedStyles && chatFeedStyles.chatPanel)) },
+            React.createElement(this.props.customScrollArea, { minHeight: this.props.minHeight, maxHeight: this.props.maxHeight, apiRef: function (e) { return (_this.scrollApi = e); }, loadOldMessagesThreshold: this.props.loadOldMessagesThreshold, onLoadOldMessages: this.onLoadOldMessages, styles: chatScrollArea },
+                React.createElement("div", { style: __assign({}, styles_1.default.chatMessages, (this.props.showRecipientAvatar &&
+                        styles_1.default.showRecipientAvatarChatMessagesStyle), (this.props.showRecipientAvatar &&
+                        this.props.showRecipientAvatarChatMessagesStyle), (this.props.showIsTyping &&
+                        styles_1.default.showIsTypingChatMessagesStyle), (this.props.showIsTyping &&
+                        this.props.showIsTypingChatMessagesStyle), (this.props.showRecipientLastSeenMessage &&
+                        styles_1.default.showRecipientLastSeenMessageChatMessagesStyle), (this.props.showRecipientLastSeenMessage &&
+                        this.props.showRecipientLastSeenMessageChatMessagesStyle)), className: "react-bell-chat__chat-messages" },
+                    React.createElement(this.props.customLoadingMessages, { isVisible: this.props.showLoadingMessages || this.state.isLoadingMessages, styles: loadingMessagesStyle }),
                     this.renderMessages(this.props.messages),
                     this.props.showIsTyping && this.renderIsTyping()))));
     };
@@ -20483,9 +20607,10 @@ var ChatFeed = /** @class */ (function (_super) {
         if (!this.state.isLoadingMessages && this.props.hasOldMessages) {
             return new Promise(function (resolve) {
                 _this.setState({
-                    isLoadingMessages: true,
+                    isLoadingMessages: true
                 }, function () { return resolve(); });
-            }).then(function () { return __awaiter(_this, void 0, void 0, function () {
+            })
+                .then(function () { return __awaiter(_this, void 0, void 0, function () {
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -20497,13 +20622,14 @@ var ChatFeed = /** @class */ (function (_super) {
                         case 2: return [2 /*return*/];
                     }
                 });
-            }); }).then(function () { return __awaiter(_this, void 0, void 0, function () {
+            }); })
+                .then(function () { return __awaiter(_this, void 0, void 0, function () {
                 var _this = this;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0: return [4 /*yield*/, new Promise(function (resolve) {
                                 _this.setState({
-                                    isLoadingMessages: false,
+                                    isLoadingMessages: false
                                 }, function () {
                                     if (_this.scrollApi.scrolledToLoadThreshold()) {
                                         _this.scrollApi.scrollTo(_this.props.loadOldMessagesThreshold + 1);
@@ -20544,11 +20670,11 @@ exports.default = ChatFeed;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = {
+var styles = {
     chatPanel: {
         display: 'flex',
         flexDirection: 'column',
-        flex: 1,
+        flexGrow: 1,
         overflow: 'hidden',
         position: 'relative'
     },
@@ -20565,22 +20691,14 @@ exports.default = {
     chatBubbleWrapper: {
         marginTop: 10,
         marginBottom: 10,
-        overflow: 'auto',
-        position: 'relative',
-    },
-    img: {
-        borderRadius: 100,
-        bottom: 0,
-        left: 0,
-        position: 'absolute',
-        width: 36,
-        zIndex: 100,
+        overflow: 'visible',
     },
     chatMessages: {
         paddingBottom: 10,
         paddingTop: 10,
     }
 };
+exports.default = styles;
 
 
 /***/ }),
@@ -20592,12 +20710,13 @@ exports.default = {
 Object.defineProperty(exports, "__esModule", { value: true });
 var groupBy = function (array, groupingKeyFn) {
     if (typeof groupingKeyFn !== 'function') {
-        throw new Error("groupBy take a function as only parameter");
+        throw new Error('groupBy take a function as only parameter');
     }
     return array.reduce(function (result, item) {
         var key = groupingKeyFn(item);
-        if (!result[key])
+        if (!result[key]) {
             result[key] = [];
+        }
         result[key].push(item);
         return result;
     }, {});

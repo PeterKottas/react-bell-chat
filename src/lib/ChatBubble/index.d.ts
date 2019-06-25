@@ -2,24 +2,14 @@
 import * as React from 'react';
 import Message from '../Message';
 import { Author } from '../Author';
-import { LastSeenAvatarProps } from './../LastSeenAvatar';
-declare const defaultBubbleStyles: ChatBubbleStyles;
-export { defaultBubbleStyles };
-export interface ChatBubbleStyles {
-    userBubble?: React.CSSProperties;
-    recipientBubble?: React.CSSProperties;
-    chatBubble?: React.CSSProperties;
-    text?: React.CSSProperties;
-    createdOn?: React.CSSProperties;
-    recipientCreatedOn?: React.CSSProperties;
-    loadingSpinnerColor?: string;
-    isSendIconColor?: string;
-    systemChatBubbleContainerStyle?: React.CSSProperties;
-}
+import { LastSeenAvatarProps, LastSeenAvatarStyles } from './../LastSeenAvatar';
+import { ChatBubbleStyles } from './styles';
+export { ChatBubbleStyles };
 export interface ChatBubbleProps {
     message: Message;
     author?: Author;
-    bubbleStyles?: ChatBubbleStyles;
+    styles?: ChatBubbleStyles;
+    lastSeenAvatarStyles?: LastSeenAvatarStyles;
     bubblesCentered?: boolean;
     yourAuthorId: number;
     isFirstInGroup?: boolean;

@@ -3,10 +3,15 @@ import { Author } from '../Author';
 
 export interface LastSeenAvatarProps {
   author: Author;
-  containerStyle?: React.CSSProperties;
+  styles: LastSeenAvatarStyles;
 }
 
-const styles = {
+export interface LastSeenAvatarStyles {
+  container?: React.CSSProperties;
+  text?: React.CSSProperties;
+}
+
+const lastSeenAvatarStyles = {
   container: {
     width: 20,
     height: 20,
@@ -20,24 +25,35 @@ const styles = {
     transition: '0.3s all ease-in-out',
     display: 'block',
     position: 'relative'
+  } as React.CSSProperties,
+  text: {
+    pointerEvents: 'none'
   } as React.CSSProperties
 };
 
-const LastSeenAvatar: React.SFC<LastSeenAvatarProps> = props => props.author && (
-  <div
-    style={{
-      ...styles.container,
-      ...props.containerStyle
-    }}
-    className="react-bell-chat__last-seen-avatar"
-  >
-    <span style={{ pointerEvents: 'none' }}>{
-      props.author.lastSeenAvatarName ?
-        props.author.lastSeenAvatarName
-        :
-        props.author.name[0].toUpperCase()}
-    </span>
-  </div>
-);
+const LastSeenAvatar: React.SFC<LastSeenAvatarProps> = props => {
+  let { styles } = props;
+  if (!styles) {
+    styles = {};
+  }
+  const { container, text } = styles;
+  return (
+    props.author && (
+      <div
+        style={{
+          ...lastSeenAvatarStyles.container,
+          ...container
+        }}
+        className="react-bell-chat__last-seen-avatar"
+      >
+        <span style={{ ...lastSeenAvatarStyles.text, ...text }}>
+          {props.author.lastSeenAvatarName
+            ? props.author.lastSeenAvatarName
+            : props.author.name[0].toUpperCase()}
+        </span>
+      </div>
+    )
+  );
+};
 
 export default LastSeenAvatar;

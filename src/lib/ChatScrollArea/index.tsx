@@ -1,7 +1,11 @@
 import * as React from 'react';
 
-const styles: { [key: string]: React.CSSProperties } = {
-  chatHistory: {
+export interface ChatScrollAreaStyles {
+  container?: React.CSSProperties;
+}
+
+const chatScrollAreaStyles: ChatScrollAreaStyles = {
+  container: {
     overflow: 'auto',
     padding: '0 10px',
     // flexDirection: 'column-reverse'
@@ -12,7 +16,7 @@ export interface ChatScrollAreaProps {
   maxHeight?: string | number;
   minHeight?: string | number;
   children?: JSX.Element | JSX.Element[];
-  containerStyles?: React.CSSProperties;
+  styles?: ChatScrollAreaStyles;
   apiRef?: (api: ChatScrollAreaApi) => void;
   loadOldMessagesThreshold: number;
   onLoadOldMessages: () => Promise<void>;
@@ -35,6 +39,11 @@ export class ChatScrollArea extends React.Component<ChatScrollAreaProps> {
   }
 
   public render() {
+    let { styles } = this.props;
+    if (!styles) {
+      styles = {};
+    }
+    const { container } = styles;
     return (
       <div
         ref={scrollContainer => {
@@ -61,10 +70,10 @@ export class ChatScrollArea extends React.Component<ChatScrollAreaProps> {
         }}
         className="react-bell-chat__chat-history"
         style={{
-          ...styles.chatHistory,
+          ...chatScrollAreaStyles.container,
           ...(this.props.maxHeight !== undefined ? { maxHeight: this.props.maxHeight } : {}),
           ...(this.props.minHeight !== undefined ? { minHeight: this.props.minHeight } : {}),
-          ...this.props.containerStyles
+          ...container
         }}
         onScroll={e => (this.scrollContainer && this.scrollContainer.scrollTop <= this.props.loadOldMessagesThreshold) && this.props.onLoadOldMessages()}
       >

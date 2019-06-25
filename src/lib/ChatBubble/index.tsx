@@ -1,37 +1,16 @@
 import * as React from 'react';
-import styles from './styles';
 import Message from '../Message';
 import { Author } from '../Author';
-import { LastSeenAvatarProps } from './../LastSeenAvatar';
-
-const defaultBubbleStyles: ChatBubbleStyles = {
-  userBubble: {},
-  recipientBubble: {},
-  chatBubble: {},
-  text: {},
-  createdOn: {},
-  recipientCreatedOn: {},
-  loadingSpinnerColor: 'rgba(255, 255, 255, 0.55)',
-  isSendIconColor: '#cddc39',
-  systemChatBubbleContainerStyle: {}
-};
-export { defaultBubbleStyles };
-export interface ChatBubbleStyles {
-  userBubble?: React.CSSProperties;
-  recipientBubble?: React.CSSProperties;
-  chatBubble?: React.CSSProperties;
-  text?: React.CSSProperties;
-  createdOn?: React.CSSProperties;
-  recipientCreatedOn?: React.CSSProperties;
-  loadingSpinnerColor?: string;
-  isSendIconColor?: string;
-  systemChatBubbleContainerStyle?: React.CSSProperties;
-}
+import { LastSeenAvatarProps, LastSeenAvatarStyles } from './../LastSeenAvatar';
+import chatBubbleStyles, { ChatBubbleStyles } from './styles';
+export { ChatBubbleStyles };
 
 export interface ChatBubbleProps {
   message: Message;
   author?: Author;
-  bubbleStyles?: ChatBubbleStyles;
+  styles?: ChatBubbleStyles;
+  lastSeenAvatarStyles?: LastSeenAvatarStyles;
+
   bubblesCentered?: boolean;
   yourAuthorId: number;
   isFirstInGroup?: boolean;
@@ -46,7 +25,10 @@ export interface ChatBubbleState {
   mouseOverLastSeenContainer: boolean;
 }
 
-export default class ChatBubble extends React.Component<ChatBubbleProps, ChatBubbleState> {
+export default class ChatBubble extends React.Component<
+  ChatBubbleProps,
+  ChatBubbleState
+> {
   constructor(props: ChatBubbleProps) {
     super(props);
     this.state = {
@@ -58,53 +40,131 @@ export default class ChatBubble extends React.Component<ChatBubbleProps, ChatBub
     if (!this.props.message) {
       return null;
     }
-    const { yourAuthorId } = this.props;
-    let { bubbleStyles } = this.props;
-    bubbleStyles = bubbleStyles || defaultBubbleStyles;
-    const { userBubble, chatBubble, text, recipientBubble } = bubbleStyles;
+
+    let { lastSeenAvatarStyles, yourAuthorId, styles } = this.props;
+
+    if (!styles) {
+      styles = {};
+    }
+    const {
+      userChatBubble,
+      chatBubble,
+      text,
+      userText,
+      recipientText,
+      recipientChatBubble,
+      firstChatBubbleInGroup,
+      userFirstChatBubbleInGroup,
+      recipientFirstChatBubbleInGroup,
+      centerChatBubbleInGroup,
+      userCenterChatBubbleInGroup,
+      recipientCenterChatBubbleInGroup,
+      lastChatBubbleInGroup,
+      userLastChatBubbleInGroup,
+      recipientLastChatBubbleInGroup,
+      userChatBubbleOrientationNormal,
+      recipientChatBubbleOrientationNormal,
+      chatBubbleWrapper,
+      createdOn,
+      userCreatedOn,
+      recipientCreatedOn,
+      isSendIconColor,
+      loadingSpinnerColor,
+      lastSeenByContainer
+    } = styles;
     const youAreAuthor = this.props.message.authorId === yourAuthorId;
 
     // message.id 0 is reserved for blue
-    const chatBubbleStyles: React.CSSProperties = {
-      ...styles.chatBubble,
-      ...(youAreAuthor ? {} : styles.recipientChatBubble),
-      ...(youAreAuthor ? styles.chatBubbleOrientationNormal : styles.recipientChatBubbleOrientationNormal),
-      ...(this.props.isFirstInGroup && (youAreAuthor ? styles.firstChatBubbleInGroup : styles.recipientFirstChatBubbleInGroup)),
-      ...(this.props.isLastInGroup && (youAreAuthor ? styles.lastChatBubbleInGroup : styles.recipientLastChatBubbleInGroup)),
-      ...(this.props.isCenterInGroup && (youAreAuthor ? styles.centerChatBubbleInGroup : styles.recipientCenterChatBubbleInGroup)),
+    const finalChatBubbleStyles: React.CSSProperties = {
+      ...chatBubbleStyles.chatBubble,
       ...chatBubble,
-      ...(youAreAuthor ? userBubble : recipientBubble),
+      ...(youAreAuthor
+        ? chatBubbleStyles.userChatBubble
+        : chatBubbleStyles.recipientChatBubble),
+      ...(youAreAuthor ? userChatBubble : recipientChatBubble),
+      ...(youAreAuthor
+        ? chatBubbleStyles.userChatBubbleOrientationNormal
+        : chatBubbleStyles.recipientChatBubbleOrientationNormal),
+      ...(youAreAuthor
+        ? userChatBubbleOrientationNormal
+        : recipientChatBubbleOrientationNormal),
+      ...(this.props.isFirstInGroup && chatBubbleStyles.firstChatBubbleInGroup),
+      ...(this.props.isFirstInGroup &&
+        (youAreAuthor
+          ? chatBubbleStyles.userFirstChatBubbleInGroup
+          : chatBubbleStyles.recipientFirstChatBubbleInGroup)),
+      ...(this.props.isCenterInGroup &&
+        chatBubbleStyles.centerChatBubbleInGroup),
+      ...(this.props.isCenterInGroup &&
+        (youAreAuthor
+          ? chatBubbleStyles.userCenterChatBubbleInGroup
+          : chatBubbleStyles.recipientCenterChatBubbleInGroup)),
+      ...(this.props.isLastInGroup && chatBubbleStyles.lastChatBubbleInGroup),
+      ...(this.props.isLastInGroup &&
+        (youAreAuthor
+          ? chatBubbleStyles.userLastChatBubbleInGroup
+          : chatBubbleStyles.recipientLastChatBubbleInGroup)),
+      ...(this.props.isFirstInGroup && firstChatBubbleInGroup),
+      ...(this.props.isFirstInGroup &&
+        (youAreAuthor
+          ? userFirstChatBubbleInGroup
+          : recipientFirstChatBubbleInGroup)),
+      ...(this.props.isCenterInGroup && centerChatBubbleInGroup),
+      ...(this.props.isCenterInGroup &&
+        (youAreAuthor
+          ? userCenterChatBubbleInGroup
+          : recipientCenterChatBubbleInGroup)),
+      ...(this.props.isLastInGroup && lastChatBubbleInGroup),
+      ...(this.props.isLastInGroup &&
+        (youAreAuthor
+          ? userLastChatBubbleInGroup
+          : recipientLastChatBubbleInGroup))
     };
 
     return (
       <div
         style={{
-          ...styles.chatBubbleWrapper,
+          ...chatBubbleStyles.chatBubbleWrapper,
+          ...chatBubbleWrapper
         }}
-        className="react-bell-chat__chat-bubble"
       >
-        <div style={chatBubbleStyles}>
-          <p style={{ ...styles.p, ...text }}>{this.props.message.message}</p>
+        <div style={{ ...finalChatBubbleStyles }}>
+          <span
+            style={{
+              ...chatBubbleStyles.text,
+              ...text,
+              ...(youAreAuthor ? userText : recipientText)
+            }}
+          >
+            {this.props.message.message}
+          </span>
           {this.props.message.createdOn && (
             <span
-              className="react-bell-chat__chat-bubble__created-on"
               style={{
-                ...styles.createdOn,
-                ...(youAreAuthor ? bubbleStyles.createdOn : bubbleStyles.recipientCreatedOn)
+                ...chatBubbleStyles.createdOn,
+                ...createdOn,
+                ...(youAreAuthor
+                  ? chatBubbleStyles.userCreatedOn
+                  : chatBubbleStyles.recipientCreatedOn),
+                ...(youAreAuthor ? userCreatedOn : recipientCreatedOn)
               }}
-              title={this.props.message.createdOn.toLocaleString()}
-            >{this.props.message.createdOn.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })}
+              /*title={this.props.message.createdOn.toLocaleString()}*/
+            >
+              {this.props.message.createdOn.toLocaleTimeString([], {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+              })}
             </span>
           )}
           {this.props.message.isSend !== undefined && youAreAuthor && (
             <span
-              className="react-bell-chat__chat-bubble__is-send"
               style={{
-                ...styles.isSend,
+                ...chatBubbleStyles.isSend
               }}
-              title={this.props.message.isSend ? 'Send' : 'Sending'}
+              /*title={this.props.message.isSend ? 'Send' : 'Sending'}*/
             >
-              {this.props.message.isSend ?
+              {this.props.message.isSend ? (
                 <svg
                   width="10px"
                   height="10px"
@@ -114,12 +174,17 @@ export default class ChatBubble extends React.Component<ChatBubbleProps, ChatBub
                   style={{ background: 'none' }}
                 >
                   <path
-                    fill={bubbleStyles.isSendIconColor ? bubbleStyles.isSendIconColor : defaultBubbleStyles.isSendIconColor}
-                    {/* tslint:disable-next-line:max-line-length*/...{}}
+                    fill={
+                      isSendIconColor
+                        ? isSendIconColor
+                        : chatBubbleStyles.isSendIconColor
+                    }
+                    {
+                      /* tslint:disable-next-line:max-line-length*/ ...{}}
                     d="M9,1.7L8.6,1.4C8.5,1.3,8.3,1.3,8.2,1.4L3.9,7C3.8,7.1,3.6,7.1,3.5,7c0,0,0,0,0,0L1.7,5.3c-0.1-0.1-0.3-0.1-0.4,0L1,5.6 C0.9,5.7,0.9,5.9,1,6l2.6,2.6c0.1,0.1,0.3,0.1,0.4,0L9,2.1C9.1,2,9.1,1.8,9,1.7z"
                   />
                 </svg>
-                :
+              ) : (
                 <svg
                   width="10px"
                   height="10px"
@@ -132,7 +197,11 @@ export default class ChatBubble extends React.Component<ChatBubbleProps, ChatBub
                   <path
                     stroke="none"
                     d="M10 50A40 40 0 0 0 90 50A40 45 0 0 1 10 50"
-                    fill={bubbleStyles.loadingSpinnerColor ? bubbleStyles.loadingSpinnerColor : defaultBubbleStyles.loadingSpinnerColor}
+                    fill={
+                      loadingSpinnerColor
+                        ? loadingSpinnerColor
+                        : chatBubbleStyles.loadingSpinnerColor
+                    }
                     transform="rotate(78 50 52.5)"
                   >
                     <animateTransform
@@ -147,27 +216,48 @@ export default class ChatBubble extends React.Component<ChatBubbleProps, ChatBub
                     />
                   </path>
                 </svg>
-              }
+              )}
             </span>
           )}
         </div>
-        {this.props.showRecipientLastSeenMessage && this.props.lastSeenByAuthors &&
-          this.props.lastSeenByAuthors.length > 0 && this.props.customLastSeenAvatar &&
-          (
+        {this.props.showRecipientLastSeenMessage &&
+          this.props.lastSeenByAuthors &&
+          this.props.lastSeenByAuthors.length > 0 &&
+          this.props.customLastSeenAvatar && (
             <div
               className="react-bell-chat__chat-bubble__last-seen-by__container"
-              style={styles.lastSeenByContainer}
-              onMouseEnter={() => this.setState({ mouseOverLastSeenContainer: true })}
-              onMouseLeave={() => this.setState({ mouseOverLastSeenContainer: false })}
-              title={'Last seen by ' + this.props.lastSeenByAuthors.map(a => a.name).join(', ').replace(/,(?!.*,)/gmi, ' and')}
+              style={{
+                ...chatBubbleStyles.lastSeenByContainer,
+                ...lastSeenByContainer
+              }}
+              onMouseEnter={() =>
+                this.setState({ mouseOverLastSeenContainer: true })
+              }
+              onMouseLeave={() =>
+                this.setState({ mouseOverLastSeenContainer: false })
+              }
+              title={
+                'Last seen by ' +
+                this.props.lastSeenByAuthors
+                  .map(a => a.name)
+                  .join(', ')
+                  .replace(/,(?!.*,)/gim, ' and')
+              }
             >
               {this.props.lastSeenByAuthors.map((a, i) => (
                 <this.props.customLastSeenAvatar
                   key={i}
                   author={a}
-                  containerStyle={{
-                    ...(i > 0 && !this.state.mouseOverLastSeenContainer ? { marginTop: -12 } : { marginTop: -4 }),
-                    zIndex: 100 + i
+                  styles={{
+                    ...lastSeenAvatarStyles,
+                    container: {
+                      ...(lastSeenAvatarStyles
+                        ? (lastSeenAvatarStyles.container)
+                        : {}),
+                      ...(i > 0 && !this.state.mouseOverLastSeenContainer
+                        ? { marginTop: -12 }
+                        : { marginTop: -4 })
+                    }
                   }}
                 />
               ))}

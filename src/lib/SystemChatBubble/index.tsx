@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { ChatBubbleProps, defaultBubbleStyles } from '../ChatBubble';
+import { ChatBubbleProps } from '../ChatBubble';
+import { ChatBubbleStyles } from '../ChatBubble/styles';
 
-const styles = {
-  container: {
+const systemChatBubbleStyles: ChatBubbleStyles = {
+  systemChatBubbleContainer: {
     textAlign: 'center',
     fontSize: 12,
     color: 'rgba(0, 0, 0, 0.55)'
@@ -13,21 +14,33 @@ export interface SystemChatBubbleProps extends ChatBubbleProps {
 }
 
 const SystemChatBubble = (props: SystemChatBubbleProps) => {
-  let { bubbleStyles } = props;
-  bubbleStyles = bubbleStyles || defaultBubbleStyles;
+  let {
+    styles
+  } = props;
+  if (!styles) {
+    styles = {};
+  }
+  const {
+    systemChatBubbleContainer,
+    systemChatBubbleText
+  } = styles;
   const time = props.message.createdOn && props.message.createdOn.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
   return props.message && (
     <div
       className="react-bell-chat__chat-bubble react-bell-chat__chat-bubble--system"
       style={{
-        ...styles.container,
-        ...bubbleStyles.systemChatBubbleContainerStyle
+        ...systemChatBubbleStyles.systemChatBubbleContainer,
+        ...systemChatBubbleContainer
       }}
     >
       {time && (
         <span
           className="react-bell-chat__chat-bubble--system__created-on"
           title={props.message.createdOn.toLocaleString()}
+          style={{
+            ...systemChatBubbleStyles.systemChatBubbleText,
+            ...systemChatBubbleText
+          }}
         >
           {time}:{' '}
         </span>

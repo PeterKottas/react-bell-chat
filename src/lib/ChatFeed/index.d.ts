@@ -2,13 +2,25 @@
 import * as React from 'react';
 import { ChatBubbleProps } from '../ChatBubble';
 import Message from '../Message';
+import { ChatFeedStyles } from './styles';
 import { Author } from '../Author';
 import { ChatBubbleStyles } from '../ChatBubble/';
-import { AvatarProps } from '../Avatar';
-import { ChatScrollAreaProps, ChatScrollAreaApi } from '../ChatScrollArea';
-import { LastSeenAvatarProps } from '../LastSeenAvatar';
-import { DateRowProps } from '../DateRow';
-import { LoadingMessagesProps } from '../LoadingMessages';
+import { AvatarProps, AvatarStyles } from '../Avatar';
+import { IsTypingStyles } from '../IsTyping';
+import { ChatScrollAreaProps, ChatScrollAreaApi, ChatScrollAreaStyles } from '../ChatScrollArea';
+import { LastSeenAvatarProps, LastSeenAvatarStyles } from '../LastSeenAvatar';
+import { DateRowProps, DateRowStyles } from '../DateRow';
+import { LoadingMessagesProps, LoadingMessagesStyle } from '../LoadingMessages';
+export interface ChatStyles {
+    bubbleStyles?: ChatBubbleStyles;
+    chatScrollArea?: ChatScrollAreaStyles;
+    avatarStyles?: AvatarStyles;
+    lastSeenAvatarStyles?: LastSeenAvatarStyles;
+    dateRowStyles?: DateRowStyles;
+    loadingMessagesStyle?: LoadingMessagesStyle;
+    isTypingStyles?: IsTypingStyles;
+    chatFeedStyles?: ChatFeedStyles;
+}
 export interface ChatFeedProps {
     className?: string;
     messages: Message[];
@@ -17,7 +29,7 @@ export interface ChatFeedProps {
     hasOldMessages?: boolean;
     loadOldMessagesThreshold?: number;
     bubblesCentered?: boolean;
-    bubbleStyles?: ChatBubbleStyles;
+    styles?: ChatStyles;
     maxHeight?: string | number;
     minHeight?: string | number;
     showDateRow?: boolean;

@@ -185,7 +185,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
           </a>
         </p>
         <div className="install">
-          <code>npm i -S react-bell-chat</code>
+          <code>yarn add react-bell-chat</code>
         </div>
         <div className="chatfeed-wrapper">
           <ChatFeed
