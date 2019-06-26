@@ -83,7 +83,6 @@ export interface ChatFeedProps {
   // Callbacks
   onLoadOldMessages?: () => Promise<void>;
 
-  ref?: (api: ChatFeedApi) => void;
 }
 
 export interface ChatFeedState {

@@ -49,7 +49,6 @@ export interface ChatFeedProps {
     customLastSeenAvatar?: (props: LastSeenAvatarProps) => JSX.Element;
     customDateRow?: (props: DateRowProps) => JSX.Element;
     onLoadOldMessages?: () => Promise<void>;
-    ref?: (api: ChatFeedApi) => void;
 }
 export interface ChatFeedState {
     isLoadingMessages: boolean;
