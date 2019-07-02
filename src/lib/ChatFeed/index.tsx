@@ -39,6 +39,8 @@ import { BubbleGroupStyles } from '../BubbleGroup/styles';
 
 // Model for ChatFeed props.
 
+export { ChatFeedStyles };
+
 export interface ChatFeedClasses {
   chatPanel?: string;
   showRecipientAvatarChatMessages?: string;

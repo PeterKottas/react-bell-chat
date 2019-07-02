@@ -13,6 +13,7 @@ import { LastSeenAvatarProps, LastSeenAvatarStyles, LastSeenAvatarClasses } from
 import { DateRowProps, DateRowStyles, DateRowClasses } from '../DateRow';
 import { LoadingMessagesProps, LoadingMessagesStyle, LoadingMessagesClasses } from '../LoadingMessages';
 import { BubbleGroupStyles } from '../BubbleGroup/styles';
+export { ChatFeedStyles };
 export interface ChatFeedClasses {
     chatPanel?: string;
     showRecipientAvatarChatMessages?: string;
