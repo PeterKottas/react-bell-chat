@@ -4,9 +4,13 @@ import { ChatBubbleProps, ChatBubbleStyles } from '../ChatBubble';
 import { BubbleGroupStyles } from './styles';
 import { Message } from '../';
 import { Author } from '../Author';
-import { AvatarProps } from '../Avatar';
-import { LastSeenAvatarProps, LastSeenAvatarStyles } from '../LastSeenAvatar';
+import { AvatarProps, AvatarClasses } from '../Avatar';
+import { LastSeenAvatarProps, LastSeenAvatarStyles, LastSeenAvatarClasses } from '../LastSeenAvatar';
 import { AvatarStyles } from './../Avatar/index';
+import { ChatBubbleClasses } from './../ChatBubble/index';
+export interface BubbleGroupClasses {
+    chatBubbleWrapper?: string;
+}
 export interface BubbleGroupProps {
     yourAuthorId?: number;
     messages: Message[];
@@ -14,6 +18,12 @@ export interface BubbleGroupProps {
     authors?: Author[];
     showRecipientAvatar?: boolean;
     bubblesCentered?: boolean;
+    className?: string;
+    classes?: BubbleGroupClasses;
+    bubbleClasses?: ChatBubbleClasses;
+    avatarClasses?: AvatarClasses;
+    lastSeenAvatarClasses?: LastSeenAvatarClasses;
+    style?: React.CSSProperties;
     styles?: BubbleGroupStyles;
     bubbleStyles?: ChatBubbleStyles;
     avatarStyles?: AvatarStyles;

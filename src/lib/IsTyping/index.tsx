@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Author } from '../Author';
+import classnames from 'classnames';
 
 const isTypingStyles: IsTypingStyles = {
   container: {
@@ -16,15 +17,25 @@ export interface IsTypingStyles {
   container?: React.CSSProperties;
 }
 
+export interface IsTypingClasses {
+  container?: string;
+}
+
 export interface IsTypingProps {
   typingAuthors: Author[];
   styles?: IsTypingStyles;
+  style?: React.CSSProperties;
+  className?: string;
+  classes?: IsTypingClasses;
 }
 
 const IsTyping = (props: IsTypingProps) => {
-  let { styles } = props;
+  let { styles, classes } = props;
   if (!styles) {
     styles = {};
+  }
+  if (!classes) {
+    classes = {};
   }
   const { container } = styles;
 
@@ -32,8 +43,12 @@ const IsTyping = (props: IsTypingProps) => {
     props.typingAuthors &&
     props.typingAuthors.length > 0 && (
       <div
-        className="react-bell-chat__is-typing__container"
-        style={{ ...isTypingStyles.container, ...container }}
+        className={classnames(
+          'react-bell-chat__is-typing__container',
+          props.className,
+          classes.container
+        )}
+        style={{ ...isTypingStyles.container, ...container, ...props.style }}
       >
         {props.typingAuthors
           .map(a => a.name)

@@ -7,9 +7,19 @@ import DefaultSystemChatBubble from '../SystemChatBubble';
 import bubbleGroupStyles, { BubbleGroupStyles } from './styles';
 import { Message } from '../';
 import { Author } from '../Author';
-import Avatar, { AvatarProps } from '../Avatar';
-import { LastSeenAvatarProps, LastSeenAvatarStyles } from '../LastSeenAvatar';
+import Avatar, { AvatarProps, AvatarClasses } from '../Avatar';
+import {
+  LastSeenAvatarProps,
+  LastSeenAvatarStyles,
+  LastSeenAvatarClasses
+} from '../LastSeenAvatar';
 import { AvatarStyles } from './../Avatar/index';
+import classnames from 'classnames';
+import { ChatBubbleClasses } from './../ChatBubble/index';
+
+export interface BubbleGroupClasses {
+  chatBubbleWrapper?: string;
+}
 
 export interface BubbleGroupProps {
   yourAuthorId?: number;
@@ -19,6 +29,13 @@ export interface BubbleGroupProps {
   showRecipientAvatar?: boolean;
   bubblesCentered?: boolean;
 
+  className?: string;
+  classes?: BubbleGroupClasses;
+  bubbleClasses?: ChatBubbleClasses;
+  avatarClasses?: AvatarClasses;
+  lastSeenAvatarClasses?: LastSeenAvatarClasses;
+
+  style?: React.CSSProperties;
   styles?: BubbleGroupStyles;
   bubbleStyles?: ChatBubbleStyles;
   avatarStyles?: AvatarStyles;
@@ -48,15 +65,18 @@ export default class BubbleGroup extends React.PureComponent<BubbleGroupProps> {
     if (!styles) {
       styles = {};
     }
-    const {
-      chatBubbleWrapper,
-    } = styles;
+    const { chatBubbleWrapper } = styles;
     const {
       bubblesCentered,
 
       bubbleStyles,
       lastSeenAvatarStyles,
       avatarStyles,
+
+      classes,
+      bubbleClasses,
+      lastSeenAvatarClasses,
+      avatarClasses,
 
       showRecipientAvatar,
       customChatBubble,
@@ -70,44 +90,61 @@ export default class BubbleGroup extends React.PureComponent<BubbleGroupProps> {
     const messageNodes = messages.map((message, i) => {
       const props: ChatBubbleProps = {
         yourAuthorId: this.props.yourAuthorId,
-        lastSeenAvatarStyles,
         author,
         message,
         bubblesCentered,
+
         styles: bubbleStyles,
+        lastSeenAvatarStyles,
+
+        classes: bubbleClasses,
+        lastSeenAvatarClasses,
+
         isFirstInGroup: i === 0,
         isLastInGroup: i === messages.length - 1 && messages.length > 1,
         isCenterInGroup: i < messages.length - 1 && messages.length > 1,
-        lastSeenByAuthors: this.props.authors && this.props.authors.filter(a => a.lastSeenMessageId !== undefined && a.lastSeenMessageId === message.id),
+        lastSeenByAuthors:
+          this.props.authors &&
+          this.props.authors.filter(
+            a =>
+              a.lastSeenMessageId !== undefined &&
+              a.lastSeenMessageId === message.id
+          ),
         showRecipientLastSeenMessage,
         customLastSeenAvatar
       };
-      return message.authorId !== undefined ?
-        (
-          <ChatBubble
-            key={i}
-            {...props}
-          />
-        )
-        :
-        (
-          <SystemChatBubble
-            key={i}
-            {...props}
-          />
-        );
+      return message.authorId !== undefined ? (
+        <ChatBubble key={i} {...props} />
+      ) : (
+        <SystemChatBubble key={i} {...props} />
+      );
     });
 
     const youAreAuthor = author && this.props.yourAuthorId === author.id;
 
     return (
-      <div style={{...bubbleGroupStyles.chatBubbleWrapper, ...chatBubbleWrapper}}>
-        {!youAreAuthor && showRecipientAvatar && author && this.props.customAvatar && (
-          <this.props.customAvatar
-            author={this.props.author}
-            styles={avatarStyles}
-          />
+      <div
+        style={{
+          ...bubbleGroupStyles.chatBubbleWrapper,
+          ...chatBubbleWrapper,
+          ...this.props.style
+        }}
+        className={classnames(
+          'react-bell-chat__bubble-group',
+          classes && classes.chatBubbleWrapper,
+          this.props.className
         )}
+      >
+        {!youAreAuthor &&
+          showRecipientAvatar &&
+          author &&
+          this.props.customAvatar && (
+            <this.props.customAvatar
+              author={this.props.author}
+              styles={avatarStyles}
+              classes={avatarClasses}
+            />
+          )}
         {messageNodes}
       </div>
     );

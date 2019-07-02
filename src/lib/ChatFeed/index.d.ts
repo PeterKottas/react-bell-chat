@@ -1,25 +1,24 @@
 /// <reference types="react" />
 import * as React from 'react';
+import { BubbleGroupClasses } from '../BubbleGroup';
 import { ChatBubbleProps } from '../ChatBubble';
 import Message from '../Message';
 import { ChatFeedStyles } from './styles';
 import { Author } from '../Author';
 import { ChatBubbleStyles } from '../ChatBubble/';
-import { AvatarProps, AvatarStyles } from '../Avatar';
-import { IsTypingStyles } from '../IsTyping';
-import { ChatScrollAreaProps, ChatScrollAreaApi, ChatScrollAreaStyles } from '../ChatScrollArea';
-import { LastSeenAvatarProps, LastSeenAvatarStyles } from '../LastSeenAvatar';
-import { DateRowProps, DateRowStyles } from '../DateRow';
-import { LoadingMessagesProps, LoadingMessagesStyle } from '../LoadingMessages';
-export interface ChatStyles {
-    bubbleStyles?: ChatBubbleStyles;
-    chatScrollArea?: ChatScrollAreaStyles;
-    avatarStyles?: AvatarStyles;
-    lastSeenAvatarStyles?: LastSeenAvatarStyles;
-    dateRowStyles?: DateRowStyles;
-    loadingMessagesStyle?: LoadingMessagesStyle;
-    isTypingStyles?: IsTypingStyles;
-    chatFeedStyles?: ChatFeedStyles;
+import { AvatarProps, AvatarStyles, AvatarClasses } from '../Avatar';
+import { IsTypingStyles, IsTypingClasses } from '../IsTyping';
+import { ChatScrollAreaProps, ChatScrollAreaApi, ChatScrollAreaStyles, ChatScrollAreaClasses } from '../ChatScrollArea';
+import { LastSeenAvatarProps, LastSeenAvatarStyles, LastSeenAvatarClasses } from '../LastSeenAvatar';
+import { DateRowProps, DateRowStyles, DateRowClasses } from '../DateRow';
+import { LoadingMessagesProps, LoadingMessagesStyle, LoadingMessagesClasses } from '../LoadingMessages';
+import { BubbleGroupStyles } from '../BubbleGroup/styles';
+export interface ChatFeedClasses {
+    chatPanel?: string;
+    showRecipientAvatarChatMessages?: string;
+    showRecipientLastSeenMessageChatMessages?: string;
+    showIsTypingChatMessages?: string;
+    chatMessages?: string;
 }
 export interface ChatFeedProps {
     className?: string;
@@ -29,7 +28,6 @@ export interface ChatFeedProps {
     hasOldMessages?: boolean;
     loadOldMessagesThreshold?: number;
     bubblesCentered?: boolean;
-    styles?: ChatStyles;
     maxHeight?: string | number;
     minHeight?: string | number;
     showDateRow?: boolean;
@@ -37,9 +35,6 @@ export interface ChatFeedProps {
     showRecipientLastSeenMessage?: boolean;
     showIsTyping?: boolean;
     showLoadingMessages?: boolean;
-    showRecipientAvatarChatMessagesStyle?: React.CSSProperties;
-    showRecipientLastSeenMessageChatMessagesStyle?: React.CSSProperties;
-    showIsTypingChatMessagesStyle?: React.CSSProperties;
     customLoadingMessages?: (props: LoadingMessagesProps) => JSX.Element;
     customChatBubble?: (props: ChatBubbleProps) => JSX.Element;
     customSystemChatBubble?: (props: ChatBubbleProps) => JSX.Element;
@@ -49,6 +44,27 @@ export interface ChatFeedProps {
     customLastSeenAvatar?: (props: LastSeenAvatarProps) => JSX.Element;
     customDateRow?: (props: DateRowProps) => JSX.Element;
     onLoadOldMessages?: () => Promise<void>;
+    style?: React.CSSProperties;
+    styles?: ChatFeedStyles;
+    bubbleGroupStyles?: BubbleGroupStyles;
+    bubbleStyles?: ChatBubbleStyles;
+    chatScrollArea?: ChatScrollAreaStyles;
+    avatarStyles?: AvatarStyles;
+    lastSeenAvatarStyles?: LastSeenAvatarStyles;
+    dateRowStyles?: DateRowStyles;
+    loadingMessagesStyle?: LoadingMessagesStyle;
+    isTypingStyles?: IsTypingStyles;
+    chatFeedStyles?: ChatFeedStyles;
+    classes?: ChatFeedClasses;
+    bubbleClasses?: BubbleGroupClasses;
+    bubbleGroupClasses?: BubbleGroupClasses;
+    chatScrollAreaClasses?: ChatScrollAreaClasses;
+    avatarClasses?: AvatarClasses;
+    lastSeenAvatarClasses?: LastSeenAvatarClasses;
+    dateRowClasses?: DateRowClasses;
+    loadingMessagesClasses?: LoadingMessagesClasses;
+    isTypingClasses?: IsTypingClasses;
+    chatFeedClasses?: ChatFeedStyles;
 }
 export interface ChatFeedState {
     isLoadingMessages: boolean;

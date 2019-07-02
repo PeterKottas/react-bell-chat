@@ -3,42 +3,48 @@
 // other developers make chat interfaces.
 
 import * as React from 'react';
-import BubbleGroup from '../BubbleGroup';
+import BubbleGroup, { BubbleGroupClasses } from '../BubbleGroup';
 import DefaultChatBubble, { ChatBubbleProps } from '../ChatBubble';
 import Message from '../Message';
 import chatStyles, { ChatFeedStyles } from './styles';
 import { Author } from '../Author';
 import { ChatBubbleStyles } from '../ChatBubble/';
-import Avatar, { AvatarProps, AvatarStyles } from '../Avatar';
-import IsTyping, { IsTypingStyles } from '../IsTyping';
+import Avatar, { AvatarProps, AvatarStyles, AvatarClasses } from '../Avatar';
+import IsTyping, { IsTypingStyles, IsTypingClasses } from '../IsTyping';
 import ChatScrollArea, {
   ChatScrollAreaProps,
   ChatScrollAreaApi,
-  ChatScrollAreaStyles
+  ChatScrollAreaStyles,
+  ChatScrollAreaClasses
 } from '../ChatScrollArea';
 import LastSeenAvatar, {
   LastSeenAvatarProps,
-  LastSeenAvatarStyles
+  LastSeenAvatarStyles,
+  LastSeenAvatarClasses
 } from '../LastSeenAvatar';
 import { groupBy } from '../utils/utils';
-import DateRow, { DateRowProps, DateRowStyles } from '../DateRow';
+import DateRow, {
+  DateRowProps,
+  DateRowStyles,
+  DateRowClasses
+} from '../DateRow';
 import LoadingMessages, {
   LoadingMessagesProps,
-  LoadingMessagesStyle
+  LoadingMessagesStyle,
+  LoadingMessagesClasses
 } from '../LoadingMessages';
 import SystemChatBubble from '../SystemChatBubble';
+import classnames from 'classnames';
+import { BubbleGroupStyles } from '../BubbleGroup/styles';
 
 // Model for ChatFeed props.
 
-export interface ChatStyles {
-  bubbleStyles?: ChatBubbleStyles;
-  chatScrollArea?: ChatScrollAreaStyles;
-  avatarStyles?: AvatarStyles;
-  lastSeenAvatarStyles?: LastSeenAvatarStyles;
-  dateRowStyles?: DateRowStyles;
-  loadingMessagesStyle?: LoadingMessagesStyle;
-  isTypingStyles?: IsTypingStyles;
-  chatFeedStyles?: ChatFeedStyles;
+export interface ChatFeedClasses {
+  chatPanel?: string;
+  showRecipientAvatarChatMessages?: string;
+  showRecipientLastSeenMessageChatMessages?: string;
+  showIsTypingChatMessages?: string;
+  chatMessages?: string;
 }
 
 export interface ChatFeedProps {
@@ -54,7 +60,6 @@ export interface ChatFeedProps {
 
   // Visual props
   bubblesCentered?: boolean;
-  styles?: ChatStyles;
   maxHeight?: string | number;
   minHeight?: string | number;
 
@@ -64,11 +69,6 @@ export interface ChatFeedProps {
   showRecipientLastSeenMessage?: boolean;
   showIsTyping?: boolean;
   showLoadingMessages?: boolean;
-
-  // Extra container styles for custom components
-  showRecipientAvatarChatMessagesStyle?: React.CSSProperties;
-  showRecipientLastSeenMessageChatMessagesStyle?: React.CSSProperties;
-  showIsTypingChatMessagesStyle?: React.CSSProperties;
 
   // Custom components
   customLoadingMessages?: (props: LoadingMessagesProps) => JSX.Element;
@@ -83,6 +83,30 @@ export interface ChatFeedProps {
   // Callbacks
   onLoadOldMessages?: () => Promise<void>;
 
+  // Styles
+  style?: React.CSSProperties;
+  styles?: ChatFeedStyles;
+  bubbleGroupStyles?: BubbleGroupStyles;
+  bubbleStyles?: ChatBubbleStyles;
+  chatScrollArea?: ChatScrollAreaStyles;
+  avatarStyles?: AvatarStyles;
+  lastSeenAvatarStyles?: LastSeenAvatarStyles;
+  dateRowStyles?: DateRowStyles;
+  loadingMessagesStyle?: LoadingMessagesStyle;
+  isTypingStyles?: IsTypingStyles;
+  chatFeedStyles?: ChatFeedStyles;
+
+  // Classes
+  classes?: ChatFeedClasses;
+  bubbleClasses?: BubbleGroupClasses;
+  bubbleGroupClasses?: BubbleGroupClasses;
+  chatScrollAreaClasses?: ChatScrollAreaClasses;
+  avatarClasses?: AvatarClasses;
+  lastSeenAvatarClasses?: LastSeenAvatarClasses;
+  dateRowClasses?: DateRowClasses;
+  loadingMessagesClasses?: LoadingMessagesClasses;
+  isTypingClasses?: IsTypingClasses;
+  chatFeedClasses?: ChatFeedStyles;
 }
 
 export interface ChatFeedState {
@@ -204,10 +228,16 @@ export default class ChatFeed
     }
     const {
       bubbleStyles,
+      bubbleClasses,
       dateRowStyles,
+      dateRowClasses,
       avatarStyles,
-      lastSeenAvatarStyles
-    } = styles;
+      avatarClasses,
+      lastSeenAvatarStyles,
+      lastSeenAvatarClasses,
+      bubbleGroupStyles,
+      bubbleGroupClasses
+    } = this.props;
     const { customChatBubble, showRecipientAvatar } = this.props;
 
     // First group by days
@@ -230,6 +260,7 @@ export default class ChatFeed
             key={key}
             date={messagesGroup[0].createdOn}
             styles={dateRowStyles}
+            classes={dateRowClasses}
           />
         );
       }
@@ -257,14 +288,19 @@ export default class ChatFeed
                 showRecipientAvatar={showRecipientAvatar}
                 customChatBubble={customChatBubble}
                 bubbleStyles={bubbleStyles}
+                bubbleClasses={bubbleClasses}
                 avatarStyles={avatarStyles}
+                avatarClasses={avatarClasses}
                 lastSeenAvatarStyles={lastSeenAvatarStyles}
+                lastSeenAvatarClasses={lastSeenAvatarClasses}
                 showRecipientLastSeenMessage={
                   this.props.showRecipientLastSeenMessage
                 }
                 customAvatar={this.props.customAvatar}
                 customLastSeenAvatar={this.props.customLastSeenAvatar}
                 customSystemChatBubble={this.props.customSystemChatBubble}
+                classes={bubbleGroupClasses}
+                styles={bubbleGroupStyles}
               />
             );
           }
@@ -280,7 +316,7 @@ export default class ChatFeed
     if (!styles) {
       styles = {};
     }
-    const { isTypingStyles } = styles;
+    const { isTypingStyles, isTypingClasses } = this.props;
     const typingAuthors =
       this.props.authors &&
       this.props.authors.filter(
@@ -289,27 +325,44 @@ export default class ChatFeed
     if (!typingAuthors || typingAuthors.length === 0) {
       return null;
     }
-    return <IsTyping typingAuthors={typingAuthors} styles={isTypingStyles} />;
+    return (
+      <IsTyping
+        typingAuthors={typingAuthors}
+        styles={isTypingStyles}
+        classes={isTypingClasses}
+      />
+    );
   }
 
   /**
    * render : renders our chat feed
    */
   render() {
-    let { styles } = this.props;
+    let { styles, classes } = this.props;
     if (!styles) {
       styles = {};
     }
-    const { loadingMessagesStyle, chatFeedStyles, chatScrollArea } = styles;
+    if (!classes) {
+      classes = {};
+    }
+    const {
+      loadingMessagesStyle,
+      chatFeedStyles,
+      chatScrollArea,
+      loadingMessagesClasses,
+      chatScrollAreaClasses
+    } = this.props;
     return (
       <div
-        className={
-          'react-bell-chat__chat-panel ' +
-          (this.props.className ? this.props.className : '')
-        }
+        className={classnames(
+          'react-bell-chat__chat-panel',
+          this.props.className,
+          classes.chatPanel
+        )}
         style={{
           ...chatStyles.chatPanel,
-          ...(chatFeedStyles && chatFeedStyles.chatPanel)
+          ...(chatFeedStyles && chatFeedStyles.chatPanel),
+          ...this.props.style
         }}
       >
         <this.props.customScrollArea
@@ -319,24 +372,32 @@ export default class ChatFeed
           loadOldMessagesThreshold={this.props.loadOldMessagesThreshold}
           onLoadOldMessages={this.onLoadOldMessages}
           styles={chatScrollArea}
+          classes={chatScrollAreaClasses}
         >
           <div
             style={{
               ...chatStyles.chatMessages,
               ...(this.props.showRecipientAvatar &&
-                chatStyles.showRecipientAvatarChatMessagesStyle),
+                chatStyles.showRecipientAvatarChatMessages),
               ...(this.props.showRecipientAvatar &&
-                this.props.showRecipientAvatarChatMessagesStyle),
+                styles.showRecipientAvatarChatMessages),
               ...(this.props.showIsTyping &&
-                chatStyles.showIsTypingChatMessagesStyle),
-              ...(this.props.showIsTyping &&
-                this.props.showIsTypingChatMessagesStyle),
+                chatStyles.showIsTypingChatMessages),
+              ...(this.props.showIsTyping && styles.showIsTypingChatMessages),
               ...(this.props.showRecipientLastSeenMessage &&
-                chatStyles.showRecipientLastSeenMessageChatMessagesStyle),
+                chatStyles.showRecipientLastSeenMessageChatMessages),
               ...(this.props.showRecipientLastSeenMessage &&
-                this.props.showRecipientLastSeenMessageChatMessagesStyle)
+                styles.showRecipientLastSeenMessageChatMessages)
             }}
-            className="react-bell-chat__chat-messages"
+            className={classnames(
+              'react-bell-chat__chat-messages',
+              classes.chatMessages,
+              this.props.showRecipientAvatar &&
+                classes.showRecipientAvatarChatMessages,
+              this.props.showIsTyping && classes.showIsTypingChatMessages,
+              this.props.showRecipientLastSeenMessage &&
+                classes.showRecipientLastSeenMessageChatMessages
+            )}
           >
             {
               <this.props.customLoadingMessages
@@ -344,6 +405,7 @@ export default class ChatFeed
                   this.props.showLoadingMessages || this.state.isLoadingMessages
                 }
                 styles={loadingMessagesStyle}
+                classes={loadingMessagesClasses}
               />
             }
             {this.renderMessages(this.props.messages)}

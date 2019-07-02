@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/dist";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 21);
+/******/ 	return __webpack_require__(__webpack_require__.s = 22);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -71,15 +71,74 @@
 /* WEBPACK VAR INJECTION */(function(process) {
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(22);
-} else {
   module.exports = __webpack_require__(23);
+} else {
+  module.exports = __webpack_require__(24);
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
 /* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+  Copyright (c) 2017 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+
+	function classNames () {
+		var classes = [];
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg) && arg.length) {
+				var inner = classNames.apply(null, arg);
+				if (inner) {
+					classes.push(inner);
+				}
+			} else if (argType === 'object') {
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
+					}
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if (typeof module !== 'undefined' && module.exports) {
+		classNames.default = classNames;
+		module.exports = classNames;
+	} else if (true) {
+		// register as 'classnames', consistent with npm package name
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = (function () {
+			return classNames;
+		}).apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else {
+		window.classNames = classNames;
+	}
+}());
+
+
+/***/ }),
+/* 2 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -269,7 +328,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -326,10 +385,10 @@ function invariant(condition, format, a, b, c, d, e, f) {
 }
 
 module.exports = invariant;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -371,7 +430,7 @@ emptyFunction.thatReturnsArgument = function (arg) {
 module.exports = emptyFunction;
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -468,7 +527,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -489,10 +548,10 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 module.exports = emptyObject;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -506,7 +565,7 @@ module.exports = emptyObject;
 
 
 
-var emptyFunction = __webpack_require__(3);
+var emptyFunction = __webpack_require__(4);
 
 /**
  * Similar to invariant but only logs a warning if the condition is not met.
@@ -558,10 +617,10 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 module.exports = warning;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -586,7 +645,8 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var styles_1 = __webpack_require__(35);
+var styles_1 = __webpack_require__(36);
+var classnames_1 = __webpack_require__(1);
 var ChatBubble = /** @class */ (function (_super) {
     __extends(ChatBubble, _super);
     function ChatBubble(props) {
@@ -601,14 +661,17 @@ var ChatBubble = /** @class */ (function (_super) {
         if (!this.props.message) {
             return null;
         }
-        var _a = this.props, lastSeenAvatarStyles = _a.lastSeenAvatarStyles, yourAuthorId = _a.yourAuthorId, styles = _a.styles;
+        var _a = this.props, lastSeenAvatarStyles = _a.lastSeenAvatarStyles, yourAuthorId = _a.yourAuthorId, styles = _a.styles, classes = _a.classes, lastSeenAvatarClasses = _a.lastSeenAvatarClasses;
+        if (!classes) {
+            classes = {};
+        }
         if (!styles) {
             styles = {};
         }
         var userChatBubble = styles.userChatBubble, chatBubble = styles.chatBubble, text = styles.text, userText = styles.userText, recipientText = styles.recipientText, recipientChatBubble = styles.recipientChatBubble, firstChatBubbleInGroup = styles.firstChatBubbleInGroup, userFirstChatBubbleInGroup = styles.userFirstChatBubbleInGroup, recipientFirstChatBubbleInGroup = styles.recipientFirstChatBubbleInGroup, centerChatBubbleInGroup = styles.centerChatBubbleInGroup, userCenterChatBubbleInGroup = styles.userCenterChatBubbleInGroup, recipientCenterChatBubbleInGroup = styles.recipientCenterChatBubbleInGroup, lastChatBubbleInGroup = styles.lastChatBubbleInGroup, userLastChatBubbleInGroup = styles.userLastChatBubbleInGroup, recipientLastChatBubbleInGroup = styles.recipientLastChatBubbleInGroup, userChatBubbleOrientationNormal = styles.userChatBubbleOrientationNormal, recipientChatBubbleOrientationNormal = styles.recipientChatBubbleOrientationNormal, chatBubbleWrapper = styles.chatBubbleWrapper, createdOn = styles.createdOn, userCreatedOn = styles.userCreatedOn, recipientCreatedOn = styles.recipientCreatedOn, isSendIconColor = styles.isSendIconColor, loadingSpinnerColor = styles.loadingSpinnerColor, lastSeenByContainer = styles.lastSeenByContainer;
         var youAreAuthor = this.props.message.authorId === yourAuthorId;
         // message.id 0 is reserved for blue
-        var finalChatBubbleStyles = __assign({}, styles_1.default.chatBubble, chatBubble, (youAreAuthor
+        var finalChatBubbleStyles = __assign({}, styles_1.default.chatBubble, chatBubble, this.props.style, (youAreAuthor
             ? styles_1.default.userChatBubble
             : styles_1.default.recipientChatBubble), (youAreAuthor ? userChatBubble : recipientChatBubble), (youAreAuthor
             ? styles_1.default.userChatBubbleOrientationNormal
@@ -634,20 +697,22 @@ var ChatBubble = /** @class */ (function (_super) {
             (youAreAuthor
                 ? userLastChatBubbleInGroup
                 : recipientLastChatBubbleInGroup)));
-        return (React.createElement("div", { style: __assign({}, styles_1.default.chatBubbleWrapper, chatBubbleWrapper) },
-            React.createElement("div", { style: __assign({}, finalChatBubbleStyles) },
-                React.createElement("span", { style: __assign({}, styles_1.default.text, text, (youAreAuthor ? userText : recipientText)) }, this.props.message.message),
+        return (React.createElement("div", { style: __assign({}, styles_1.default.chatBubbleWrapper, chatBubbleWrapper), className: classnames_1.default('react-bell-chat__chat-bubble__wrapper', this.props.className, classes.chatBubbleWrapper) },
+            React.createElement("div", { style: __assign({}, finalChatBubbleStyles), className: classnames_1.default('react-bell-chat__chat-bubble', this.props.className, classes.chatBubble) },
+                React.createElement("span", { style: __assign({}, styles_1.default.text, text, (youAreAuthor ? userText : recipientText)), className: classnames_1.default('react-bell-chat__chat-bubble__text', classes.text, youAreAuthor ? classes.userText : classes.recipientText) }, this.props.message.message),
                 this.props.message.createdOn && (React.createElement("span", { style: __assign({}, styles_1.default.createdOn, createdOn, (youAreAuthor
                         ? styles_1.default.userCreatedOn
-                        : styles_1.default.recipientCreatedOn), (youAreAuthor ? userCreatedOn : recipientCreatedOn)) }, this.props.message.createdOn.toLocaleTimeString([], {
+                        : styles_1.default.recipientCreatedOn), (youAreAuthor ? userCreatedOn : recipientCreatedOn)), className: classnames_1.default('react-bell-chat__chat-bubble__created-on', classes.createdOn, youAreAuthor
+                        ? classes.userCreatedOn
+                        : classes.recipientCreatedOn), title: this.props.message.createdOn.toLocaleString() }, this.props.message.createdOn.toLocaleTimeString([], {
                     hour: '2-digit',
                     minute: '2-digit',
                     hour12: true
                 }))),
-                this.props.message.isSend !== undefined && youAreAuthor && (React.createElement("span", { style: __assign({}, styles_1.default.isSend) }, this.props.message.isSend ? (React.createElement("svg", { width: "10px", height: "10px", xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 10 10", preserveAspectRatio: "xMidYMid", style: { background: 'none' } },
+                this.props.message.isSend !== undefined && youAreAuthor && (React.createElement("span", { style: __assign({}, styles_1.default.isSend), className: classnames_1.default('react-bell-chat__chat-bubble__is-send', classes.isSend), title: this.props.message.isSend ? 'Send' : 'Sending' }, this.props.message.isSend ? (React.createElement("svg", { width: "10px", height: "10px", xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 10 10", preserveAspectRatio: "xMidYMid", style: { background: 'none' } },
                     React.createElement("path", __assign({ fill: isSendIconColor
                             ? isSendIconColor
-                            : styles_1.default.isSendIconColor }, {}, { d: "M9,1.7L8.6,1.4C8.5,1.3,8.3,1.3,8.2,1.4L3.9,7C3.8,7.1,3.6,7.1,3.5,7c0,0,0,0,0,0L1.7,5.3c-0.1-0.1-0.3-0.1-0.4,0L1,5.6 C0.9,5.7,0.9,5.9,1,6l2.6,2.6c0.1,0.1,0.3,0.1,0.4,0L9,2.1C9.1,2,9.1,1.8,9,1.7z" })))) : (React.createElement("svg", { width: "10px", height: "10px", xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 100 100", preserveAspectRatio: "xMidYMid", className: "lds-eclipse", style: { background: 'none' } },
+                            : styles_1.default.isSendIconColor }, {}, { d: "M9,1.7L8.6,1.4C8.5,1.3,8.3,1.3,8.2,1.4L3.9,7C3.8,7.1,3.6,7.1,3.5,7c0,0,0,0,0,0L1.7,5.3c-0.1-0.1-0.3-0.1-0.4,0L1,5.6 C0.9,5.7,0.9,5.9,1,6l2.6,2.6c0.1,0.1,0.3,0.1,0.4,0L9,2.1C9.1,2,9.1,1.8,9,1.7z" })))) : (React.createElement("svg", { width: "10px", height: "10px", xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 100 100", preserveAspectRatio: "xMidYMid", style: { background: 'none' } },
                     React.createElement("path", { stroke: "none", d: "M10 50A40 40 0 0 0 90 50A40 45 0 0 1 10 50", fill: loadingSpinnerColor
                             ? loadingSpinnerColor
                             : styles_1.default.loadingSpinnerColor, transform: "rotate(78 50 52.5)" },
@@ -655,7 +720,7 @@ var ChatBubble = /** @class */ (function (_super) {
             this.props.showRecipientLastSeenMessage &&
                 this.props.lastSeenByAuthors &&
                 this.props.lastSeenByAuthors.length > 0 &&
-                this.props.customLastSeenAvatar && (React.createElement("div", { className: "react-bell-chat__chat-bubble__last-seen-by__container", style: __assign({}, styles_1.default.lastSeenByContainer, lastSeenByContainer), onMouseEnter: function () {
+                this.props.customLastSeenAvatar && (React.createElement("div", { style: __assign({}, styles_1.default.lastSeenByContainer, lastSeenByContainer), className: classnames_1.default('react-bell-chat__chat-bubble__last-seen-by__container', classes.lastSeenByContainer), onMouseEnter: function () {
                     return _this.setState({ mouseOverLastSeenContainer: true });
                 }, onMouseLeave: function () {
                     return _this.setState({ mouseOverLastSeenContainer: false });
@@ -664,10 +729,10 @@ var ChatBubble = /** @class */ (function (_super) {
                         .map(function (a) { return a.name; })
                         .join(', ')
                         .replace(/,(?!.*,)/gim, ' and') }, this.props.lastSeenByAuthors.map(function (a, i) { return (React.createElement(_this.props.customLastSeenAvatar, { key: i, author: a, styles: __assign({}, lastSeenAvatarStyles, { container: __assign({}, (lastSeenAvatarStyles
-                        ? (lastSeenAvatarStyles.container)
+                        ? lastSeenAvatarStyles.container
                         : {}), (i > 0 && !_this.state.mouseOverLastSeenContainer
                         ? { marginTop: -12 }
-                        : { marginTop: -4 })) }) })); })))));
+                        : { marginTop: -4 })) }), classes: lastSeenAvatarClasses })); })))));
     };
     return ChatBubble;
 }(React.Component));
@@ -675,7 +740,7 @@ exports.default = ChatBubble;
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -690,6 +755,7 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
+var classnames_1 = __webpack_require__(1);
 var styles = {
     container: {
         position: 'absolute',
@@ -710,21 +776,22 @@ var styles = {
     }
 };
 var Avatar = function (props) {
-    return props.author && (React.createElement("div", { style: __assign({}, styles.container, (props.styles && props.styles.container)), title: props.author.name, className: "react-bell-chat__avatar" },
-        React.createElement("span", { style: __assign({}, styles.text, (props.styles && props.styles.text)) }, props.author.avatarName
-            ? props.author.avatarName
-            : props.author.name
+    var author = props.author, classes = props.classes, className = props.className;
+    return (author && (React.createElement("div", { style: __assign({}, styles.container, (props.styles && props.styles.container), (props.style)), title: author.name, className: classnames_1.default('react-bell-chat__avatar', classes && classes.container, className) },
+        React.createElement("span", { style: __assign({}, styles.text, (props.styles && props.styles.text)), className: classnames_1.default('react-bell-chat__avatar__text', classes && classes.text) }, author.avatarName
+            ? author.avatarName
+            : author.name
                 .split(' ')
                 .map(function (part) { return part[0]; })
                 .join('')
                 .toUpperCase()
-                .substr(0, 3))));
+                .substr(0, 3)))));
 };
 exports.default = Avatar;
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -739,32 +806,41 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
+var classnames_1 = __webpack_require__(1);
 var systemChatBubbleStyles = {
     systemChatBubbleContainer: {
         textAlign: 'center',
         fontSize: 12,
         color: 'rgba(0, 0, 0, 0.55)'
-    },
+    }
 };
 var SystemChatBubble = function (props) {
-    var styles = props.styles;
+    var styles = props.styles, classes = props.classes;
     if (!styles) {
         styles = {};
     }
+    if (!classes) {
+        classes = {};
+    }
     var systemChatBubbleContainer = styles.systemChatBubbleContainer, systemChatBubbleText = styles.systemChatBubbleText;
-    var time = props.message.createdOn && props.message.createdOn.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
-    return props.message && (React.createElement("div", { className: "react-bell-chat__chat-bubble react-bell-chat__chat-bubble--system", style: __assign({}, systemChatBubbleStyles.systemChatBubbleContainer, systemChatBubbleContainer) },
-        time && (React.createElement("span", { className: "react-bell-chat__chat-bubble--system__created-on", title: props.message.createdOn.toLocaleString(), style: __assign({}, systemChatBubbleStyles.systemChatBubbleText, systemChatBubbleText) },
+    var time = props.message.createdOn &&
+        props.message.createdOn.toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        });
+    return (props.message && (React.createElement("div", { className: classnames_1.default('react-bell-chat__chat-bubble react-bell-chat__chat-bubble--system', props.className, classes.chatBubble), style: __assign({}, systemChatBubbleStyles.systemChatBubbleContainer, systemChatBubbleContainer, props.style) },
+        time && (React.createElement("span", { className: classnames_1.default('react-bell-chat__chat-bubble--system__created-on', classes.createdOn), title: props.message.createdOn.toLocaleString(), style: __assign({}, systemChatBubbleStyles.systemChatBubbleText, systemChatBubbleText) },
             time,
             ":",
             ' ')),
-        props.message.message));
+        props.message.message)));
 };
 exports.default = SystemChatBubble;
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -778,9 +854,9 @@ exports.default = SystemChatBubble;
 
 
 if (process.env.NODE_ENV !== 'production') {
-  var invariant = __webpack_require__(2);
-  var warning = __webpack_require__(6);
-  var ReactPropTypesSecret = __webpack_require__(24);
+  var invariant = __webpack_require__(3);
+  var warning = __webpack_require__(7);
+  var ReactPropTypesSecret = __webpack_require__(25);
   var loggedTypeFailures = {};
 }
 
@@ -828,10 +904,10 @@ function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
 
 module.exports = checkPropTypes;
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -870,7 +946,7 @@ var ExecutionEnvironment = {
 module.exports = ExecutionEnvironment;
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -912,7 +988,7 @@ function getActiveElement(doc) /*?DOMElement*/{
 module.exports = getActiveElement;
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -983,7 +1059,7 @@ function shallowEqual(objA, objB) {
 module.exports = shallowEqual;
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -998,7 +1074,7 @@ module.exports = shallowEqual;
  * 
  */
 
-var isTextNode = __webpack_require__(27);
+var isTextNode = __webpack_require__(28);
 
 /*eslint-disable no-bitwise */
 
@@ -1026,7 +1102,7 @@ function containsNode(outerNode, innerNode) {
 module.exports = containsNode;
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1041,6 +1117,7 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
+var classnames_1 = __webpack_require__(1);
 var isTypingStyles = {
     container: {
         position: 'absolute',
@@ -1052,13 +1129,16 @@ var isTypingStyles = {
     }
 };
 var IsTyping = function (props) {
-    var styles = props.styles;
+    var styles = props.styles, classes = props.classes;
     if (!styles) {
         styles = {};
     }
+    if (!classes) {
+        classes = {};
+    }
     var container = styles.container;
     return (props.typingAuthors &&
-        props.typingAuthors.length > 0 && (React.createElement("div", { className: "react-bell-chat__is-typing__container", style: __assign({}, isTypingStyles.container, container) }, props.typingAuthors
+        props.typingAuthors.length > 0 && (React.createElement("div", { className: classnames_1.default('react-bell-chat__is-typing__container', props.className, classes.container), style: __assign({}, isTypingStyles.container, container, props.style) }, props.typingAuthors
         .map(function (a) { return a.name; })
         .join(', ')
         .replace(/,(?!.*,)/gim, ' and') +
@@ -1069,7 +1149,7 @@ exports.default = IsTyping;
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1094,10 +1174,12 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
+var classnames_1 = __webpack_require__(1);
 var chatScrollAreaStyles = {
     container: {
         overflow: 'auto',
-        padding: '0 10px',
+        padding: '0 10px'
+        // flexDirection: 'column-reverse'
     }
 };
 var ChatScrollArea = /** @class */ (function (_super) {
@@ -1107,36 +1189,66 @@ var ChatScrollArea = /** @class */ (function (_super) {
     }
     ChatScrollArea.prototype.render = function () {
         var _this = this;
-        var styles = this.props.styles;
+        var _a = this.props, styles = _a.styles, classes = _a.classes;
         if (!styles) {
             styles = {};
+        }
+        if (!classes) {
+            classes = {};
         }
         var container = styles.container;
         return (React.createElement("div", { ref: function (scrollContainer) {
                 _this.scrollContainer = scrollContainer;
-                _this.props.apiRef && _this.props.apiRef({
-                    scrollToBottom: function (behavior) {
-                        if (behavior === void 0) { behavior = 'auto'; }
-                        return scrollContainer && (scrollContainer.scrollTo ?
-                            scrollContainer.scrollTo({
-                                top: scrollContainer.scrollHeight,
-                                behavior: behavior
-                            }) :
-                            scrollContainer.scrollTop = scrollContainer.scrollHeight);
-                    },
-                    scrollTo: function (top) { return scrollContainer && (scrollContainer.scrollTo ?
-                        scrollContainer.scrollTo({
-                            top: top
-                        })
-                        :
-                            scrollContainer.scrollTop = top); },
-                    scrolledToBottom: function () { return _this.scrollContainer.clientHeight + _this.scrollContainer.scrollTop === _this.scrollContainer.scrollHeight; },
-                    scrolledToLoadThreshold: function () { return _this.scrollContainer && _this.scrollContainer.scrollTop <= _this.props.loadOldMessagesThreshold; },
-                    scrollTop: function () { return _this.scrollContainer && _this.scrollContainer.scrollTop; },
-                    scrollHeight: function () { return _this.scrollContainer && _this.scrollContainer.scrollHeight; },
-                    clientHeight: function () { return _this.scrollContainer && _this.scrollContainer.clientHeight; },
-                });
-            }, className: "react-bell-chat__chat-history", style: __assign({}, chatScrollAreaStyles.container, (this.props.maxHeight !== undefined ? { maxHeight: this.props.maxHeight } : {}), (this.props.minHeight !== undefined ? { minHeight: this.props.minHeight } : {}), container), onScroll: function (e) { return (_this.scrollContainer && _this.scrollContainer.scrollTop <= _this.props.loadOldMessagesThreshold) && _this.props.onLoadOldMessages(); } }, this.props.children));
+                _this.props.apiRef &&
+                    _this.props.apiRef({
+                        scrollToBottom: function (behavior) {
+                            if (behavior === void 0) { behavior = 'auto'; }
+                            return scrollContainer &&
+                                (scrollContainer.scrollTo
+                                    ? scrollContainer.scrollTo({
+                                        top: scrollContainer.scrollHeight,
+                                        behavior: behavior
+                                    })
+                                    : (scrollContainer.scrollTop = scrollContainer.scrollHeight));
+                        },
+                        scrollTo: function (top) {
+                            return scrollContainer &&
+                                (scrollContainer.scrollTo
+                                    ? scrollContainer.scrollTo({
+                                        top: top
+                                    })
+                                    : (scrollContainer.scrollTop = top));
+                        },
+                        scrolledToBottom: function () {
+                            return _this.scrollContainer.clientHeight +
+                                _this.scrollContainer.scrollTop ===
+                                _this.scrollContainer.scrollHeight;
+                        },
+                        scrolledToLoadThreshold: function () {
+                            return _this.scrollContainer &&
+                                _this.scrollContainer.scrollTop <=
+                                    _this.props.loadOldMessagesThreshold;
+                        },
+                        scrollTop: function () {
+                            return _this.scrollContainer && _this.scrollContainer.scrollTop;
+                        },
+                        scrollHeight: function () {
+                            return _this.scrollContainer && _this.scrollContainer.scrollHeight;
+                        },
+                        clientHeight: function () {
+                            return _this.scrollContainer && _this.scrollContainer.clientHeight;
+                        }
+                    });
+            }, className: classnames_1.default('react-bell-chat__chat-scroll-area', this.props.className, classes.container), style: __assign({}, chatScrollAreaStyles.container, (this.props.maxHeight !== undefined
+                ? { maxHeight: this.props.maxHeight }
+                : {}), (this.props.minHeight !== undefined
+                ? { minHeight: this.props.minHeight }
+                : {}), container, this.props.style), onScroll: function (e) {
+                return _this.scrollContainer &&
+                    _this.scrollContainer.scrollTop <=
+                        _this.props.loadOldMessagesThreshold &&
+                    _this.props.onLoadOldMessages();
+            } }, this.props.children));
     };
     return ChatScrollArea;
 }(React.Component));
@@ -1145,7 +1257,7 @@ exports.default = ChatScrollArea;
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1160,6 +1272,7 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
+var classnames_1 = __webpack_require__(1);
 var lastSeenAvatarStyles = {
     container: {
         width: 20,
@@ -1180,13 +1293,16 @@ var lastSeenAvatarStyles = {
     }
 };
 var LastSeenAvatar = function (props) {
-    var styles = props.styles;
+    var styles = props.styles, classes = props.classes;
     if (!styles) {
         styles = {};
     }
+    if (!classes) {
+        classes = {};
+    }
     var container = styles.container, text = styles.text;
-    return (props.author && (React.createElement("div", { style: __assign({}, lastSeenAvatarStyles.container, container), className: "react-bell-chat__last-seen-avatar" },
-        React.createElement("span", { style: __assign({}, lastSeenAvatarStyles.text, text) }, props.author.lastSeenAvatarName
+    return (props.author && (React.createElement("div", { style: __assign({}, lastSeenAvatarStyles.container, container, props.style), className: classnames_1.default('react-bell-chat__last-seen-avatar', props.className, classes.container) },
+        React.createElement("span", { style: __assign({}, lastSeenAvatarStyles.text, text), className: classnames_1.default('react-bell-chat__last-seen-avatar__text', classes.text) }, props.author.lastSeenAvatarName
             ? props.author.lastSeenAvatarName
             : props.author.name[0].toUpperCase()))));
 };
@@ -1194,7 +1310,7 @@ exports.default = LastSeenAvatar;
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1219,10 +1335,11 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var ChatBubble_1 = __webpack_require__(7);
-var SystemChatBubble_1 = __webpack_require__(9);
-var styles_1 = __webpack_require__(36);
-var Avatar_1 = __webpack_require__(8);
+var ChatBubble_1 = __webpack_require__(8);
+var SystemChatBubble_1 = __webpack_require__(10);
+var styles_1 = __webpack_require__(37);
+var Avatar_1 = __webpack_require__(9);
+var classnames_1 = __webpack_require__(1);
 var BubbleGroup = /** @class */ (function (_super) {
     __extends(BubbleGroup, _super);
     function BubbleGroup(props) {
@@ -1235,32 +1352,38 @@ var BubbleGroup = /** @class */ (function (_super) {
             styles = {};
         }
         var chatBubbleWrapper = styles.chatBubbleWrapper;
-        var _a = this.props, bubblesCentered = _a.bubblesCentered, bubbleStyles = _a.bubbleStyles, lastSeenAvatarStyles = _a.lastSeenAvatarStyles, avatarStyles = _a.avatarStyles, showRecipientAvatar = _a.showRecipientAvatar, customChatBubble = _a.customChatBubble, customSystemChatBubble = _a.customSystemChatBubble, showRecipientLastSeenMessage = _a.showRecipientLastSeenMessage, customLastSeenAvatar = _a.customLastSeenAvatar;
+        var _a = this.props, bubblesCentered = _a.bubblesCentered, bubbleStyles = _a.bubbleStyles, lastSeenAvatarStyles = _a.lastSeenAvatarStyles, avatarStyles = _a.avatarStyles, classes = _a.classes, bubbleClasses = _a.bubbleClasses, lastSeenAvatarClasses = _a.lastSeenAvatarClasses, avatarClasses = _a.avatarClasses, showRecipientAvatar = _a.showRecipientAvatar, customChatBubble = _a.customChatBubble, customSystemChatBubble = _a.customSystemChatBubble, showRecipientLastSeenMessage = _a.showRecipientLastSeenMessage, customLastSeenAvatar = _a.customLastSeenAvatar;
         var ChatBubble = customChatBubble || ChatBubble_1.default;
         var SystemChatBubble = customSystemChatBubble || SystemChatBubble_1.default;
         var messageNodes = messages.map(function (message, i) {
             var props = {
                 yourAuthorId: _this.props.yourAuthorId,
-                lastSeenAvatarStyles: lastSeenAvatarStyles,
                 author: author,
                 message: message,
                 bubblesCentered: bubblesCentered,
                 styles: bubbleStyles,
+                lastSeenAvatarStyles: lastSeenAvatarStyles,
+                classes: bubbleClasses,
+                lastSeenAvatarClasses: lastSeenAvatarClasses,
                 isFirstInGroup: i === 0,
                 isLastInGroup: i === messages.length - 1 && messages.length > 1,
                 isCenterInGroup: i < messages.length - 1 && messages.length > 1,
-                lastSeenByAuthors: _this.props.authors && _this.props.authors.filter(function (a) { return a.lastSeenMessageId !== undefined && a.lastSeenMessageId === message.id; }),
+                lastSeenByAuthors: _this.props.authors &&
+                    _this.props.authors.filter(function (a) {
+                        return a.lastSeenMessageId !== undefined &&
+                            a.lastSeenMessageId === message.id;
+                    }),
                 showRecipientLastSeenMessage: showRecipientLastSeenMessage,
                 customLastSeenAvatar: customLastSeenAvatar
             };
-            return message.authorId !== undefined ?
-                (React.createElement(ChatBubble, __assign({ key: i }, props)))
-                :
-                    (React.createElement(SystemChatBubble, __assign({ key: i }, props)));
+            return message.authorId !== undefined ? (React.createElement(ChatBubble, __assign({ key: i }, props))) : (React.createElement(SystemChatBubble, __assign({ key: i }, props)));
         });
         var youAreAuthor = author && this.props.yourAuthorId === author.id;
-        return (React.createElement("div", { style: __assign({}, styles_1.default.chatBubbleWrapper, chatBubbleWrapper) },
-            !youAreAuthor && showRecipientAvatar && author && this.props.customAvatar && (React.createElement(this.props.customAvatar, { author: this.props.author, styles: avatarStyles })),
+        return (React.createElement("div", { style: __assign({}, styles_1.default.chatBubbleWrapper, chatBubbleWrapper, this.props.style), className: classnames_1.default('react-bell-chat__bubble-group', classes && classes.chatBubbleWrapper, this.props.className) },
+            !youAreAuthor &&
+                showRecipientAvatar &&
+                author &&
+                this.props.customAvatar && (React.createElement(this.props.customAvatar, { author: this.props.author, styles: avatarStyles, classes: avatarClasses })),
             messageNodes));
     };
     BubbleGroup.prototype.render = function () {
@@ -1279,40 +1402,6 @@ exports.default = BubbleGroup;
 
 
 /***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var React = __webpack_require__(0);
-var dateRowStyles = {
-    container: {
-        textAlign: 'center',
-        fontSize: 12,
-        color: 'rgba(0, 0, 0, 0.55)'
-    },
-};
-var DateRow = function (props) {
-    var styles = props.styles;
-    if (!styles) {
-        styles = {};
-    }
-    var container = styles.container;
-    return props.date && (React.createElement("div", { className: "react-bell-chat__date-row", style: __assign({}, dateRowStyles.container, container), title: props.date.toLocaleDateString([], { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }, props.date.toLocaleDateString()));
-};
-exports.default = DateRow;
-
-
-/***/ }),
 /* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1328,24 +1417,73 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
+var classnames_1 = __webpack_require__(1);
+var dateRowStyles = {
+    container: {
+        textAlign: 'center',
+        fontSize: 12,
+        color: 'rgba(0, 0, 0, 0.55)'
+    }
+};
+var DateRow = function (props) {
+    var styles = props.styles, classes = props.classes;
+    if (!styles) {
+        styles = {};
+    }
+    if (!classes) {
+        classes = {};
+    }
+    var container = styles.container;
+    return (props.date && (React.createElement("div", { className: classnames_1.default('react-bell-chat__date-row', props.className, classes.container), style: __assign({}, dateRowStyles.container, container, props.style), title: props.date.toLocaleDateString([], {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        }) }, props.date.toLocaleDateString())));
+};
+exports.default = DateRow;
+
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var React = __webpack_require__(0);
+var classnames_1 = __webpack_require__(1);
 var loadingMessagesStyles = {
-    containerStyle: {
+    container: {
         display: 'flex',
         marginBottom: 10
     },
     spinnerColor: 'rgb(0, 132, 255)'
 };
 var LoadingMessages = function (props) {
-    var styles = props.styles;
+    var styles = props.styles, classes = props.classes;
     if (!styles) {
         styles = {};
     }
-    var containerStyle = styles.containerStyle, spinnerColor = styles.spinnerColor;
-    return (React.createElement("div", { className: "react-bell-chat__loading-messages", style: __assign({}, loadingMessagesStyles.containerStyle, containerStyle) },
+    if (!classes) {
+        classes = {};
+    }
+    var container = styles.container, spinnerColor = styles.spinnerColor;
+    return (React.createElement("div", { className: classnames_1.default('react-bell-chat__loading-messages', props.className, classes.container), style: __assign({}, loadingMessagesStyles.container, container, props.style) },
         React.createElement("svg", { width: "40px", height: "40px", xmlns: "http://www.w3.org/2000/svg", viewBox: "0 0 100 100", preserveAspectRatio: "xMidYMid", style: {
                 background: 'none',
                 margin: 'auto',
-                fill: spinnerColor ? spinnerColor : loadingMessagesStyles.spinnerColor,
+                fill: spinnerColor
+                    ? spinnerColor
+                    : loadingMessagesStyles.spinnerColor,
                 opacity: props.isVisible ? 1 : 0,
                 transition: '0.3s all ease-in-out'
             } },
@@ -1357,7 +1495,7 @@ exports.default = LoadingMessages;
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1382,8 +1520,8 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var react_dom_1 = __webpack_require__(25);
-var lib_1 = __webpack_require__(34);
+var react_dom_1 = __webpack_require__(26);
+var lib_1 = __webpack_require__(35);
 var styles = {
     button: {
         backgroundColor: '#fff',
@@ -1606,7 +1744,7 @@ react_dom_1.render(React.createElement(Chat, null), document.getElementById('cha
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1619,7 +1757,7 @@ react_dom_1.render(React.createElement(Chat, null), document.getElementById('cha
  * LICENSE file in the root directory of this source tree.
  */
 
-var m=__webpack_require__(4),n=__webpack_require__(2),p=__webpack_require__(5),q=__webpack_require__(3),r="function"===typeof Symbol&&Symbol["for"],t=r?Symbol["for"]("react.element"):60103,u=r?Symbol["for"]("react.portal"):60106,v=r?Symbol["for"]("react.fragment"):60107,w=r?Symbol["for"]("react.strict_mode"):60108,x=r?Symbol["for"]("react.provider"):60109,y=r?Symbol["for"]("react.context"):60110,z=r?Symbol["for"]("react.async_mode"):60111,A=r?Symbol["for"]("react.forward_ref"):
+var m=__webpack_require__(5),n=__webpack_require__(3),p=__webpack_require__(6),q=__webpack_require__(4),r="function"===typeof Symbol&&Symbol["for"],t=r?Symbol["for"]("react.element"):60103,u=r?Symbol["for"]("react.portal"):60106,v=r?Symbol["for"]("react.fragment"):60107,w=r?Symbol["for"]("react.strict_mode"):60108,x=r?Symbol["for"]("react.provider"):60109,y=r?Symbol["for"]("react.context"):60110,z=r?Symbol["for"]("react.async_mode"):60111,A=r?Symbol["for"]("react.forward_ref"):
 60112,B="function"===typeof Symbol&&Symbol.iterator;function C(a){for(var b=arguments.length-1,e="http://reactjs.org/docs/error-decoder.html?invariant\x3d"+a,c=0;c<b;c++)e+="\x26args[]\x3d"+encodeURIComponent(arguments[c+1]);n(!1,"Minified React error #"+a+"; visit %s for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ",e)}var D={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}};
 function E(a,b,e){this.props=a;this.context=b;this.refs=p;this.updater=e||D}E.prototype.isReactComponent={};E.prototype.setState=function(a,b){"object"!==typeof a&&"function"!==typeof a&&null!=a?C("85"):void 0;this.updater.enqueueSetState(this,a,b,"setState")};E.prototype.forceUpdate=function(a){this.updater.enqueueForceUpdate(this,a,"forceUpdate")};function F(){}F.prototype=E.prototype;function G(a,b,e){this.props=a;this.context=b;this.refs=p;this.updater=e||D}var H=G.prototype=new F;
 H.constructor=G;m(H,E.prototype);H.isPureReactComponent=!0;var I={current:null},J=Object.prototype.hasOwnProperty,K={key:!0,ref:!0,__self:!0,__source:!0};
@@ -1635,7 +1773,7 @@ Y=X&&W||X;module.exports=Y["default"]?Y["default"]:Y;
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1656,12 +1794,12 @@ if (process.env.NODE_ENV !== "production") {
   (function() {
 'use strict';
 
-var _assign = __webpack_require__(4);
-var invariant = __webpack_require__(2);
-var emptyObject = __webpack_require__(5);
-var warning = __webpack_require__(6);
-var emptyFunction = __webpack_require__(3);
-var checkPropTypes = __webpack_require__(10);
+var _assign = __webpack_require__(5);
+var invariant = __webpack_require__(3);
+var emptyObject = __webpack_require__(6);
+var warning = __webpack_require__(7);
+var emptyFunction = __webpack_require__(4);
+var checkPropTypes = __webpack_require__(11);
 
 // TODO: this is special because it gets imported during build.
 
@@ -3054,10 +3192,10 @@ module.exports = react;
   })();
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3076,7 +3214,7 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3114,15 +3252,15 @@ if (process.env.NODE_ENV === 'production') {
   // DCE check should happen before ReactDOM bundle executes so that
   // DevTools can report bad minification during injection.
   checkDCE();
-  module.exports = __webpack_require__(26);
+  module.exports = __webpack_require__(27);
 } else {
-  module.exports = __webpack_require__(29);
+  module.exports = __webpack_require__(30);
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3138,7 +3276,7 @@ if (process.env.NODE_ENV === 'production') {
 /*
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
-var ba=__webpack_require__(2),ea=__webpack_require__(0),m=__webpack_require__(11),A=__webpack_require__(4),C=__webpack_require__(3),fa=__webpack_require__(12),ha=__webpack_require__(13),ja=__webpack_require__(14),ka=__webpack_require__(5);
+var ba=__webpack_require__(3),ea=__webpack_require__(0),m=__webpack_require__(12),A=__webpack_require__(5),C=__webpack_require__(4),fa=__webpack_require__(13),ha=__webpack_require__(14),ja=__webpack_require__(15),ka=__webpack_require__(6);
 function D(a){for(var b=arguments.length-1,c="http://reactjs.org/docs/error-decoder.html?invariant\x3d"+a,d=0;d<b;d++)c+="\x26args[]\x3d"+encodeURIComponent(arguments[d+1]);ba(!1,"Minified React error #"+a+"; visit %s for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ",c)}ea?void 0:D("227");
 function ma(a,b,c,d,e,f,h,g,k){this._hasCaughtError=!1;this._caughtError=null;var v=Array.prototype.slice.call(arguments,3);try{b.apply(c,v)}catch(l){this._caughtError=l,this._hasCaughtError=!0}}
 var E={_caughtError:null,_hasCaughtError:!1,_rethrowError:null,_hasRethrowError:!1,invokeGuardedCallback:function(a,b,c,d,e,f,h,g,k){ma.apply(E,arguments)},invokeGuardedCallbackAndCatchFirstError:function(a,b,c,d,e,f,h,g,k){E.invokeGuardedCallback.apply(this,arguments);if(E.hasCaughtError()){var v=E.clearCaughtError();E._hasRethrowError||(E._hasRethrowError=!0,E._rethrowError=v)}},rethrowCaughtError:function(){return na.apply(E,arguments)},hasCaughtError:function(){return E._hasCaughtError},clearCaughtError:function(){if(E._hasCaughtError){var a=
@@ -3375,7 +3513,7 @@ X.injectIntoDevTools({findFiberByHostInstance:Ua,bundleType:0,version:"16.3.2",r
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3390,7 +3528,7 @@ X.injectIntoDevTools({findFiberByHostInstance:Ua,bundleType:0,version:"16.3.2",r
  * @typechecks
  */
 
-var isNode = __webpack_require__(28);
+var isNode = __webpack_require__(29);
 
 /**
  * @param {*} object The object to check.
@@ -3403,7 +3541,7 @@ function isTextNode(object) {
 module.exports = isTextNode;
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3431,7 +3569,7 @@ function isNode(object) {
 module.exports = isNode;
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3452,19 +3590,19 @@ if (process.env.NODE_ENV !== "production") {
   (function() {
 'use strict';
 
-var invariant = __webpack_require__(2);
+var invariant = __webpack_require__(3);
 var React = __webpack_require__(0);
-var warning = __webpack_require__(6);
-var ExecutionEnvironment = __webpack_require__(11);
-var _assign = __webpack_require__(4);
-var emptyFunction = __webpack_require__(3);
-var checkPropTypes = __webpack_require__(10);
-var getActiveElement = __webpack_require__(12);
-var shallowEqual = __webpack_require__(13);
-var containsNode = __webpack_require__(14);
-var emptyObject = __webpack_require__(5);
-var hyphenateStyleName = __webpack_require__(30);
-var camelizeStyleName = __webpack_require__(32);
+var warning = __webpack_require__(7);
+var ExecutionEnvironment = __webpack_require__(12);
+var _assign = __webpack_require__(5);
+var emptyFunction = __webpack_require__(4);
+var checkPropTypes = __webpack_require__(11);
+var getActiveElement = __webpack_require__(13);
+var shallowEqual = __webpack_require__(14);
+var containsNode = __webpack_require__(15);
+var emptyObject = __webpack_require__(6);
+var hyphenateStyleName = __webpack_require__(31);
+var camelizeStyleName = __webpack_require__(33);
 
 // Relying on the `invariant()` implementation lets us
 // have preserve the format and params in the www builds.
@@ -20090,10 +20228,10 @@ module.exports = reactDom;
   })();
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20108,7 +20246,7 @@ module.exports = reactDom;
 
 
 
-var hyphenate = __webpack_require__(31);
+var hyphenate = __webpack_require__(32);
 
 var msPattern = /^ms-/;
 
@@ -20135,7 +20273,7 @@ function hyphenateStyleName(string) {
 module.exports = hyphenateStyleName;
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20171,7 +20309,7 @@ function hyphenate(string) {
 module.exports = hyphenate;
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20186,7 +20324,7 @@ module.exports = hyphenate;
 
 
 
-var camelize = __webpack_require__(33);
+var camelize = __webpack_require__(34);
 
 var msPattern = /^-ms-/;
 
@@ -20214,7 +20352,7 @@ function camelizeStyleName(string) {
 module.exports = camelizeStyleName;
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20249,38 +20387,38 @@ function camelize(string) {
 module.exports = camelize;
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var _1 = __webpack_require__(7);
+var _1 = __webpack_require__(8);
 exports.ChatBubble = _1.default;
-var _2 = __webpack_require__(8);
+var _2 = __webpack_require__(9);
 exports.Avatar = _2.default;
-var _3 = __webpack_require__(15);
+var _3 = __webpack_require__(16);
 exports.IsTyping = _3.default;
-var _4 = __webpack_require__(16);
+var _4 = __webpack_require__(17);
 exports.ChatScrollArea = _4.default;
-var _5 = __webpack_require__(17);
+var _5 = __webpack_require__(18);
 exports.LastSeenAvatar = _5.default;
-var BubbleGroup_1 = __webpack_require__(18);
+var BubbleGroup_1 = __webpack_require__(19);
 exports.BubbleGroup = BubbleGroup_1.default;
-var _6 = __webpack_require__(37);
+var _6 = __webpack_require__(38);
 exports.ChatFeed = _6.default;
-var _7 = __webpack_require__(40);
+var _7 = __webpack_require__(41);
 exports.ChatInput = _7.default;
-var _8 = __webpack_require__(9);
+var _8 = __webpack_require__(10);
 exports.SystemChatBubble = _8.default;
-var _9 = __webpack_require__(19);
+var _9 = __webpack_require__(20);
 exports.DateRow = _9.default;
-var _10 = __webpack_require__(20);
+var _10 = __webpack_require__(21);
 exports.LoadingMessages = _10.default;
 
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20369,7 +20507,7 @@ exports.default = styles;
 
 
 /***/ }),
-/* 36 */
+/* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20381,17 +20519,11 @@ exports.default = {
         marginBottom: 10,
         position: 'relative'
     },
-    bubbleGroupHeader: {
-        margin: 0,
-        fontSize: 14,
-        fontWeight: 400,
-        color: '#999'
-    }
 };
 
 
 /***/ }),
-/* 37 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20454,17 +20586,18 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var BubbleGroup_1 = __webpack_require__(18);
-var ChatBubble_1 = __webpack_require__(7);
-var styles_1 = __webpack_require__(38);
-var Avatar_1 = __webpack_require__(8);
-var IsTyping_1 = __webpack_require__(15);
-var ChatScrollArea_1 = __webpack_require__(16);
-var LastSeenAvatar_1 = __webpack_require__(17);
-var utils_1 = __webpack_require__(39);
-var DateRow_1 = __webpack_require__(19);
-var LoadingMessages_1 = __webpack_require__(20);
-var SystemChatBubble_1 = __webpack_require__(9);
+var BubbleGroup_1 = __webpack_require__(19);
+var ChatBubble_1 = __webpack_require__(8);
+var styles_1 = __webpack_require__(39);
+var Avatar_1 = __webpack_require__(9);
+var IsTyping_1 = __webpack_require__(16);
+var ChatScrollArea_1 = __webpack_require__(17);
+var LastSeenAvatar_1 = __webpack_require__(18);
+var utils_1 = __webpack_require__(40);
+var DateRow_1 = __webpack_require__(20);
+var LoadingMessages_1 = __webpack_require__(21);
+var SystemChatBubble_1 = __webpack_require__(10);
+var classnames_1 = __webpack_require__(1);
 var DefaultChatBubbleFunc = function (props) { return React.createElement(ChatBubble_1.default, __assign({}, props)); };
 var DefaultScrollAreaFunc = function (props) { return React.createElement(ChatScrollArea_1.default, __assign({}, props)); };
 // React component to render a complete chat feed
@@ -20533,8 +20666,8 @@ var ChatFeed = /** @class */ (function (_super) {
         if (!styles) {
             styles = {};
         }
-        var bubbleStyles = styles.bubbleStyles, dateRowStyles = styles.dateRowStyles, avatarStyles = styles.avatarStyles, lastSeenAvatarStyles = styles.lastSeenAvatarStyles;
-        var _a = this.props, customChatBubble = _a.customChatBubble, showRecipientAvatar = _a.showRecipientAvatar;
+        var _a = this.props, bubbleStyles = _a.bubbleStyles, bubbleClasses = _a.bubbleClasses, dateRowStyles = _a.dateRowStyles, dateRowClasses = _a.dateRowClasses, avatarStyles = _a.avatarStyles, avatarClasses = _a.avatarClasses, lastSeenAvatarStyles = _a.lastSeenAvatarStyles, lastSeenAvatarClasses = _a.lastSeenAvatarClasses, bubbleGroupStyles = _a.bubbleGroupStyles, bubbleGroupClasses = _a.bubbleGroupClasses;
+        var _b = this.props, customChatBubble = _b.customChatBubble, showRecipientAvatar = _b.showRecipientAvatar;
         // First group by days
         var groups = utils_1.groupBy(messages, function (item) { return item.createdOn && item.createdOn.toDateString(); });
         var messageNodes = [];
@@ -20545,7 +20678,7 @@ var ChatFeed = /** @class */ (function (_super) {
             if (messagesGroup[0] &&
                 messagesGroup[0].createdOn &&
                 _this.props.showDateRow) {
-                messageNodes.push(React.createElement(_this.props.customDateRow, { key: key, date: messagesGroup[0].createdOn, styles: dateRowStyles }));
+                messageNodes.push(React.createElement(_this.props.customDateRow, { key: key, date: messagesGroup[0].createdOn, styles: dateRowStyles, classes: dateRowClasses }));
             }
             messageNodes = messageNodes.concat(messagesGroup.map(function (message, index) {
                 group.push(message);
@@ -20557,7 +20690,7 @@ var ChatFeed = /** @class */ (function (_super) {
                         _this.props.authors.filter(function (a) { return a.id === message.authorId; })[0];
                     group = [];
                     jsxKey++;
-                    return (React.createElement(BubbleGroup_1.default, { key: jsxKey, yourAuthorId: _this.props.yourAuthorId, messages: messageGroup, author: author, authors: _this.props.authors, showRecipientAvatar: showRecipientAvatar, customChatBubble: customChatBubble, bubbleStyles: bubbleStyles, avatarStyles: avatarStyles, lastSeenAvatarStyles: lastSeenAvatarStyles, showRecipientLastSeenMessage: _this.props.showRecipientLastSeenMessage, customAvatar: _this.props.customAvatar, customLastSeenAvatar: _this.props.customLastSeenAvatar, customSystemChatBubble: _this.props.customSystemChatBubble }));
+                    return (React.createElement(BubbleGroup_1.default, { key: jsxKey, yourAuthorId: _this.props.yourAuthorId, messages: messageGroup, author: author, authors: _this.props.authors, showRecipientAvatar: showRecipientAvatar, customChatBubble: customChatBubble, bubbleStyles: bubbleStyles, bubbleClasses: bubbleClasses, avatarStyles: avatarStyles, avatarClasses: avatarClasses, lastSeenAvatarStyles: lastSeenAvatarStyles, lastSeenAvatarClasses: lastSeenAvatarClasses, showRecipientLastSeenMessage: _this.props.showRecipientLastSeenMessage, customAvatar: _this.props.customAvatar, customLastSeenAvatar: _this.props.customLastSeenAvatar, customSystemChatBubble: _this.props.customSystemChatBubble, classes: bubbleGroupClasses, styles: bubbleGroupStyles }));
                 }
                 return null;
             }));
@@ -20570,35 +20703,38 @@ var ChatFeed = /** @class */ (function (_super) {
         if (!styles) {
             styles = {};
         }
-        var isTypingStyles = styles.isTypingStyles;
+        var _a = this.props, isTypingStyles = _a.isTypingStyles, isTypingClasses = _a.isTypingClasses;
         var typingAuthors = this.props.authors &&
             this.props.authors.filter(function (a) { return a.isTyping && a.id !== _this.props.yourAuthorId; });
         if (!typingAuthors || typingAuthors.length === 0) {
             return null;
         }
-        return React.createElement(IsTyping_1.default, { typingAuthors: typingAuthors, styles: isTypingStyles });
+        return (React.createElement(IsTyping_1.default, { typingAuthors: typingAuthors, styles: isTypingStyles, classes: isTypingClasses }));
     };
     /**
      * render : renders our chat feed
      */
     ChatFeed.prototype.render = function () {
         var _this = this;
-        var styles = this.props.styles;
+        var _a = this.props, styles = _a.styles, classes = _a.classes;
         if (!styles) {
             styles = {};
         }
-        var loadingMessagesStyle = styles.loadingMessagesStyle, chatFeedStyles = styles.chatFeedStyles, chatScrollArea = styles.chatScrollArea;
-        return (React.createElement("div", { className: 'react-bell-chat__chat-panel ' +
-                (this.props.className ? this.props.className : ''), style: __assign({}, styles_1.default.chatPanel, (chatFeedStyles && chatFeedStyles.chatPanel)) },
-            React.createElement(this.props.customScrollArea, { minHeight: this.props.minHeight, maxHeight: this.props.maxHeight, apiRef: function (e) { return (_this.scrollApi = e); }, loadOldMessagesThreshold: this.props.loadOldMessagesThreshold, onLoadOldMessages: this.onLoadOldMessages, styles: chatScrollArea },
+        if (!classes) {
+            classes = {};
+        }
+        var _b = this.props, loadingMessagesStyle = _b.loadingMessagesStyle, chatFeedStyles = _b.chatFeedStyles, chatScrollArea = _b.chatScrollArea, loadingMessagesClasses = _b.loadingMessagesClasses, chatScrollAreaClasses = _b.chatScrollAreaClasses;
+        return (React.createElement("div", { className: classnames_1.default('react-bell-chat__chat-panel', this.props.className, classes.chatPanel), style: __assign({}, styles_1.default.chatPanel, (chatFeedStyles && chatFeedStyles.chatPanel), this.props.style) },
+            React.createElement(this.props.customScrollArea, { minHeight: this.props.minHeight, maxHeight: this.props.maxHeight, apiRef: function (e) { return (_this.scrollApi = e); }, loadOldMessagesThreshold: this.props.loadOldMessagesThreshold, onLoadOldMessages: this.onLoadOldMessages, styles: chatScrollArea, classes: chatScrollAreaClasses },
                 React.createElement("div", { style: __assign({}, styles_1.default.chatMessages, (this.props.showRecipientAvatar &&
-                        styles_1.default.showRecipientAvatarChatMessagesStyle), (this.props.showRecipientAvatar &&
-                        this.props.showRecipientAvatarChatMessagesStyle), (this.props.showIsTyping &&
-                        styles_1.default.showIsTypingChatMessagesStyle), (this.props.showIsTyping &&
-                        this.props.showIsTypingChatMessagesStyle), (this.props.showRecipientLastSeenMessage &&
-                        styles_1.default.showRecipientLastSeenMessageChatMessagesStyle), (this.props.showRecipientLastSeenMessage &&
-                        this.props.showRecipientLastSeenMessageChatMessagesStyle)), className: "react-bell-chat__chat-messages" },
-                    React.createElement(this.props.customLoadingMessages, { isVisible: this.props.showLoadingMessages || this.state.isLoadingMessages, styles: loadingMessagesStyle }),
+                        styles_1.default.showRecipientAvatarChatMessages), (this.props.showRecipientAvatar &&
+                        styles.showRecipientAvatarChatMessages), (this.props.showIsTyping &&
+                        styles_1.default.showIsTypingChatMessages), (this.props.showIsTyping && styles.showIsTypingChatMessages), (this.props.showRecipientLastSeenMessage &&
+                        styles_1.default.showRecipientLastSeenMessageChatMessages), (this.props.showRecipientLastSeenMessage &&
+                        styles.showRecipientLastSeenMessageChatMessages)), className: classnames_1.default('react-bell-chat__chat-messages', classes.chatMessages, this.props.showRecipientAvatar &&
+                        classes.showRecipientAvatarChatMessages, this.props.showIsTyping && classes.showIsTypingChatMessages, this.props.showRecipientLastSeenMessage &&
+                        classes.showRecipientLastSeenMessageChatMessages) },
+                    React.createElement(this.props.customLoadingMessages, { isVisible: this.props.showLoadingMessages || this.state.isLoadingMessages, styles: loadingMessagesStyle, classes: loadingMessagesClasses }),
                     this.renderMessages(this.props.messages),
                     this.props.showIsTyping && this.renderIsTyping()))));
     };
@@ -20664,7 +20800,7 @@ exports.default = ChatFeed;
 
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20678,31 +20814,26 @@ var styles = {
         overflow: 'hidden',
         position: 'relative'
     },
-    showRecipientAvatarChatMessagesStyle: {
+    showRecipientAvatarChatMessages: {
         paddingLeft: 50
     },
-    showIsTypingChatMessagesStyle: {
+    showIsTypingChatMessages: {
         paddingBottom: 24,
         position: 'relative'
     },
-    showRecipientLastSeenMessageChatMessagesStyle: {
-        paddingRight: 30,
-    },
-    chatBubbleWrapper: {
-        marginTop: 10,
-        marginBottom: 10,
-        overflow: 'visible',
+    showRecipientLastSeenMessageChatMessages: {
+        paddingRight: 30
     },
     chatMessages: {
         paddingBottom: 10,
-        paddingTop: 10,
+        paddingTop: 10
     }
 };
 exports.default = styles;
 
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -20725,18 +20856,27 @@ exports.groupBy = groupBy;
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __webpack_require__(0);
-var styles = {
+var classnames_1 = __webpack_require__(1);
+var chatInputStyles = {
     chatInput: {
-        flex: 1,
+        flex: 1
     },
-    inputStyle: {
+    input: {
         border: 'none',
         borderTopWidth: '1',
         borderTopStyle: 'solid',
@@ -20744,13 +20884,19 @@ var styles = {
         fontSize: '16',
         outline: 'none',
         padding: '30',
-        width: '100%',
-    },
+        width: '100%'
+    }
 };
 var ChatInput = function (props) {
-    var inputStyles = props.inputStyles, inputPlaceholder = props.inputPlaceholder;
-    return (React.createElement("div", { className: "react-bell-chat__chat-input", style: styles.chatInput },
-        React.createElement("input", { type: "text", style: inputStyles || styles.inputStyle, placeholder: inputPlaceholder })));
+    var styles = props.styles, classes = props.classes, inputPlaceholder = props.inputPlaceholder;
+    if (!styles) {
+        styles = {};
+    }
+    if (!classes) {
+        classes = {};
+    }
+    return (React.createElement("div", { className: classnames_1.default('react-bell-chat__chat-input', props.className, classes.chatInput), style: __assign({}, chatInputStyles.chatInput, styles.chatInput) },
+        React.createElement("input", { type: "text", className: classnames_1.default('react-bell-chat__chat-input__input', classes.input), style: __assign({}, chatInputStyles.input, styles.input), placeholder: inputPlaceholder })));
 };
 exports.default = ChatInput;
 

@@ -1,15 +1,55 @@
 import * as React from 'react';
 import Message from '../Message';
 import { Author } from '../Author';
-import { LastSeenAvatarProps, LastSeenAvatarStyles } from './../LastSeenAvatar';
+import {
+  LastSeenAvatarProps,
+  LastSeenAvatarStyles,
+  LastSeenAvatarClasses
+} from './../LastSeenAvatar';
 import chatBubbleStyles, { ChatBubbleStyles } from './styles';
 export { ChatBubbleStyles };
+import classnames from 'classnames';
+
+export interface ChatBubbleClasses {
+  chatBubbleWrapper?: string;
+  chatBubble?: string;
+  systemChatBubbleContainer?: string;
+  systemChatBubbleText?: string;
+  userChatBubbleOrientationNormal?: string;
+  recipientChatBubbleOrientationNormal?: string;
+  text?: string;
+  userText?: string;
+  recipientText?: string;
+  userChatBubble?: string;
+  recipientChatBubble?: string;
+  firstChatBubbleInGroup?: string;
+  userFirstChatBubbleInGroup?: string;
+  recipientFirstChatBubbleInGroup?: string;
+  lastChatBubbleInGroup?: string;
+  userLastChatBubbleInGroup?: string;
+  recipientLastChatBubbleInGroup?: string;
+  centerChatBubbleInGroup?: string;
+  userCenterChatBubbleInGroup?: string;
+  recipientCenterChatBubbleInGroup?: string;
+  createdOn?: string;
+  recipientCreatedOn?: string;
+  userCreatedOn?: string;
+  isSend?: string;
+
+  lastSeenByContainer?: string;
+}
 
 export interface ChatBubbleProps {
   message: Message;
   author?: Author;
+
+  style?: React.CSSProperties;
   styles?: ChatBubbleStyles;
   lastSeenAvatarStyles?: LastSeenAvatarStyles;
+
+  className?: string;
+  classes?: ChatBubbleClasses;
+  lastSeenAvatarClasses?: LastSeenAvatarClasses;
 
   bubblesCentered?: boolean;
   yourAuthorId: number;
@@ -41,7 +81,11 @@ export default class ChatBubble extends React.Component<
       return null;
     }
 
-    let { lastSeenAvatarStyles, yourAuthorId, styles } = this.props;
+    let { lastSeenAvatarStyles, yourAuthorId, styles, classes, lastSeenAvatarClasses } = this.props;
+
+    if (!classes) {
+      classes = {};
+    }
 
     if (!styles) {
       styles = {};
@@ -78,6 +122,7 @@ export default class ChatBubble extends React.Component<
     const finalChatBubbleStyles: React.CSSProperties = {
       ...chatBubbleStyles.chatBubble,
       ...chatBubble,
+      ...this.props.style,
       ...(youAreAuthor
         ? chatBubbleStyles.userChatBubble
         : chatBubbleStyles.recipientChatBubble),
@@ -127,14 +172,31 @@ export default class ChatBubble extends React.Component<
           ...chatBubbleStyles.chatBubbleWrapper,
           ...chatBubbleWrapper
         }}
+        className={classnames(
+          'react-bell-chat__chat-bubble__wrapper',
+          this.props.className,
+          classes.chatBubbleWrapper
+        )}
       >
-        <div style={{ ...finalChatBubbleStyles }}>
+        <div
+          style={{ ...finalChatBubbleStyles }}
+          className={classnames(
+            'react-bell-chat__chat-bubble',
+            this.props.className,
+            classes.chatBubble
+          )}
+        >
           <span
             style={{
               ...chatBubbleStyles.text,
               ...text,
               ...(youAreAuthor ? userText : recipientText)
             }}
+            className={classnames(
+              'react-bell-chat__chat-bubble__text',
+              classes.text,
+              youAreAuthor ? classes.userText : classes.recipientText
+            )}
           >
             {this.props.message.message}
           </span>
@@ -148,7 +210,14 @@ export default class ChatBubble extends React.Component<
                   : chatBubbleStyles.recipientCreatedOn),
                 ...(youAreAuthor ? userCreatedOn : recipientCreatedOn)
               }}
-              /*title={this.props.message.createdOn.toLocaleString()}*/
+              className={classnames(
+                'react-bell-chat__chat-bubble__created-on',
+                classes.createdOn,
+                youAreAuthor
+                  ? classes.userCreatedOn
+                  : classes.recipientCreatedOn
+              )}
+              title={this.props.message.createdOn.toLocaleString()}
             >
               {this.props.message.createdOn.toLocaleTimeString([], {
                 hour: '2-digit',
@@ -162,7 +231,11 @@ export default class ChatBubble extends React.Component<
               style={{
                 ...chatBubbleStyles.isSend
               }}
-              /*title={this.props.message.isSend ? 'Send' : 'Sending'}*/
+              className={classnames(
+                'react-bell-chat__chat-bubble__is-send',
+                classes.isSend
+              )}
+              title={this.props.message.isSend ? 'Send' : 'Sending'}
             >
               {this.props.message.isSend ? (
                 <svg
@@ -191,7 +264,6 @@ export default class ChatBubble extends React.Component<
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 100 100"
                   preserveAspectRatio="xMidYMid"
-                  className="lds-eclipse"
                   style={{ background: 'none' }}
                 >
                   <path
@@ -225,11 +297,14 @@ export default class ChatBubble extends React.Component<
           this.props.lastSeenByAuthors.length > 0 &&
           this.props.customLastSeenAvatar && (
             <div
-              className="react-bell-chat__chat-bubble__last-seen-by__container"
               style={{
                 ...chatBubbleStyles.lastSeenByContainer,
                 ...lastSeenByContainer
               }}
+              className={classnames(
+                'react-bell-chat__chat-bubble__last-seen-by__container',
+                classes.lastSeenByContainer
+              )}
               onMouseEnter={() =>
                 this.setState({ mouseOverLastSeenContainer: true })
               }
@@ -252,13 +327,14 @@ export default class ChatBubble extends React.Component<
                     ...lastSeenAvatarStyles,
                     container: {
                       ...(lastSeenAvatarStyles
-                        ? (lastSeenAvatarStyles.container)
+                        ? lastSeenAvatarStyles.container
                         : {}),
                       ...(i > 0 && !this.state.mouseOverLastSeenContainer
                         ? { marginTop: -12 }
                         : { marginTop: -4 })
                     }
                   }}
+                  classes={lastSeenAvatarClasses}
                 />
               ))}
             </div>
