@@ -1352,7 +1352,7 @@ var BubbleGroup = /** @class */ (function (_super) {
             styles = {};
         }
         var chatBubbleWrapper = styles.chatBubbleWrapper;
-        var _a = this.props, bubblesCentered = _a.bubblesCentered, bubbleStyles = _a.bubbleStyles, lastSeenAvatarStyles = _a.lastSeenAvatarStyles, avatarStyles = _a.avatarStyles, classes = _a.classes, bubbleClasses = _a.bubbleClasses, lastSeenAvatarClasses = _a.lastSeenAvatarClasses, avatarClasses = _a.avatarClasses, showRecipientAvatar = _a.showRecipientAvatar, customChatBubble = _a.customChatBubble, customSystemChatBubble = _a.customSystemChatBubble, showRecipientLastSeenMessage = _a.showRecipientLastSeenMessage, customLastSeenAvatar = _a.customLastSeenAvatar;
+        var _a = this.props, bubblesCentered = _a.bubblesCentered, chatBubbleStyles = _a.chatBubbleStyles, lastSeenAvatarStyles = _a.lastSeenAvatarStyles, avatarStyles = _a.avatarStyles, classes = _a.classes, chatBubbleClasses = _a.chatBubbleClasses, lastSeenAvatarClasses = _a.lastSeenAvatarClasses, avatarClasses = _a.avatarClasses, showRecipientAvatar = _a.showRecipientAvatar, customChatBubble = _a.customChatBubble, customSystemChatBubble = _a.customSystemChatBubble, showRecipientLastSeenMessage = _a.showRecipientLastSeenMessage, customLastSeenAvatar = _a.customLastSeenAvatar;
         var ChatBubble = customChatBubble || ChatBubble_1.default;
         var SystemChatBubble = customSystemChatBubble || SystemChatBubble_1.default;
         var messageNodes = messages.map(function (message, i) {
@@ -1361,9 +1361,9 @@ var BubbleGroup = /** @class */ (function (_super) {
                 author: author,
                 message: message,
                 bubblesCentered: bubblesCentered,
-                styles: bubbleStyles,
+                styles: chatBubbleStyles,
                 lastSeenAvatarStyles: lastSeenAvatarStyles,
-                classes: bubbleClasses,
+                classes: chatBubbleClasses,
                 lastSeenAvatarClasses: lastSeenAvatarClasses,
                 isFirstInGroup: i === 0,
                 isLastInGroup: i === messages.length - 1 && messages.length > 1,
@@ -20666,7 +20666,7 @@ var ChatFeed = /** @class */ (function (_super) {
         if (!styles) {
             styles = {};
         }
-        var _a = this.props, bubbleStyles = _a.bubbleStyles, bubbleClasses = _a.bubbleClasses, dateRowStyles = _a.dateRowStyles, dateRowClasses = _a.dateRowClasses, avatarStyles = _a.avatarStyles, avatarClasses = _a.avatarClasses, lastSeenAvatarStyles = _a.lastSeenAvatarStyles, lastSeenAvatarClasses = _a.lastSeenAvatarClasses, bubbleGroupStyles = _a.bubbleGroupStyles, bubbleGroupClasses = _a.bubbleGroupClasses;
+        var _a = this.props, chatBubbleStyles = _a.chatBubbleStyles, chatBubbleClasses = _a.chatBubbleClasses, dateRowStyles = _a.dateRowStyles, dateRowClasses = _a.dateRowClasses, avatarStyles = _a.avatarStyles, avatarClasses = _a.avatarClasses, lastSeenAvatarStyles = _a.lastSeenAvatarStyles, lastSeenAvatarClasses = _a.lastSeenAvatarClasses, bubbleGroupStyles = _a.bubbleGroupStyles, bubbleGroupClasses = _a.bubbleGroupClasses;
         var _b = this.props, customChatBubble = _b.customChatBubble, showRecipientAvatar = _b.showRecipientAvatar;
         // First group by days
         var groups = utils_1.groupBy(messages, function (item) { return item.createdOn && item.createdOn.toDateString(); });
@@ -20690,7 +20690,7 @@ var ChatFeed = /** @class */ (function (_super) {
                         _this.props.authors.filter(function (a) { return a.id === message.authorId; })[0];
                     group = [];
                     jsxKey++;
-                    return (React.createElement(BubbleGroup_1.default, { key: jsxKey, yourAuthorId: _this.props.yourAuthorId, messages: messageGroup, author: author, authors: _this.props.authors, showRecipientAvatar: showRecipientAvatar, customChatBubble: customChatBubble, bubbleStyles: bubbleStyles, bubbleClasses: bubbleClasses, avatarStyles: avatarStyles, avatarClasses: avatarClasses, lastSeenAvatarStyles: lastSeenAvatarStyles, lastSeenAvatarClasses: lastSeenAvatarClasses, showRecipientLastSeenMessage: _this.props.showRecipientLastSeenMessage, customAvatar: _this.props.customAvatar, customLastSeenAvatar: _this.props.customLastSeenAvatar, customSystemChatBubble: _this.props.customSystemChatBubble, classes: bubbleGroupClasses, styles: bubbleGroupStyles }));
+                    return (React.createElement(BubbleGroup_1.default, { key: jsxKey, yourAuthorId: _this.props.yourAuthorId, messages: messageGroup, author: author, authors: _this.props.authors, showRecipientAvatar: showRecipientAvatar, customChatBubble: customChatBubble, chatBubbleStyles: chatBubbleStyles, chatBubbleClasses: chatBubbleClasses, avatarStyles: avatarStyles, avatarClasses: avatarClasses, lastSeenAvatarStyles: lastSeenAvatarStyles, lastSeenAvatarClasses: lastSeenAvatarClasses, showRecipientLastSeenMessage: _this.props.showRecipientLastSeenMessage, customAvatar: _this.props.customAvatar, customLastSeenAvatar: _this.props.customLastSeenAvatar, customSystemChatBubble: _this.props.customSystemChatBubble, classes: bubbleGroupClasses, styles: bubbleGroupStyles }));
                 }
                 return null;
             }));

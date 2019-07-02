@@ -31,13 +31,13 @@ export interface BubbleGroupProps {
 
   className?: string;
   classes?: BubbleGroupClasses;
-  bubbleClasses?: ChatBubbleClasses;
+  chatBubbleClasses?: ChatBubbleClasses;
   avatarClasses?: AvatarClasses;
   lastSeenAvatarClasses?: LastSeenAvatarClasses;
 
   style?: React.CSSProperties;
   styles?: BubbleGroupStyles;
-  bubbleStyles?: ChatBubbleStyles;
+  chatBubbleStyles?: ChatBubbleStyles;
   avatarStyles?: AvatarStyles;
   lastSeenAvatarStyles?: LastSeenAvatarStyles;
 
@@ -69,12 +69,12 @@ export default class BubbleGroup extends React.PureComponent<BubbleGroupProps> {
     const {
       bubblesCentered,
 
-      bubbleStyles,
+      chatBubbleStyles,
       lastSeenAvatarStyles,
       avatarStyles,
 
       classes,
-      bubbleClasses,
+      chatBubbleClasses,
       lastSeenAvatarClasses,
       avatarClasses,
 
@@ -94,10 +94,10 @@ export default class BubbleGroup extends React.PureComponent<BubbleGroupProps> {
         message,
         bubblesCentered,
 
-        styles: bubbleStyles,
+        styles: chatBubbleStyles,
         lastSeenAvatarStyles,
 
-        classes: bubbleClasses,
+        classes: chatBubbleClasses,
         lastSeenAvatarClasses,
 
         isFirstInGroup: i === 0,

@@ -20,12 +20,12 @@ export interface BubbleGroupProps {
     bubblesCentered?: boolean;
     className?: string;
     classes?: BubbleGroupClasses;
-    bubbleClasses?: ChatBubbleClasses;
+    chatBubbleClasses?: ChatBubbleClasses;
     avatarClasses?: AvatarClasses;
     lastSeenAvatarClasses?: LastSeenAvatarClasses;
     style?: React.CSSProperties;
     styles?: BubbleGroupStyles;
-    bubbleStyles?: ChatBubbleStyles;
+    chatBubbleStyles?: ChatBubbleStyles;
     avatarStyles?: AvatarStyles;
     lastSeenAvatarStyles?: LastSeenAvatarStyles;
     customAvatar?: (props: AvatarProps) => JSX.Element;

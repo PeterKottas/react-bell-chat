@@ -13,6 +13,7 @@ import { LastSeenAvatarProps, LastSeenAvatarStyles, LastSeenAvatarClasses } from
 import { DateRowProps, DateRowStyles, DateRowClasses } from '../DateRow';
 import { LoadingMessagesProps, LoadingMessagesStyle, LoadingMessagesClasses } from '../LoadingMessages';
 import { BubbleGroupStyles } from '../BubbleGroup/styles';
+import { ChatBubbleClasses } from './../ChatBubble/index';
 export { ChatFeedStyles };
 export interface ChatFeedClasses {
     chatPanel?: string;
@@ -48,7 +49,7 @@ export interface ChatFeedProps {
     style?: React.CSSProperties;
     styles?: ChatFeedStyles;
     bubbleGroupStyles?: BubbleGroupStyles;
-    bubbleStyles?: ChatBubbleStyles;
+    chatBubbleStyles?: ChatBubbleStyles;
     chatScrollArea?: ChatScrollAreaStyles;
     avatarStyles?: AvatarStyles;
     lastSeenAvatarStyles?: LastSeenAvatarStyles;
@@ -57,7 +58,7 @@ export interface ChatFeedProps {
     isTypingStyles?: IsTypingStyles;
     chatFeedStyles?: ChatFeedStyles;
     classes?: ChatFeedClasses;
-    bubbleClasses?: BubbleGroupClasses;
+    chatBubbleClasses?: ChatBubbleClasses;
     bubbleGroupClasses?: BubbleGroupClasses;
     chatScrollAreaClasses?: ChatScrollAreaClasses;
     avatarClasses?: AvatarClasses;

@@ -36,6 +36,7 @@ import LoadingMessages, {
 import SystemChatBubble from '../SystemChatBubble';
 import classnames from 'classnames';
 import { BubbleGroupStyles } from '../BubbleGroup/styles';
+import { ChatBubbleClasses } from './../ChatBubble/index';
 
 // Model for ChatFeed props.
 
@@ -89,7 +90,7 @@ export interface ChatFeedProps {
   style?: React.CSSProperties;
   styles?: ChatFeedStyles;
   bubbleGroupStyles?: BubbleGroupStyles;
-  bubbleStyles?: ChatBubbleStyles;
+  chatBubbleStyles?: ChatBubbleStyles;
   chatScrollArea?: ChatScrollAreaStyles;
   avatarStyles?: AvatarStyles;
   lastSeenAvatarStyles?: LastSeenAvatarStyles;
@@ -100,7 +101,7 @@ export interface ChatFeedProps {
 
   // Classes
   classes?: ChatFeedClasses;
-  bubbleClasses?: BubbleGroupClasses;
+  chatBubbleClasses?: ChatBubbleClasses;
   bubbleGroupClasses?: BubbleGroupClasses;
   chatScrollAreaClasses?: ChatScrollAreaClasses;
   avatarClasses?: AvatarClasses;
@@ -229,8 +230,8 @@ export default class ChatFeed
       styles = {};
     }
     const {
-      bubbleStyles,
-      bubbleClasses,
+      chatBubbleStyles,
+      chatBubbleClasses,
       dateRowStyles,
       dateRowClasses,
       avatarStyles,
@@ -289,8 +290,8 @@ export default class ChatFeed
                 authors={this.props.authors}
                 showRecipientAvatar={showRecipientAvatar}
                 customChatBubble={customChatBubble}
-                bubbleStyles={bubbleStyles}
-                bubbleClasses={bubbleClasses}
+                chatBubbleStyles={chatBubbleStyles}
+                chatBubbleClasses={chatBubbleClasses}
                 avatarStyles={avatarStyles}
                 avatarClasses={avatarClasses}
                 lastSeenAvatarStyles={lastSeenAvatarStyles}
