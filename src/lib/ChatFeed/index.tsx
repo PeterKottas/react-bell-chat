@@ -303,7 +303,7 @@ export default class ChatFeed
     const { loadingMessagesStyle, chatFeedStyles, chatScrollArea } = styles;
     return (
       <div
-        id={
+        className={
           'react-bell-chat__chat-panel ' +
           (this.props.className ? this.props.className : '')
         }

@@ -20588,7 +20588,7 @@ var ChatFeed = /** @class */ (function (_super) {
             styles = {};
         }
         var loadingMessagesStyle = styles.loadingMessagesStyle, chatFeedStyles = styles.chatFeedStyles, chatScrollArea = styles.chatScrollArea;
-        return (React.createElement("div", { id: 'react-bell-chat__chat-panel ' +
+        return (React.createElement("div", { className: 'react-bell-chat__chat-panel ' +
                 (this.props.className ? this.props.className : ''), style: __assign({}, styles_1.default.chatPanel, (chatFeedStyles && chatFeedStyles.chatPanel)) },
             React.createElement(this.props.customScrollArea, { minHeight: this.props.minHeight, maxHeight: this.props.maxHeight, apiRef: function (e) { return (_this.scrollApi = e); }, loadOldMessagesThreshold: this.props.loadOldMessagesThreshold, onLoadOldMessages: this.onLoadOldMessages, styles: chatScrollArea },
                 React.createElement("div", { style: __assign({}, styles_1.default.chatMessages, (this.props.showRecipientAvatar &&
