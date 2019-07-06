@@ -1,17 +1,26 @@
 {
   "compilerOptions": {
-    "noUnusedLocals": true,    
     "declaration": true,
     "baseUrl": ".",
     "moduleResolution": "node",
     "target": "es5",
-    "jsx": "react",
+    "module": "esnext",
+    "jsx": "react",    
     "experimentalDecorators": true,
     "sourceMap": true,
     "skipDefaultLibCheck": true,
+    "noUnusedLocals": true,    
     "lib": [ "es6", "dom" ],
     "types": []
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["./node_modules/**/*"]
+  "exclude": ["node_modules"],
+  "paths": {
+    "react": [
+      "node_modules/@types/react/index"
+    ],
+    "react-dom": [
+      "node_modules/@types/react-dom/index"
+    ],
+  }
 }
