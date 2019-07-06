@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import * as React from 'react';
 import { BubbleGroupClasses } from '../BubbleGroup';
 import { ChatBubbleProps } from '../ChatBubble';
@@ -103,5 +102,5 @@ export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedSta
      * render : renders our chat feed
      */
     render(): JSX.Element;
-    private onLoadOldMessages();
+    private onLoadOldMessages;
 }

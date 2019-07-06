@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import * as React from 'react';
 import { ChatBubbleProps, ChatBubbleStyles } from '../ChatBubble';
 import { BubbleGroupStyles } from './styles';

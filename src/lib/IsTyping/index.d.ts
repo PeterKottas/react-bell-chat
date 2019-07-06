@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import * as React from 'react';
 import { Author } from '../Author';
 export interface IsTypingStyles {

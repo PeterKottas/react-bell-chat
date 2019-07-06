@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import * as React from 'react';
 import Message from '../Message';
 import { Author } from '../Author';
