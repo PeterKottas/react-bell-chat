@@ -14,7 +14,8 @@ const chatScrollAreaStyles: ChatScrollAreaStyles = {
     overflow: 'auto',
     padding: '0 10px',
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    height: '100%'
     // flexDirection: 'column-reverse'
   }
 };
