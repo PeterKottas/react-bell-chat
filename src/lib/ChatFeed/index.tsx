@@ -371,7 +371,12 @@ export default class ChatFeed
         <this.props.customScrollArea
           minHeight={this.props.minHeight}
           maxHeight={this.props.maxHeight}
-          apiRef={e => (this.scrollApi = e)}
+          apiRef={e => {
+            if (!this.scrollApi) {
+              e.scrollToBottom();
+            }
+            this.scrollApi = e;
+          }}
           loadOldMessagesThreshold={this.props.loadOldMessagesThreshold}
           onLoadOldMessages={this.onLoadOldMessages}
           styles={chatScrollArea}
