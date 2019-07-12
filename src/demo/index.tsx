@@ -193,8 +193,8 @@ class Chat extends React.Component<ChatProps, ChatState> {
             authors={this.state.authors}
             customChatBubble={this.state.useCustomBubble && customBubble}
             // chatBubbleStyles={bubbleStyles}
-            // maxHeight={350}
-            minHeight={600}
+            maxHeight={350}
+            // minHeight={600}
             messages={this.state.messages}
             showRecipientAvatar={this.state.showAvatar}
             ref={e => this.chat = e}

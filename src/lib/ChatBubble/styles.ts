@@ -45,7 +45,7 @@ const styles: ChatBubbleStyles = {
     marginLeft: 'auto',
     maxWidth: '80%',
     paddingTop: 8,
-    paddingBottom: 10,
+    paddingBottom: 14,
     paddingLeft: 14,
     paddingRight: 14
     // boxShadow: 'rgba(0, 0, 0, 0.3) 2px 2px 2px'
