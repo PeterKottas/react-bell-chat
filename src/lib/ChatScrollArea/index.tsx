@@ -12,7 +12,9 @@ export interface ChatScrollAreaClasses {
 const chatScrollAreaStyles: ChatScrollAreaStyles = {
   container: {
     overflow: 'auto',
-    padding: '0 10px'
+    padding: '0 10px',
+    display: 'flex',
+    flexDirection: 'column'
     // flexDirection: 'column-reverse'
   }
 };

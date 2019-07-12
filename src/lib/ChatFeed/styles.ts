@@ -28,7 +28,11 @@ const styles: ChatFeedStyles = {
   },
   chatMessages: {
     paddingBottom: 10,
-    paddingTop: 10
+    paddingTop: 10,
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-end'
   }
 };
 
