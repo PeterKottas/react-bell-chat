@@ -65,7 +65,7 @@ export default class BubbleGroup extends React.PureComponent<BubbleGroupProps> {
     if (!styles) {
       styles = {};
     }
-    const { chatBubbleWrapper } = styles;
+    const { bubbleGroupWrapper: chatBubbleWrapper } = styles;
     const {
       bubblesCentered,
 
@@ -125,7 +125,7 @@ export default class BubbleGroup extends React.PureComponent<BubbleGroupProps> {
     return (
       <div
         style={{
-          ...bubbleGroupStyles.chatBubbleWrapper,
+          ...bubbleGroupStyles.bubbleGroupWrapper,
           ...chatBubbleWrapper,
           ...this.props.style
         }}

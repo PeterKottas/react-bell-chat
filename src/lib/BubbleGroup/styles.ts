@@ -1,11 +1,11 @@
 import * as React from 'react';
 
 export interface BubbleGroupStyles {
-  chatBubbleWrapper?: React.CSSProperties;
+  bubbleGroupWrapper?: React.CSSProperties;
 }
 
 export default {
-  chatBubbleWrapper: {
+  bubbleGroupWrapper: {
     marginTop: 10,
     marginBottom: 10,
     position: 'relative'
