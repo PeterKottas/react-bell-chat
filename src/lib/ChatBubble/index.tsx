@@ -65,7 +65,7 @@ export interface ChatBubbleState {
   mouseOverLastSeenContainer: boolean;
 }
 
-export default class ChatBubble extends React.Component<
+export default class ChatBubble extends React.PureComponent<
   ChatBubbleProps,
   ChatBubbleState
 > {

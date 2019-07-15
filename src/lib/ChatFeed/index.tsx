@@ -132,7 +132,7 @@ export interface ChatFeedSnapshot {
 
 // React component to render a complete chat feed
 export default class ChatFeed
-  extends React.Component<ChatFeedProps, ChatFeedState>
+  extends React.PureComponent<ChatFeedProps, ChatFeedState>
   implements ChatFeedApi {
   public static defaultProps: ChatFeedProps = {
     messages: [],
@@ -153,6 +153,7 @@ export default class ChatFeed
   constructor(props: ChatFeedProps) {
     super(props);
     this.onLoadOldMessages = this.onLoadOldMessages.bind(this);
+    this.apiRef = this.apiRef.bind(this);
     this.state = {
       isLoadingMessages: false
     };
@@ -160,13 +161,6 @@ export default class ChatFeed
 
   public onMessageSend() {
     this.scrollApi && this.scrollApi.scrollToBottom();
-  }
-
-  shouldComponentUpdate(nextProps: ChatFeedProps, nextState: ChatFeedState) {
-    return (
-      this.shallowDiffers(this.props, nextProps) ||
-      this.shallowDiffers(this.state, nextState)
-    );
   }
 
   componentDidMount() {
@@ -205,20 +199,6 @@ export default class ChatFeed
       const scrollHeight = this.scrollApi && this.scrollApi.scrollHeight();
       this.scrollApi.scrollTo(scrollHeight - snapshot.scrollHeight);
     }
-  }
-
-  shallowDiffers(a: object, b: object) {
-    for (let i in a) {
-      if (!(i in b)) {
-        return true;
-      }
-    }
-    for (let i in b) {
-      if (a[i] !== b[i]) {
-        return true;
-      }
-    }
-    return false;
   }
 
   /**
@@ -337,6 +317,13 @@ export default class ChatFeed
     );
   }
 
+  apiRef(e: ChatScrollAreaApi) {
+    if (!this.scrollApi) {
+      e.scrollToBottom();
+    }
+    this.scrollApi = e;
+  }
+
   /**
    * render : renders our chat feed
    */
@@ -371,12 +358,7 @@ export default class ChatFeed
         <this.props.customScrollArea
           minHeight={this.props.minHeight}
           maxHeight={this.props.maxHeight}
-          apiRef={e => {
-            if (!this.scrollApi) {
-              e.scrollToBottom();
-            }
-            this.scrollApi = e;
-          }}
+          apiRef={this.apiRef}
           loadOldMessagesThreshold={this.props.loadOldMessagesThreshold}
           onLoadOldMessages={this.onLoadOldMessages}
           styles={chatScrollArea}

@@ -29,7 +29,7 @@ export interface IsTypingProps {
   classes?: IsTypingClasses;
 }
 
-const IsTyping = (props: IsTypingProps) => {
+const IsTyping: React.FC<IsTypingProps> = props => {
   let { styles, classes } = props;
   if (!styles) {
     styles = {};
@@ -61,4 +61,4 @@ const IsTyping = (props: IsTypingProps) => {
   );
 };
 
-export default IsTyping;
+export default React.memo(IsTyping);

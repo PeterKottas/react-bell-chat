@@ -40,7 +40,7 @@ const styles = {
   } as React.CSSProperties
 };
 
-const Avatar: React.SFC<AvatarProps> = props => {
+const Avatar: React.FC<AvatarProps> = props => {
   const { author, classes, className } = props;
   return (
     author && (
@@ -78,4 +78,4 @@ const Avatar: React.SFC<AvatarProps> = props => {
   );
 };
 
-export default Avatar;
+export default React.memo(Avatar);

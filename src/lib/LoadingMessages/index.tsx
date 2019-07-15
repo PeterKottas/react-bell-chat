@@ -26,7 +26,7 @@ export interface LoadingMessagesProps {
   isVisible: boolean;
 }
 
-const LoadingMessages: React.SFC<LoadingMessagesProps> = props => {
+const LoadingMessages: React.FC<LoadingMessagesProps> = props => {
   let { styles, classes } = props;
   if (!styles) {
     styles = {};
@@ -86,4 +86,4 @@ const LoadingMessages: React.SFC<LoadingMessagesProps> = props => {
   );
 };
 
-export default LoadingMessages;
+export default React.memo(LoadingMessages);

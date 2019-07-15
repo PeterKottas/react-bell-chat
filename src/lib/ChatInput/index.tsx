@@ -35,7 +35,7 @@ export interface ChatInputProps {
   style?: React.CSSProperties;
 }
 
-const ChatInput = (props: ChatInputProps) => {
+const ChatInput: React.FC<ChatInputProps> = props => {
   let { styles, classes, inputPlaceholder } = props;
   if (!styles) {
     styles = {};
@@ -65,4 +65,4 @@ const ChatInput = (props: ChatInputProps) => {
   );
 };
 
-export default ChatInput;
+export default React.memo(ChatInput);

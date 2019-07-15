@@ -44,10 +44,12 @@ export interface ChatScrollAreaApi {
   scrolledToLoadThreshold: () => boolean; // Check if we are scrolled to threshold where we need to load messages
 }
 
-export class ChatScrollArea extends React.Component<ChatScrollAreaProps> {
+export class ChatScrollArea extends React.PureComponent<ChatScrollAreaProps> {
   scrollContainer: HTMLDivElement;
   constructor(props: ChatScrollAreaProps) {
     super(props);
+    this.containerRef = this.containerRef.bind(this);
+    this.onScroll = this.onScroll.bind(this);
   }
 
   public render() {
@@ -61,41 +63,7 @@ export class ChatScrollArea extends React.Component<ChatScrollAreaProps> {
     const { container } = styles;
     return (
       <div
-        ref={scrollContainer => {
-          this.scrollContainer = scrollContainer;
-          this.props.apiRef &&
-            this.props.apiRef({
-              scrollToBottom: (behavior = 'auto') =>
-                scrollContainer &&
-                (scrollContainer.scrollTo
-                  ? scrollContainer.scrollTo({
-                      top: scrollContainer.scrollHeight,
-                      behavior
-                    })
-                  : (scrollContainer.scrollTop = scrollContainer.scrollHeight)),
-              scrollTo: top =>
-                scrollContainer &&
-                (scrollContainer.scrollTo
-                  ? scrollContainer.scrollTo({
-                      top: top
-                    })
-                  : (scrollContainer.scrollTop = top)),
-              scrolledToBottom: () =>
-                this.scrollContainer.clientHeight +
-                  this.scrollContainer.scrollTop ===
-                this.scrollContainer.scrollHeight,
-              scrolledToLoadThreshold: () =>
-                this.scrollContainer &&
-                this.scrollContainer.scrollTop <=
-                  this.props.loadOldMessagesThreshold,
-              scrollTop: () =>
-                this.scrollContainer && this.scrollContainer.scrollTop,
-              scrollHeight: () =>
-                this.scrollContainer && this.scrollContainer.scrollHeight,
-              clientHeight: () =>
-                this.scrollContainer && this.scrollContainer.clientHeight
-            });
-        }}
+        ref={this.containerRef}
         className={classnames(
           'react-bell-chat__chat-scroll-area',
           this.props.className,
@@ -112,16 +80,50 @@ export class ChatScrollArea extends React.Component<ChatScrollAreaProps> {
           ...container,
           ...this.props.style
         }}
-        onScroll={e =>
-          this.scrollContainer &&
-          this.scrollContainer.scrollTop <=
-            this.props.loadOldMessagesThreshold &&
-          this.props.onLoadOldMessages()
-        }
+        onScroll={this.onScroll}
       >
         {this.props.children}
       </div>
     );
+  }
+
+  private onScroll() {
+    this.scrollContainer &&
+      this.scrollContainer.scrollTop <= this.props.loadOldMessagesThreshold &&
+      this.props.onLoadOldMessages();
+  }
+
+  private containerRef(scrollContainer: HTMLDivElement) {
+    this.scrollContainer = scrollContainer;
+    this.props.apiRef &&
+      this.props.apiRef({
+        scrollToBottom: (behavior = 'auto') =>
+          scrollContainer &&
+          (scrollContainer.scrollTo
+            ? scrollContainer.scrollTo({
+                top: scrollContainer.scrollHeight,
+                behavior
+              })
+            : (scrollContainer.scrollTop = scrollContainer.scrollHeight)),
+        scrollTo: top =>
+          scrollContainer &&
+          (scrollContainer.scrollTo
+            ? scrollContainer.scrollTo({
+                top: top
+              })
+            : (scrollContainer.scrollTop = top)),
+        scrolledToBottom: () =>
+          this.scrollContainer.clientHeight + this.scrollContainer.scrollTop ===
+          this.scrollContainer.scrollHeight,
+        scrolledToLoadThreshold: () =>
+          this.scrollContainer &&
+          this.scrollContainer.scrollTop <= this.props.loadOldMessagesThreshold,
+        scrollTop: () => this.scrollContainer && this.scrollContainer.scrollTop,
+        scrollHeight: () =>
+          this.scrollContainer && this.scrollContainer.scrollHeight,
+        clientHeight: () =>
+          this.scrollContainer && this.scrollContainer.clientHeight
+      });
   }
 }
 

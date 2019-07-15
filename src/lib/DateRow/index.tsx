@@ -25,7 +25,7 @@ export interface DateRowProps {
   classes?: DateRowClasses;
 }
 
-const DateRow = (props: DateRowProps) => {
+const DateRow: React.FC<DateRowProps> = props => {
   let { styles, classes } = props;
   if (!styles) {
     styles = {};
@@ -60,4 +60,4 @@ const DateRow = (props: DateRowProps) => {
   );
 };
 
-export default DateRow;
+export default React.memo(DateRow);

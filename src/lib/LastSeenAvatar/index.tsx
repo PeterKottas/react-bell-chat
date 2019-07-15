@@ -40,7 +40,7 @@ const lastSeenAvatarStyles = {
   } as React.CSSProperties
 };
 
-const LastSeenAvatar: React.SFC<LastSeenAvatarProps> = props => {
+const LastSeenAvatar: React.FC<LastSeenAvatarProps> = props => {
   let { styles, classes } = props;
   if (!styles) {
     styles = {};
@@ -79,4 +79,4 @@ const LastSeenAvatar: React.SFC<LastSeenAvatarProps> = props => {
   );
 };
 
-export default LastSeenAvatar;
+export default React.memo(LastSeenAvatar);

@@ -13,7 +13,7 @@ const systemChatBubbleStyles: ChatBubbleStyles = {
 
 export interface SystemChatBubbleProps extends ChatBubbleProps {}
 
-const SystemChatBubble = (props: SystemChatBubbleProps) => {
+const SystemChatBubble: React.FC<SystemChatBubbleProps> = props => {
   let { styles, classes } = props;
   if (!styles) {
     styles = {};
@@ -64,4 +64,4 @@ const SystemChatBubble = (props: SystemChatBubbleProps) => {
   );
 };
 
-export default SystemChatBubble;
+export default React.memo(SystemChatBubble);
