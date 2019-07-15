@@ -15,5 +15,5 @@ export interface AvatarProps {
     classes?: AvatarClasses;
     style?: React.CSSProperties;
 }
-declare const Avatar: React.SFC<AvatarProps>;
-export default Avatar;
+declare const _default: React.NamedExoticComponent<AvatarProps>;
+export default _default;

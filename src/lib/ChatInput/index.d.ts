@@ -14,5 +14,5 @@ export interface ChatInputProps {
     classes?: ChatInputClasses;
     style?: React.CSSProperties;
 }
-declare const ChatInput: (props: ChatInputProps) => JSX.Element;
-export default ChatInput;
+declare const _default: React.NamedExoticComponent<ChatInputProps>;
+export default _default;

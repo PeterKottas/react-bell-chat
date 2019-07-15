@@ -13,5 +13,5 @@ export interface LoadingMessagesProps {
     className?: string;
     isVisible: boolean;
 }
-declare const LoadingMessages: React.SFC<LoadingMessagesProps>;
-export default LoadingMessages;
+declare const _default: React.NamedExoticComponent<LoadingMessagesProps>;
+export default _default;

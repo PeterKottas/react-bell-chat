@@ -79,12 +79,11 @@ export interface ChatFeedSnapshot {
     scrollHeight: number;
     clientHeight: number;
 }
-export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedState> implements ChatFeedApi {
+export default class ChatFeed extends React.PureComponent<ChatFeedProps, ChatFeedState> implements ChatFeedApi {
     static defaultProps: ChatFeedProps;
     scrollApi: ChatScrollAreaApi;
     constructor(props: ChatFeedProps);
     onMessageSend(): void;
-    shouldComponentUpdate(nextProps: ChatFeedProps, nextState: ChatFeedState): boolean;
     componentDidMount(): void;
     getSnapshotBeforeUpdate(prevProps: ChatFeedProps, prevState: ChatFeedState): {
         wasScrolledToBottom: boolean;
@@ -92,12 +91,12 @@ export default class ChatFeed extends React.Component<ChatFeedProps, ChatFeedSta
         clientHeight: number;
     };
     componentDidUpdate(prevProps: ChatFeedProps, prevState: ChatFeedState, snapshot: ChatFeedSnapshot): void;
-    shallowDiffers(a: object, b: object): boolean;
     /**
      * Determines what type of message/messages to render.
      */
     renderMessages(messages: Message[]): JSX.Element[];
     renderIsTyping(): JSX.Element;
+    apiRef(e: ChatScrollAreaApi): void;
     /**
      * render : renders our chat feed
      */

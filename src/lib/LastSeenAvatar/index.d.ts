@@ -15,5 +15,5 @@ export interface LastSeenAvatarStyles {
     container?: React.CSSProperties;
     text?: React.CSSProperties;
 }
-declare const LastSeenAvatar: React.SFC<LastSeenAvatarProps>;
-export default LastSeenAvatar;
+declare const _default: React.NamedExoticComponent<LastSeenAvatarProps>;
+export default _default;

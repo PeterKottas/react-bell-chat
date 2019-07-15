@@ -52,7 +52,7 @@ export interface ChatBubbleProps {
 export interface ChatBubbleState {
     mouseOverLastSeenContainer: boolean;
 }
-export default class ChatBubble extends React.Component<ChatBubbleProps, ChatBubbleState> {
+export default class ChatBubble extends React.PureComponent<ChatBubbleProps, ChatBubbleState> {
     constructor(props: ChatBubbleProps);
     render(): JSX.Element;
 }

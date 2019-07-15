@@ -26,9 +26,11 @@ export interface ChatScrollAreaApi {
     scrolledToBottom: () => boolean;
     scrolledToLoadThreshold: () => boolean;
 }
-export declare class ChatScrollArea extends React.Component<ChatScrollAreaProps> {
+export declare class ChatScrollArea extends React.PureComponent<ChatScrollAreaProps> {
     scrollContainer: HTMLDivElement;
     constructor(props: ChatScrollAreaProps);
     render(): JSX.Element;
+    private onScroll;
+    private containerRef;
 }
 export default ChatScrollArea;

@@ -13,5 +13,5 @@ export interface IsTypingProps {
     className?: string;
     classes?: IsTypingClasses;
 }
-declare const IsTyping: (props: IsTypingProps) => JSX.Element;
-export default IsTyping;
+declare const _default: React.NamedExoticComponent<IsTypingProps>;
+export default _default;

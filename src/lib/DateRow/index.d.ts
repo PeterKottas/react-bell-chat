@@ -12,5 +12,5 @@ export interface DateRowProps {
     className?: string;
     classes?: DateRowClasses;
 }
-declare const DateRow: (props: DateRowProps) => JSX.Element;
-export default DateRow;
+declare const _default: React.NamedExoticComponent<DateRowProps>;
+export default _default;
