@@ -204,6 +204,10 @@ Q: My chat is scrolling up/down automatically every time I use setState on paren
 
 A: Make sure to provide const expressions for custom components. Not inline functions.
 
+## Created and sponsored by
+
+- [GuestBell](https://guestbell.com/) - Customer centric online POS for Hotels and short terms stays.
+
 ## Contributing 🔧
 
 Contributions are always welcomed and encouraged.
