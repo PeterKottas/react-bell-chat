@@ -12,6 +12,8 @@ import classnames from 'classnames';
 
 export interface MessageRenderProps<T = string> {
   message: Message<T>;
+  style?: React.CSSProperties;
+  className?: string;
 }
 
 export interface ChatBubbleClasses {
@@ -177,6 +179,17 @@ export default class ChatBubble<T = string> extends React.PureComponent<
           : recipientLastChatBubbleInGroup)),
     };
 
+    const messageStyle = {
+      ...chatBubbleStyles.text,
+      ...text,
+      ...(youAreAuthor ? userText : recipientText),
+    };
+    const messageClassName = classnames(
+      'react-bell-chat__chat-bubble__text',
+      classes.text,
+      youAreAuthor ? classes.userText : classes.recipientText
+    );
+
     return (
       <div
         style={{
@@ -201,24 +214,17 @@ export default class ChatBubble<T = string> extends React.PureComponent<
             }
           )}
         >
-          <span
-            style={{
-              ...chatBubbleStyles.text,
-              ...text,
-              ...(youAreAuthor ? userText : recipientText),
-            }}
-            className={classnames(
-              'react-bell-chat__chat-bubble__text',
-              classes.text,
-              youAreAuthor ? classes.userText : classes.recipientText
-            )}
-          >
-            {this.props.customMessageRender
-              ? this.props.customMessageRender({
-                  message: this.props.message,
-                })
-              : this.props.message.message}
-          </span>
+          {this.props.customMessageRender ? (
+            this.props.customMessageRender({
+              message: this.props.message,
+              style: messageStyle,
+              className: messageClassName,
+            })
+          ) : (
+            <span style={messageStyle} className={messageClassName}>
+              {this.props.message.message}
+            </span>
+          )}
           {this.props.message.createdOn && (
             <span
               style={{

@@ -6,6 +6,8 @@ import { ChatBubbleStyles } from './styles';
 export { ChatBubbleStyles };
 export interface MessageRenderProps<T = string> {
     message: Message<T>;
+    style?: React.CSSProperties;
+    className?: string;
 }
 export interface ChatBubbleClasses {
     chatBubbleWrapper?: string;
