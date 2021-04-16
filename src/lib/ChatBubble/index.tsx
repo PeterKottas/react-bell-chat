@@ -1,14 +1,18 @@
-import * as React from 'react';
-import Message from '../Message';
-import { Author } from '../Author';
+import * as React from "react";
+import Message from "../Message";
+import { Author } from "../Author";
 import {
   LastSeenAvatarProps,
   LastSeenAvatarStyles,
-  LastSeenAvatarClasses
-} from './../LastSeenAvatar';
-import chatBubbleStyles, { ChatBubbleStyles } from './styles';
+  LastSeenAvatarClasses,
+} from "./../LastSeenAvatar";
+import chatBubbleStyles, { ChatBubbleStyles } from "./styles";
 export { ChatBubbleStyles };
-import classnames from 'classnames';
+import classnames from "classnames";
+
+export interface MessageRenderProps<T> {
+  message: Message<T>;
+}
 
 export interface ChatBubbleClasses {
   chatBubbleWrapper?: string;
@@ -39,8 +43,8 @@ export interface ChatBubbleClasses {
   lastSeenByContainer?: string;
 }
 
-export interface ChatBubbleProps {
-  message: Message;
+export interface ChatBubbleProps<T> {
+  message: Message<T>;
   author?: Author;
 
   style?: React.CSSProperties;
@@ -59,20 +63,21 @@ export interface ChatBubbleProps {
   lastSeenByAuthors?: Author[];
   showRecipientLastSeenMessage?: boolean;
   customLastSeenAvatar?: (props: LastSeenAvatarProps) => JSX.Element;
+  customMessageRender?: (props: MessageRenderProps<T>) => JSX.Element | string;
 }
 
 export interface ChatBubbleState {
   mouseOverLastSeenContainer: boolean;
 }
 
-export default class ChatBubble extends React.PureComponent<
-  ChatBubbleProps,
+export default class ChatBubble<T> extends React.PureComponent<
+  ChatBubbleProps<T>,
   ChatBubbleState
 > {
-  constructor(props: ChatBubbleProps) {
+  constructor(props: ChatBubbleProps<T>) {
     super(props);
     this.state = {
-      mouseOverLastSeenContainer: false
+      mouseOverLastSeenContainer: false,
     };
   }
 
@@ -81,7 +86,13 @@ export default class ChatBubble extends React.PureComponent<
       return null;
     }
 
-    let { lastSeenAvatarStyles, yourAuthorId, styles, classes, lastSeenAvatarClasses } = this.props;
+    let {
+      lastSeenAvatarStyles,
+      yourAuthorId,
+      styles,
+      classes,
+      lastSeenAvatarClasses,
+    } = this.props;
 
     if (!classes) {
       classes = {};
@@ -114,7 +125,7 @@ export default class ChatBubble extends React.PureComponent<
       recipientCreatedOn,
       isSendIconColor,
       loadingSpinnerColor,
-      lastSeenByContainer
+      lastSeenByContainer,
     } = styles;
     const youAreAuthor = this.props.message.authorId === yourAuthorId;
 
@@ -163,17 +174,17 @@ export default class ChatBubble extends React.PureComponent<
       ...(this.props.isLastInGroup &&
         (youAreAuthor
           ? userLastChatBubbleInGroup
-          : recipientLastChatBubbleInGroup))
+          : recipientLastChatBubbleInGroup)),
     };
 
     return (
       <div
         style={{
           ...chatBubbleStyles.chatBubbleWrapper,
-          ...chatBubbleWrapper
+          ...chatBubbleWrapper,
         }}
         className={classnames(
-          'react-bell-chat__chat-bubble__wrapper',
+          "react-bell-chat__chat-bubble__wrapper",
           this.props.className,
           classes.chatBubbleWrapper
         )}
@@ -181,7 +192,7 @@ export default class ChatBubble extends React.PureComponent<
         <div
           style={{ ...finalChatBubbleStyles }}
           className={classnames(
-            'react-bell-chat__chat-bubble',
+            "react-bell-chat__chat-bubble",
             this.props.className,
             classes.chatBubble
           )}
@@ -190,15 +201,19 @@ export default class ChatBubble extends React.PureComponent<
             style={{
               ...chatBubbleStyles.text,
               ...text,
-              ...(youAreAuthor ? userText : recipientText)
+              ...(youAreAuthor ? userText : recipientText),
             }}
             className={classnames(
-              'react-bell-chat__chat-bubble__text',
+              "react-bell-chat__chat-bubble__text",
               classes.text,
               youAreAuthor ? classes.userText : classes.recipientText
             )}
           >
-            {this.props.message.message}
+            {this.props.customMessageRender
+              ? this.props.customMessageRender({
+                  message: this.props.message,
+                })
+              : this.props.message.message}
           </span>
           {this.props.message.createdOn && (
             <span
@@ -208,10 +223,10 @@ export default class ChatBubble extends React.PureComponent<
                 ...(youAreAuthor
                   ? chatBubbleStyles.userCreatedOn
                   : chatBubbleStyles.recipientCreatedOn),
-                ...(youAreAuthor ? userCreatedOn : recipientCreatedOn)
+                ...(youAreAuthor ? userCreatedOn : recipientCreatedOn),
               }}
               className={classnames(
-                'react-bell-chat__chat-bubble__created-on',
+                "react-bell-chat__chat-bubble__created-on",
                 classes.createdOn,
                 youAreAuthor
                   ? classes.userCreatedOn
@@ -220,22 +235,22 @@ export default class ChatBubble extends React.PureComponent<
               title={this.props.message.createdOn.toLocaleString()}
             >
               {this.props.message.createdOn.toLocaleTimeString([], {
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: true
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: true,
               })}
             </span>
           )}
           {this.props.message.isSend !== undefined && youAreAuthor && (
             <span
               style={{
-                ...chatBubbleStyles.isSend
+                ...chatBubbleStyles.isSend,
               }}
               className={classnames(
-                'react-bell-chat__chat-bubble__is-send',
+                "react-bell-chat__chat-bubble__is-send",
                 classes.isSend
               )}
-              title={this.props.message.isSend ? 'Send' : 'Sending'}
+              title={this.props.message.isSend ? "Send" : "Sending"}
             >
               {this.props.message.isSend ? (
                 <svg
@@ -244,7 +259,7 @@ export default class ChatBubble extends React.PureComponent<
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 10 10"
                   preserveAspectRatio="xMidYMid"
-                  style={{ background: 'none' }}
+                  style={{ background: "none" }}
                 >
                   <path
                     fill={
@@ -253,7 +268,8 @@ export default class ChatBubble extends React.PureComponent<
                         : chatBubbleStyles.isSendIconColor
                     }
                     {
-                      /* tslint:disable-next-line:max-line-length*/ ...{}}
+                      /* tslint:disable-next-line:max-line-length*/ ...{}
+                    }
                     d="M9,1.7L8.6,1.4C8.5,1.3,8.3,1.3,8.2,1.4L3.9,7C3.8,7.1,3.6,7.1,3.5,7c0,0,0,0,0,0L1.7,5.3c-0.1-0.1-0.3-0.1-0.4,0L1,5.6 C0.9,5.7,0.9,5.9,1,6l2.6,2.6c0.1,0.1,0.3,0.1,0.4,0L9,2.1C9.1,2,9.1,1.8,9,1.7z"
                   />
                 </svg>
@@ -264,7 +280,7 @@ export default class ChatBubble extends React.PureComponent<
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 100 100"
                   preserveAspectRatio="xMidYMid"
-                  style={{ background: 'none' }}
+                  style={{ background: "none" }}
                 >
                   <path
                     stroke="none"
@@ -299,10 +315,10 @@ export default class ChatBubble extends React.PureComponent<
             <div
               style={{
                 ...chatBubbleStyles.lastSeenByContainer,
-                ...lastSeenByContainer
+                ...lastSeenByContainer,
               }}
               className={classnames(
-                'react-bell-chat__chat-bubble__last-seen-by__container',
+                "react-bell-chat__chat-bubble__last-seen-by__container",
                 classes.lastSeenByContainer
               )}
               onMouseEnter={() =>
@@ -312,11 +328,11 @@ export default class ChatBubble extends React.PureComponent<
                 this.setState({ mouseOverLastSeenContainer: false })
               }
               title={
-                'Last seen by ' +
+                "Last seen by " +
                 this.props.lastSeenByAuthors
-                  .map(a => a.name)
-                  .join(', ')
-                  .replace(/,(?!.*,)/gim, ' and')
+                  .map((a) => a.name)
+                  .join(", ")
+                  .replace(/,(?!.*,)/gim, " and")
               }
             >
               {this.props.lastSeenByAuthors.map((a, i) => (
@@ -331,8 +347,8 @@ export default class ChatBubble extends React.PureComponent<
                         : {}),
                       ...(i > 0 && !this.state.mouseOverLastSeenContainer
                         ? { marginTop: -12 }
-                        : { marginTop: -4 })
-                    }
+                        : { marginTop: -4 }),
+                    },
                   }}
                   classes={lastSeenAvatarClasses}
                 />

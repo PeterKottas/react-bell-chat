@@ -1,18 +1,18 @@
-import * as React from 'react';
-import { BubbleGroupClasses } from '../BubbleGroup';
-import { ChatBubbleProps } from '../ChatBubble';
-import Message from '../Message';
-import { ChatFeedStyles } from './styles';
-import { Author } from '../Author';
-import { ChatBubbleStyles } from '../ChatBubble/';
-import { AvatarProps, AvatarStyles, AvatarClasses } from '../Avatar';
-import { IsTypingStyles, IsTypingClasses } from '../IsTyping';
-import { ChatScrollAreaProps, ChatScrollAreaApi, ChatScrollAreaStyles, ChatScrollAreaClasses } from '../ChatScrollArea';
-import { LastSeenAvatarProps, LastSeenAvatarStyles, LastSeenAvatarClasses } from '../LastSeenAvatar';
-import { DateRowProps, DateRowStyles, DateRowClasses } from '../DateRow';
-import { LoadingMessagesProps, LoadingMessagesStyle, LoadingMessagesClasses } from '../LoadingMessages';
-import { BubbleGroupStyles } from '../BubbleGroup/styles';
-import { ChatBubbleClasses } from './../ChatBubble/index';
+import * as React from "react";
+import { BubbleGroupClasses } from "../BubbleGroup";
+import { ChatBubbleProps, MessageRenderProps } from "../ChatBubble";
+import Message from "../Message";
+import { ChatFeedStyles } from "./styles";
+import { Author } from "../Author";
+import { ChatBubbleStyles } from "../ChatBubble/";
+import { AvatarProps, AvatarStyles, AvatarClasses } from "../Avatar";
+import { IsTypingStyles, IsTypingClasses } from "../IsTyping";
+import { ChatScrollAreaProps, ChatScrollAreaApi, ChatScrollAreaStyles, ChatScrollAreaClasses } from "../ChatScrollArea";
+import { LastSeenAvatarProps, LastSeenAvatarStyles, LastSeenAvatarClasses } from "../LastSeenAvatar";
+import { DateRowProps, DateRowStyles, DateRowClasses } from "../DateRow";
+import { LoadingMessagesProps, LoadingMessagesStyle, LoadingMessagesClasses } from "../LoadingMessages";
+import { BubbleGroupStyles } from "../BubbleGroup/styles";
+import { ChatBubbleClasses } from "./../ChatBubble/index";
 export { ChatFeedStyles };
 export interface ChatFeedClasses {
     chatPanel?: string;
@@ -21,9 +21,9 @@ export interface ChatFeedClasses {
     showIsTypingChatMessages?: string;
     chatMessages?: string;
 }
-export interface ChatFeedProps {
+export interface ChatFeedProps<T = string> {
     className?: string;
-    messages: Message[];
+    messages: Message<T>[];
     authors: Author[];
     yourAuthorId: number;
     hasOldMessages?: boolean;
@@ -37,12 +37,13 @@ export interface ChatFeedProps {
     showIsTyping?: boolean;
     showLoadingMessages?: boolean;
     customLoadingMessages?: (props: LoadingMessagesProps) => JSX.Element;
-    customChatBubble?: (props: ChatBubbleProps) => JSX.Element;
-    customSystemChatBubble?: (props: ChatBubbleProps) => JSX.Element;
+    customChatBubble?: (props: ChatBubbleProps<T>) => JSX.Element;
+    customSystemChatBubble?: (props: ChatBubbleProps<T>) => JSX.Element;
     customAvatar?: (props: AvatarProps) => JSX.Element;
     customScrollArea?: (props: ChatScrollAreaProps) => JSX.Element;
     customIsTyping?: (props: ChatScrollAreaProps) => JSX.Element;
     customLastSeenAvatar?: (props: LastSeenAvatarProps) => JSX.Element;
+    customMessageRender?: (props: MessageRenderProps<T>) => JSX.Element | string;
     customDateRow?: (props: DateRowProps) => JSX.Element;
     onLoadOldMessages?: () => Promise<void>;
     style?: React.CSSProperties;
@@ -79,22 +80,22 @@ export interface ChatFeedSnapshot {
     scrollHeight: number;
     clientHeight: number;
 }
-export default class ChatFeed extends React.PureComponent<ChatFeedProps, ChatFeedState> implements ChatFeedApi {
+export default class ChatFeed<T = string> extends React.PureComponent<ChatFeedProps<T>, ChatFeedState> implements ChatFeedApi {
     static defaultProps: ChatFeedProps;
     scrollApi: ChatScrollAreaApi;
-    constructor(props: ChatFeedProps);
+    constructor(props: ChatFeedProps<T>);
     onMessageSend(): void;
     componentDidMount(): void;
-    getSnapshotBeforeUpdate(prevProps: ChatFeedProps, prevState: ChatFeedState): {
+    getSnapshotBeforeUpdate(prevProps: ChatFeedProps<T>, prevState: ChatFeedState): {
         wasScrolledToBottom: boolean;
         scrollHeight: number;
         clientHeight: number;
     };
-    componentDidUpdate(prevProps: ChatFeedProps, prevState: ChatFeedState, snapshot: ChatFeedSnapshot): void;
+    componentDidUpdate(prevProps: ChatFeedProps<T>, prevState: ChatFeedState, snapshot: ChatFeedSnapshot): void;
     /**
      * Determines what type of message/messages to render.
      */
-    renderMessages(messages: Message[]): JSX.Element[];
+    renderMessages<T>(messages: Message<T>[]): JSX.Element[];
     renderIsTyping(): JSX.Element;
     apiRef(e: ChatScrollAreaApi): void;
     /**

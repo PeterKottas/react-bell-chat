@@ -19,7 +19,8 @@
     "conventional-github-releaser": "conventional-github-releaser -p angular",
     "commit:build": "git add . && git commit -m \"Deploy commit\" --quiet & npm run push:git",
     "create:patch": "npm run version:patch && npm run push:git",
-    "deploy": ".env.bat && npm run build:gh-pages && npm run build:prod && npm run commit:build && npm publish && npm run conventional-github-releaser -p angular && npm run create:patch"
+    "deploy": ".env.bat && npm run build:gh-pages && npm run build:prod && npm run commit:build && npm publish && npm run conventional-github-releaser -p angular && npm run create:patch",
+    "lint": "eslint \"./src/**/*.{js,ts,tsx}\" --quiet --fix"
   },
   "keywords": [
     "react",
@@ -44,8 +45,9 @@
     "@types/react": "16.8.16",
     "@types/react-dom": "16.8.4",
     "@types/webpack": "4.4.30",
+    "@typescript-eslint/eslint-plugin": "^4.1.0",
+    "@typescript-eslint/parser": "^4.1.0",
     "awesome-typescript-loader": "5.2.1",
-    "browserify": "^16.3.0",
     "classnames": "2.2.6",
     "conventional-github-releaser": "^3.1.3",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
@@ -54,12 +56,14 @@
     "react-dom": "^16.8.6",
     "rimraf": "2.6.3",
     "terser-webpack-plugin": "^1.3.0",
-    "tslint": "^5.18.0",
-    "tslint-react": "^4.0.0",
     "typescript": "^3.5.2",
     "webpack": "4.35.2",
     "webpack-cli": "^3.3.5",
     "webpack-dev-server": "3.7.2",
-    "webpack-merge": "4.2.1"
+    "webpack-merge": "4.2.1",
+    "eslint": "^7.8.1",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.6"
   }
 }

@@ -3,10 +3,10 @@
  * in rendering messages in the chat feed.
  */
 
-export interface Message {
+export interface Message<T> {
   id?: number;
   authorId?: number;
-  message: string;
+  message: T;
   createdOn?: Date;
   isSend?: boolean;
 }
