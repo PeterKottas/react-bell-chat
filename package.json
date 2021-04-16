@@ -3,8 +3,8 @@
   "version": "1.0.28",
   "description": "A library of React components for building chat UIs",
   "repository": "https://github.com/PeterKottas/react-bell-chat",
-  "main": "./lib/index.js",
-  "typings": "src/lib/index.d.ts",
+  "main": "./lib/index.min.js",
+  "typings": "lib/index.d.ts",
   "scripts": {
     "start": "set NODE_ENV=local && webpack --config webpack/webpack.config.dev.js",
     "build:typings": "tsc --declaration --emitDeclarationOnly --declarationDir lib",
