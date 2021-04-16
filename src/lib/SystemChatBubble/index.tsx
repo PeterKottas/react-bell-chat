@@ -11,7 +11,7 @@ const systemChatBubbleStyles: ChatBubbleStyles = {
   } as React.CSSProperties,
 };
 
-export interface SystemChatBubbleProps<T> extends ChatBubbleProps<T> {}
+export interface SystemChatBubbleProps<T = string> extends ChatBubbleProps<T> {}
 
 function SystemChatBubble<T>(props: SystemChatBubbleProps<T>) {
   let { styles, classes } = props;

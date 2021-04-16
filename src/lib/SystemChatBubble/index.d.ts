@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ChatBubbleProps } from '../ChatBubble';
-export interface SystemChatBubbleProps<T> extends ChatBubbleProps<T> {
+export interface SystemChatBubbleProps<T = string> extends ChatBubbleProps<T> {
 }
 declare function SystemChatBubble<T>(props: SystemChatBubbleProps<T>): JSX.Element;
 declare const _default: React.MemoExoticComponent<typeof SystemChatBubble>;

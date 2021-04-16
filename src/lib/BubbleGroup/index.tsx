@@ -22,7 +22,7 @@ export interface BubbleGroupClasses {
   chatBubbleWrapper?: string;
 }
 
-export interface BubbleGroupProps<T> {
+export interface BubbleGroupProps<T = string> {
   yourAuthorId?: number;
   messages: Message<T>[];
   author: Author;
@@ -50,7 +50,7 @@ export interface BubbleGroupProps<T> {
   showRecipientLastSeenMessage?: boolean;
 }
 
-export default class BubbleGroup<T> extends React.PureComponent<
+export default class BubbleGroup<T = string> extends React.PureComponent<
   BubbleGroupProps<T>
 > {
   public static defaultProps: BubbleGroupProps<string> = {

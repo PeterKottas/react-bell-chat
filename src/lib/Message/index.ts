@@ -3,7 +3,7 @@
  * in rendering messages in the chat feed.
  */
 
-export interface Message<T> {
+export interface Message<T = string> {
   id?: number;
   authorId?: number;
   message: T;

@@ -10,7 +10,7 @@ import chatBubbleStyles, { ChatBubbleStyles } from './styles';
 export { ChatBubbleStyles };
 import classnames from 'classnames';
 
-export interface MessageRenderProps<T> {
+export interface MessageRenderProps<T = string> {
   message: Message<T>;
 }
 
@@ -43,7 +43,7 @@ export interface ChatBubbleClasses {
   lastSeenByContainer?: string;
 }
 
-export interface ChatBubbleProps<T> {
+export interface ChatBubbleProps<T = string> {
   message: Message<T>;
   author?: Author;
 
@@ -70,7 +70,7 @@ export interface ChatBubbleState {
   mouseOverLastSeenContainer: boolean;
 }
 
-export default class ChatBubble<T> extends React.PureComponent<
+export default class ChatBubble<T = string> extends React.PureComponent<
   ChatBubbleProps<T>,
   ChatBubbleState
 > {
