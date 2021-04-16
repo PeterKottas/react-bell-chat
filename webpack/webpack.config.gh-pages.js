@@ -48,7 +48,7 @@ module.exports = mergeWithCustomize({
   },
   output: {
     path: path.join(__dirname, '..', 'docs'),
-    publicPath: '/guestbell-chat',
+    publicPath: '/react-bell-chat',
     filename: 'dist/[name].[hash].js',
   },
   externals: {},
