@@ -1,35 +1,71 @@
 const path = require('path');
 const webpack = require('webpack');
-const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
 var isLocalBuild = process.env.NODE_ENV === 'local';
-const merge = require('webpack-merge');
+const { mergeWithCustomize } = require('webpack-merge');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+var _ = require('lodash');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
-module.exports = merge(
-    {
-        customizeObject(a, b, key) {
-            if (key === 'entry') {
-                // Custom merging
-                return b;
-            }
+let htmlPluginOptions = {
+  alwaysWriteToDisk: true,
+  filename: 'index.html',
+  template: './src/demo/index.template.ejs',
+};
 
-            if (key === 'output') {
-                // Custom merging
-                return b;
-            }
-
-            // Fall back to default merging
-            return undefined;
-        }
+module.exports = mergeWithCustomize({
+  customizeArray(a, b, key) {
+    if (key === 'plugins') {
+      a = _.remove(a, function (plugin) {
+        // console.log(JSON.stringify(plugin));
+        return !(plugin.options && plugin.options.filename === '[name].css');
+      });
+      return a.concat(b);
     }
-)(require('./webpack.config.base'), {
-    entry:
-    {
-        'bundle': './src/demo/index.tsx'
-    },
-    output: {
-        path: path.join(__dirname, '..', 'docs'),
-        publicPath: '/dist',
-        filename: '[name].js'
-    },
-    externals: {}
+
+    // Fall back to default merging
+    return undefined;
+  },
+  customizeObject(a, b, key) {
+    if (key === 'entry') {
+      // Custom merging
+      return b;
+    }
+
+    if (key === 'output') {
+      // Custom merging
+      return b;
+    }
+
+    // Fall back to default merging
+    return undefined;
+  },
+})(require('./webpack.config.base'), {
+  entry: {
+    main: './src/demo/index.tsx',
+  },
+  output: {
+    path: path.join(__dirname, '..', 'docs'),
+    publicPath: '/guestbell-chat',
+    filename: 'dist/[name].[hash].js',
+  },
+  externals: {},
+  plugins: [
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin(htmlPluginOptions),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: './src/demo/assets/favicon/icons',
+          to: 'dist/icons',
+        },
+      ],
+    }),
+    new MiniCssExtractPlugin({
+      filename: 'dist/[name].[hash].css',
+    }),
+  ],
+  mode: 'production',
 });
