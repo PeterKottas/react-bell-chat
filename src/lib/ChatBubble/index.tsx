@@ -194,7 +194,11 @@ export default class ChatBubble<T = string> extends React.PureComponent<
           className={classnames(
             'react-bell-chat__chat-bubble',
             this.props.className,
-            classes.chatBubble
+            classes.chatBubble,
+            {
+              [classes.recipientChatBubble]: !youAreAuthor,
+              [classes.userChatBubble]: youAreAuthor,
+            }
           )}
         >
           <span
