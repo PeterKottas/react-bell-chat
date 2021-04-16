@@ -9,8 +9,8 @@ const isTypingStyles: IsTypingStyles = {
     left: 0,
     right: 0,
     color: 'rgb(204, 204, 204)',
-    textAlign: 'center'
-  } as React.CSSProperties
+    textAlign: 'center',
+  } as React.CSSProperties,
 };
 
 export interface IsTypingStyles {
@@ -29,7 +29,7 @@ export interface IsTypingProps {
   classes?: IsTypingClasses;
 }
 
-const IsTyping: React.FC<IsTypingProps> = props => {
+const IsTyping: React.FC<IsTypingProps> = (props) => {
   let { styles, classes } = props;
   if (!styles) {
     styles = {};
@@ -51,7 +51,7 @@ const IsTyping: React.FC<IsTypingProps> = props => {
         style={{ ...isTypingStyles.container, ...container, ...props.style }}
       >
         {props.typingAuthors
-          .map(a => a.name)
+          .map((a) => a.name)
           .join(', ')
           .replace(/,(?!.*,)/gim, ' and') +
           (props.typingAuthors.length === 1 ? ' is ' : ' are ') +

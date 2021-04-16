@@ -2,44 +2,44 @@
 // Written, developed, and designed by Brandon Mowat for the purpose of helping
 // other developers make chat interfaces.
 
-import * as React from "react";
-import BubbleGroup, { BubbleGroupClasses } from "../BubbleGroup";
+import * as React from 'react';
+import BubbleGroup, { BubbleGroupClasses } from '../BubbleGroup';
 import DefaultChatBubble, {
   ChatBubbleProps,
   MessageRenderProps,
-} from "../ChatBubble";
-import Message from "../Message";
-import chatStyles, { ChatFeedStyles } from "./styles";
-import { Author } from "../Author";
-import { ChatBubbleStyles } from "../ChatBubble/";
-import Avatar, { AvatarProps, AvatarStyles, AvatarClasses } from "../Avatar";
-import IsTyping, { IsTypingStyles, IsTypingClasses } from "../IsTyping";
+} from '../ChatBubble';
+import Message from '../Message';
+import chatStyles, { ChatFeedStyles } from './styles';
+import { Author } from '../Author';
+import { ChatBubbleStyles } from '../ChatBubble/';
+import Avatar, { AvatarProps, AvatarStyles, AvatarClasses } from '../Avatar';
+import IsTyping, { IsTypingStyles, IsTypingClasses } from '../IsTyping';
 import ChatScrollArea, {
   ChatScrollAreaProps,
   ChatScrollAreaApi,
   ChatScrollAreaStyles,
   ChatScrollAreaClasses,
-} from "../ChatScrollArea";
+} from '../ChatScrollArea';
 import LastSeenAvatar, {
   LastSeenAvatarProps,
   LastSeenAvatarStyles,
   LastSeenAvatarClasses,
-} from "../LastSeenAvatar";
-import { groupBy } from "../utils/utils";
+} from '../LastSeenAvatar';
+import { groupBy } from '../utils/utils';
 import DateRow, {
   DateRowProps,
   DateRowStyles,
   DateRowClasses,
-} from "../DateRow";
+} from '../DateRow';
 import LoadingMessages, {
   LoadingMessagesProps,
   LoadingMessagesStyle,
   LoadingMessagesClasses,
-} from "../LoadingMessages";
-import SystemChatBubble from "../SystemChatBubble";
-import classnames from "classnames";
-import { BubbleGroupStyles } from "../BubbleGroup/styles";
-import { ChatBubbleClasses } from "./../ChatBubble/index";
+} from '../LoadingMessages';
+import SystemChatBubble from '../SystemChatBubble';
+import classnames from 'classnames';
+import { BubbleGroupStyles } from '../BubbleGroup/styles';
+import { ChatBubbleClasses } from './../ChatBubble/index';
 
 // Model for ChatFeed props.
 
@@ -361,7 +361,7 @@ export default class ChatFeed<T = string>
     return (
       <div
         className={classnames(
-          "react-bell-chat__chat-panel",
+          'react-bell-chat__chat-panel',
           this.props.className,
           classes.chatPanel
         )}
@@ -396,7 +396,7 @@ export default class ChatFeed<T = string>
                 styles.showRecipientLastSeenMessageChatMessages),
             }}
             className={classnames(
-              "react-bell-chat__chat-messages",
+              'react-bell-chat__chat-messages',
               classes.chatMessages,
               this.props.showRecipientAvatar &&
                 classes.showRecipientAvatarChatMessages,

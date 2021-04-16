@@ -7,8 +7,8 @@ const systemChatBubbleStyles: ChatBubbleStyles = {
   systemChatBubbleContainer: {
     textAlign: 'center',
     fontSize: 12,
-    color: 'rgba(0, 0, 0, 0.55)'
-  } as React.CSSProperties
+    color: 'rgba(0, 0, 0, 0.55)',
+  } as React.CSSProperties,
 };
 
 export interface SystemChatBubbleProps<T> extends ChatBubbleProps<T> {}
@@ -27,7 +27,7 @@ function SystemChatBubble<T>(props: SystemChatBubbleProps<T>) {
     props.message.createdOn.toLocaleTimeString([], {
       hour: '2-digit',
       minute: '2-digit',
-      hour12: true
+      hour12: true,
     });
   return (
     props.message && (
@@ -40,7 +40,7 @@ function SystemChatBubble<T>(props: SystemChatBubbleProps<T>) {
         style={{
           ...systemChatBubbleStyles.systemChatBubbleContainer,
           ...systemChatBubbleContainer,
-          ...props.style
+          ...props.style,
         }}
       >
         {time && (
@@ -52,7 +52,7 @@ function SystemChatBubble<T>(props: SystemChatBubbleProps<T>) {
             title={props.message.createdOn.toLocaleString()}
             style={{
               ...systemChatBubbleStyles.systemChatBubbleText,
-              ...systemChatBubbleText
+              ...systemChatBubbleText,
             }}
           >
             {time}:{' '}
@@ -62,6 +62,6 @@ function SystemChatBubble<T>(props: SystemChatBubbleProps<T>) {
       </div>
     )
   );
-};
+}
 
 export default React.memo(SystemChatBubble);

@@ -1,14 +1,14 @@
-import * as React from "react";
-import Message from "../Message";
-import { Author } from "../Author";
+import * as React from 'react';
+import Message from '../Message';
+import { Author } from '../Author';
 import {
   LastSeenAvatarProps,
   LastSeenAvatarStyles,
   LastSeenAvatarClasses,
-} from "./../LastSeenAvatar";
-import chatBubbleStyles, { ChatBubbleStyles } from "./styles";
+} from './../LastSeenAvatar';
+import chatBubbleStyles, { ChatBubbleStyles } from './styles';
 export { ChatBubbleStyles };
-import classnames from "classnames";
+import classnames from 'classnames';
 
 export interface MessageRenderProps<T> {
   message: Message<T>;
@@ -86,13 +86,13 @@ export default class ChatBubble<T> extends React.PureComponent<
       return null;
     }
 
-    let {
+    const {
       lastSeenAvatarStyles,
       yourAuthorId,
-      styles,
-      classes,
       lastSeenAvatarClasses,
     } = this.props;
+
+    let { styles, classes } = this.props;
 
     if (!classes) {
       classes = {};
@@ -184,7 +184,7 @@ export default class ChatBubble<T> extends React.PureComponent<
           ...chatBubbleWrapper,
         }}
         className={classnames(
-          "react-bell-chat__chat-bubble__wrapper",
+          'react-bell-chat__chat-bubble__wrapper',
           this.props.className,
           classes.chatBubbleWrapper
         )}
@@ -192,7 +192,7 @@ export default class ChatBubble<T> extends React.PureComponent<
         <div
           style={{ ...finalChatBubbleStyles }}
           className={classnames(
-            "react-bell-chat__chat-bubble",
+            'react-bell-chat__chat-bubble',
             this.props.className,
             classes.chatBubble
           )}
@@ -204,7 +204,7 @@ export default class ChatBubble<T> extends React.PureComponent<
               ...(youAreAuthor ? userText : recipientText),
             }}
             className={classnames(
-              "react-bell-chat__chat-bubble__text",
+              'react-bell-chat__chat-bubble__text',
               classes.text,
               youAreAuthor ? classes.userText : classes.recipientText
             )}
@@ -226,7 +226,7 @@ export default class ChatBubble<T> extends React.PureComponent<
                 ...(youAreAuthor ? userCreatedOn : recipientCreatedOn),
               }}
               className={classnames(
-                "react-bell-chat__chat-bubble__created-on",
+                'react-bell-chat__chat-bubble__created-on',
                 classes.createdOn,
                 youAreAuthor
                   ? classes.userCreatedOn
@@ -235,8 +235,8 @@ export default class ChatBubble<T> extends React.PureComponent<
               title={this.props.message.createdOn.toLocaleString()}
             >
               {this.props.message.createdOn.toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
+                hour: '2-digit',
+                minute: '2-digit',
                 hour12: true,
               })}
             </span>
@@ -247,10 +247,10 @@ export default class ChatBubble<T> extends React.PureComponent<
                 ...chatBubbleStyles.isSend,
               }}
               className={classnames(
-                "react-bell-chat__chat-bubble__is-send",
+                'react-bell-chat__chat-bubble__is-send',
                 classes.isSend
               )}
-              title={this.props.message.isSend ? "Send" : "Sending"}
+              title={this.props.message.isSend ? 'Send' : 'Sending'}
             >
               {this.props.message.isSend ? (
                 <svg
@@ -259,7 +259,7 @@ export default class ChatBubble<T> extends React.PureComponent<
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 10 10"
                   preserveAspectRatio="xMidYMid"
-                  style={{ background: "none" }}
+                  style={{ background: 'none' }}
                 >
                   <path
                     fill={
@@ -280,7 +280,7 @@ export default class ChatBubble<T> extends React.PureComponent<
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 100 100"
                   preserveAspectRatio="xMidYMid"
-                  style={{ background: "none" }}
+                  style={{ background: 'none' }}
                 >
                   <path
                     stroke="none"
@@ -318,7 +318,7 @@ export default class ChatBubble<T> extends React.PureComponent<
                 ...lastSeenByContainer,
               }}
               className={classnames(
-                "react-bell-chat__chat-bubble__last-seen-by__container",
+                'react-bell-chat__chat-bubble__last-seen-by__container',
                 classes.lastSeenByContainer
               )}
               onMouseEnter={() =>
@@ -328,11 +328,11 @@ export default class ChatBubble<T> extends React.PureComponent<
                 this.setState({ mouseOverLastSeenContainer: false })
               }
               title={
-                "Last seen by " +
+                'Last seen by ' +
                 this.props.lastSeenByAuthors
                   .map((a) => a.name)
-                  .join(", ")
-                  .replace(/,(?!.*,)/gim, " and")
+                  .join(', ')
+                  .replace(/,(?!.*,)/gim, ' and')
               }
             >
               {this.props.lastSeenByAuthors.map((a, i) => (

@@ -13,7 +13,7 @@ export interface ChatInputClasses {
 
 const chatInputStyles: ChatInputStyles = {
   chatInput: {
-    flex: 1
+    flex: 1,
   },
   input: {
     border: 'none',
@@ -23,8 +23,8 @@ const chatInputStyles: ChatInputStyles = {
     fontSize: '16',
     outline: 'none',
     padding: '30',
-    width: '100%'
-  }
+    width: '100%',
+  },
 };
 
 export interface ChatInputProps {
@@ -35,8 +35,9 @@ export interface ChatInputProps {
   style?: React.CSSProperties;
 }
 
-const ChatInput: React.FC<ChatInputProps> = props => {
-  let { styles, classes, inputPlaceholder } = props;
+const ChatInput: React.FC<ChatInputProps> = (props) => {
+  const { inputPlaceholder } = props;
+  let { styles, classes } = props;
   if (!styles) {
     styles = {};
   }

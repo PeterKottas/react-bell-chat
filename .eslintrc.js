@@ -32,6 +32,12 @@ module.exports = {
       'error',
       { vars: 'all', args: 'none', ignoreRestSiblings: false },
     ],
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
     // e.g.,
   },

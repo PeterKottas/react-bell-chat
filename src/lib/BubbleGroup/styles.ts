@@ -8,6 +8,6 @@ export default {
   bubbleGroupWrapper: {
     marginTop: 10,
     marginBottom: 10,
-    position: 'relative'
+    position: 'relative',
   },
 } as BubbleGroupStyles;

@@ -1,21 +1,21 @@
-import * as React from "react";
-import { render } from "react-dom";
+import * as React from 'react';
+import { render } from 'react-dom';
 import {
   ChatFeed,
   Message,
   Author,
   ChatBubbleProps,
   ChatFeedApi,
-} from "../lib";
+} from '../lib';
 
 const styles: { [key: string]: React.CSSProperties } = {
   button: {
-    backgroundColor: "#fff",
-    borderColor: "#1D2129",
-    borderStyle: "solid",
+    backgroundColor: '#fff',
+    borderColor: '#1D2129',
+    borderStyle: 'solid',
     borderRadius: 20,
     borderWidth: 2,
-    color: "#1D2129",
+    color: '#1D2129',
     fontSize: 18,
     fontWeight: 300,
     paddingTop: 8,
@@ -24,9 +24,9 @@ const styles: { [key: string]: React.CSSProperties } = {
     paddingRight: 16,
   },
   selected: {
-    color: "#fff",
-    backgroundColor: "#0084FF",
-    borderColor: "#0084FF",
+    color: '#fff',
+    backgroundColor: '#0084FF',
+    borderColor: '#0084FF',
   },
 };
 
@@ -35,9 +35,9 @@ const customBubble: React.FC<ChatBubbleProps<string>> = (props) => (
     <p>
       {props.author &&
         props.author.name +
-          " " +
-          (props.message.authorId !== props.yourAuthorId ? "says" : "said") +
-          ": " +
+          ' ' +
+          (props.message.authorId !== props.yourAuthorId ? 'says' : 'said') +
+          ': ' +
           props.message.message}
     </p>
   </div>
@@ -71,17 +71,17 @@ class Chat extends React.Component<ChatProps, ChatState> {
       authors: [
         {
           id: 0,
-          name: "You",
+          name: 'You',
         },
         {
           id: 1,
-          name: "Mark",
+          name: 'Mark',
           isTyping: true,
           lastSeenMessageId: 7,
         },
         {
           id: 2,
-          name: "Evan",
+          name: 'Evan',
           isTyping: true,
           lastSeenMessageId: 7,
         },
@@ -90,63 +90,63 @@ class Chat extends React.Component<ChatProps, ChatState> {
         {
           id: 0,
           authorId: 1,
-          message: "Hey guys!!",
+          message: 'Hey guys!!',
           createdOn: new Date(2018, 2, 27, 18, 32, 24),
           isSend: true,
         },
         {
           id: 1,
           authorId: 2,
-          message: "Hey! Evan here. react-bell-chat is pretty dooope.",
+          message: 'Hey! Evan here. react-bell-chat is pretty dooope.',
           createdOn: new Date(2018, 2, 28, 18, 12, 24),
           isSend: true,
         },
         {
           id: 2,
           authorId: 2,
-          message: "Rly is.",
+          message: 'Rly is.',
           createdOn: new Date(2018, 2, 28, 18, 13, 24),
           isSend: true,
         },
         {
           id: 3,
           authorId: 2,
-          message: "Long group.",
+          message: 'Long group.',
           createdOn: new Date(2018, 2, 28, 18, 13, 24),
           isSend: true,
         },
         {
           id: 4,
           authorId: 0,
-          message: "My message.",
+          message: 'My message.',
           createdOn: new Date(2018, 2, 29, 19, 32, 24),
           isSend: true,
         },
         {
           id: 5,
           authorId: 0,
-          message: "One more.",
+          message: 'One more.',
           createdOn: new Date(2018, 2, 29, 19, 33, 24),
           isSend: true,
         },
         {
           id: 6,
           authorId: 2,
-          message: "One more group to see the scroll.",
+          message: 'One more group to see the scroll.',
           createdOn: new Date(2018, 2, 29, 19, 35, 24),
           isSend: true,
         },
         {
           id: 7,
           authorId: 2,
-          message: "I said group.",
+          message: 'I said group.',
           createdOn: new Date(2018, 2, 29, 19, 35, 24),
           isSend: true,
         },
       ],
       useCustomBubble: false,
       currentUser: 0,
-      messageText: "",
+      messageText: '',
       simulateTyping: false,
       showAvatar: true,
       showDateRow: true,
@@ -163,7 +163,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
 
   onMessageSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (this.state.messageText !== "") {
+    if (this.state.messageText !== '') {
       const id = Number(new Date());
       const newMessage: Message<string> = {
         id,
@@ -174,7 +174,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
       };
       this.setState(
         (previousState) => ({
-          messageText: "",
+          messageText: '',
           messages: previousState.messages.concat(newMessage),
         }),
         () => this.chat && this.chat.onMessageSend()
@@ -198,6 +198,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
           <a
             href="https://github.com/PeterKottas/react-bell-chat"
             target="_blank"
+            rel="noreferrer"
           >
             Github
           </a>
@@ -233,7 +234,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
                             ({
                               id: Number(new Date()),
                               createdOn: new Date(2017, 1, 1),
-                              message: "Old message " + (i + 1).toString(),
+                              message: 'Old message ' + (i + 1).toString(),
                               authorId: Math.round(Math.random() + 1),
                             } as Message<string>)
                         )
@@ -256,7 +257,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
             />
           </form>
 
-          <div style={{ display: "flex", justifyContent: "space-around" }}>
+          <div style={{ display: 'flex', justifyContent: 'space-around' }}>
             <button
               role="button"
               style={{
@@ -288,8 +289,8 @@ class Chat extends React.Component<ChatProps, ChatState> {
           </div>
           <div
             style={{
-              display: "flex",
-              justifyContent: "space-around",
+              display: 'flex',
+              justifyContent: 'space-around',
               marginTop: 10,
             }}
           >
@@ -352,7 +353,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
                     {
                       id: Number(new Date()),
                       createdOn: new Date(),
-                      message: "Simulated message",
+                      message: 'Simulated message',
                       authorId: Math.round(Math.random() + 1),
                     },
                   ]),
@@ -371,7 +372,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
                     {
                       id: Number(new Date()),
                       createdOn: new Date(),
-                      message: "System message",
+                      message: 'System message',
                     },
                   ]),
                 });
@@ -382,8 +383,8 @@ class Chat extends React.Component<ChatProps, ChatState> {
           </div>
           <div
             style={{
-              display: "flex",
-              justifyContent: "space-around",
+              display: 'flex',
+              justifyContent: 'space-around',
               marginTop: 10,
             }}
           >
@@ -434,8 +435,8 @@ class Chat extends React.Component<ChatProps, ChatState> {
           </div>
           <div
             style={{
-              display: "flex",
-              justifyContent: "space-around",
+              display: 'flex',
+              justifyContent: 'space-around',
               marginTop: 10,
             }}
           >
@@ -470,4 +471,4 @@ class Chat extends React.Component<ChatProps, ChatState> {
   }
 }
 
-render(<Chat />, document.getElementById("chat-ui"));
+render(<Chat />, document.getElementById('chat-ui'));

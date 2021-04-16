@@ -14,17 +14,17 @@ const styles: ChatFeedStyles = {
     flexDirection: 'column',
     flexGrow: 1,
     overflow: 'hidden',
-    position: 'relative'
+    position: 'relative',
   },
   showRecipientAvatarChatMessages: {
-    paddingLeft: 50
+    paddingLeft: 50,
   },
   showIsTypingChatMessages: {
     paddingBottom: 24,
-    position: 'relative'
+    position: 'relative',
   },
   showRecipientLastSeenMessageChatMessages: {
-    paddingRight: 30
+    paddingRight: 30,
   },
   chatMessages: {
     paddingBottom: 10,
@@ -32,8 +32,8 @@ const styles: ChatFeedStyles = {
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'flex-end'
-  }
+    justifyContent: 'flex-end',
+  },
 };
 
 export default styles;

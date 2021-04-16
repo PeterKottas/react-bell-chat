@@ -35,7 +35,7 @@ const styles: ChatBubbleStyles = {
   chatBubbleWrapper: {
     position: 'relative',
     marginBottom: 2,
-    display: 'flex'
+    display: 'flex',
   } as React.CSSProperties,
   chatBubble: {
     position: 'relative',
@@ -47,17 +47,17 @@ const styles: ChatBubbleStyles = {
     paddingTop: 8,
     paddingBottom: 14,
     paddingLeft: 14,
-    paddingRight: 14
+    paddingRight: 14,
     // boxShadow: 'rgba(0, 0, 0, 0.3) 2px 2px 2px'
   } as React.CSSProperties,
   userChatBubbleOrientationNormal: {
-    marginRight: 0
+    marginRight: 0,
   } as React.CSSProperties,
   recipientChatBubbleOrientationNormal: {
-    marginLeft: 0
+    marginLeft: 0,
   } as React.CSSProperties,
   recipientChatBubble: {
-    backgroundColor: '#ccc'
+    backgroundColor: '#ccc',
   } as React.CSSProperties,
   text: {
     color: '#FFFFFF',
@@ -65,34 +65,34 @@ const styles: ChatBubbleStyles = {
     fontWeight: 300,
     margin: 0,
     marginRight: 30,
-    whiteSpace: 'pre'
+    whiteSpace: 'pre',
   } as React.CSSProperties,
   userFirstChatBubbleInGroup: {
-    borderTopRightRadius: 0
+    borderTopRightRadius: 0,
   } as React.CSSProperties,
   recipientFirstChatBubbleInGroup: {
-    borderTopLeftRadius: 0
+    borderTopLeftRadius: 0,
   } as React.CSSProperties,
   userLastChatBubbleInGroup: {
-    borderTopRightRadius: 0
+    borderTopRightRadius: 0,
   } as React.CSSProperties,
   recipientLastChatBubbleInGroup: {
-    borderTopLeftRadius: 0
+    borderTopLeftRadius: 0,
   } as React.CSSProperties,
   userCenterChatBubbleInGroup: {
     borderTopRightRadius: 0,
-    borderBottomRightRadius: 0
+    borderBottomRightRadius: 0,
   } as React.CSSProperties,
   recipientCenterChatBubbleInGroup: {
     borderBottomLeftRadius: 0,
-    borderTopLeftRadius: 0
+    borderTopLeftRadius: 0,
   } as React.CSSProperties,
   createdOn: {
     position: 'absolute',
     right: 14,
     bottom: 2,
     fontSize: 9,
-    color: 'rgba(255, 255, 255, 0.55)'
+    color: 'rgba(255, 255, 255, 0.55)',
   } as React.CSSProperties,
   isSend: {
     position: 'absolute',

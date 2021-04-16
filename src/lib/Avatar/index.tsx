@@ -33,14 +33,14 @@ const styles = {
     backgroundColor: 'rgb(153, 153, 153)',
     borderRadius: 20,
     textAlign: 'center',
-    borderTopRightRadius: 5
+    borderTopRightRadius: 5,
   } as React.CSSProperties,
   text: {
-    pointerEvents: 'none'
-  } as React.CSSProperties
+    pointerEvents: 'none',
+  } as React.CSSProperties,
 };
 
-const Avatar: React.FC<AvatarProps> = props => {
+const Avatar: React.FC<AvatarProps> = (props) => {
   const { author, classes, className } = props;
   return (
     author && (
@@ -48,7 +48,7 @@ const Avatar: React.FC<AvatarProps> = props => {
         style={{
           ...styles.container,
           ...(props.styles && props.styles.container),
-          ...(props.style)
+          ...props.style,
         }}
         title={author.name}
         className={classnames(
@@ -68,7 +68,7 @@ const Avatar: React.FC<AvatarProps> = props => {
             ? author.avatarName
             : author.name
                 .split(' ')
-                .map(part => part[0])
+                .map((part) => part[0])
                 .join('')
                 .toUpperCase()
                 .substr(0, 3)}

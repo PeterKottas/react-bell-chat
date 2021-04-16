@@ -13,8 +13,8 @@ const dateRowStyles: DateRowStyles = {
   container: {
     textAlign: 'center',
     fontSize: 12,
-    color: 'rgba(0, 0, 0, 0.55)'
-  }
+    color: 'rgba(0, 0, 0, 0.55)',
+  },
 };
 
 export interface DateRowProps {
@@ -25,7 +25,7 @@ export interface DateRowProps {
   classes?: DateRowClasses;
 }
 
-const DateRow: React.FC<DateRowProps> = props => {
+const DateRow: React.FC<DateRowProps> = (props) => {
   let { styles, classes } = props;
   if (!styles) {
     styles = {};
@@ -45,13 +45,13 @@ const DateRow: React.FC<DateRowProps> = props => {
         style={{
           ...dateRowStyles.container,
           ...container,
-          ...props.style
+          ...props.style,
         }}
         title={props.date.toLocaleDateString([], {
           weekday: 'long',
           year: 'numeric',
           month: 'long',
-          day: 'numeric'
+          day: 'numeric',
         })}
       >
         {props.date.toLocaleDateString()}

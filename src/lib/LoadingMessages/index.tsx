@@ -4,9 +4,9 @@ import classnames from 'classnames';
 const loadingMessagesStyles: LoadingMessagesStyle = {
   container: {
     display: 'flex',
-    marginBottom: 10
+    marginBottom: 10,
   },
-  spinnerColor: 'rgb(0, 132, 255)'
+  spinnerColor: 'rgb(0, 132, 255)',
 };
 
 export interface LoadingMessagesClasses {
@@ -26,7 +26,7 @@ export interface LoadingMessagesProps {
   isVisible: boolean;
 }
 
-const LoadingMessages: React.FC<LoadingMessagesProps> = props => {
+const LoadingMessages: React.FC<LoadingMessagesProps> = (props) => {
   let { styles, classes } = props;
   if (!styles) {
     styles = {};
@@ -45,7 +45,7 @@ const LoadingMessages: React.FC<LoadingMessagesProps> = props => {
       style={{
         ...loadingMessagesStyles.container,
         ...container,
-        ...props.style
+        ...props.style,
       }}
     >
       <svg
@@ -61,7 +61,7 @@ const LoadingMessages: React.FC<LoadingMessagesProps> = props => {
             ? spinnerColor
             : loadingMessagesStyles.spinnerColor,
           opacity: props.isVisible ? 1 : 0,
-          transition: '0.3s all ease-in-out'
+          transition: '0.3s all ease-in-out',
         }}
       >
         <title>Loading messages</title>

@@ -33,14 +33,14 @@ const lastSeenAvatarStyles = {
     textAlign: 'center',
     transition: '0.3s all ease-in-out',
     display: 'block',
-    position: 'relative'
+    position: 'relative',
   } as React.CSSProperties,
   text: {
-    pointerEvents: 'none'
-  } as React.CSSProperties
+    pointerEvents: 'none',
+  } as React.CSSProperties,
 };
 
-const LastSeenAvatar: React.FC<LastSeenAvatarProps> = props => {
+const LastSeenAvatar: React.FC<LastSeenAvatarProps> = (props) => {
   let { styles, classes } = props;
   if (!styles) {
     styles = {};
@@ -55,7 +55,7 @@ const LastSeenAvatar: React.FC<LastSeenAvatarProps> = props => {
         style={{
           ...lastSeenAvatarStyles.container,
           ...container,
-          ...props.style
+          ...props.style,
         }}
         className={classnames(
           'react-bell-chat__last-seen-avatar',

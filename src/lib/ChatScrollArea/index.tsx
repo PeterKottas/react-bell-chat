@@ -15,9 +15,9 @@ const chatScrollAreaStyles: ChatScrollAreaStyles = {
     padding: '0 10px',
     display: 'flex',
     flexDirection: 'column',
-    height: '100%'
+    height: '100%',
     // flexDirection: 'column-reverse'
-  }
+  },
 };
 
 export interface ChatScrollAreaProps {
@@ -78,7 +78,7 @@ export class ChatScrollArea extends React.PureComponent<ChatScrollAreaProps> {
             ? { minHeight: this.props.minHeight }
             : {}),
           ...container,
-          ...this.props.style
+          ...this.props.style,
         }}
         onScroll={this.onScroll}
       >
@@ -102,14 +102,14 @@ export class ChatScrollArea extends React.PureComponent<ChatScrollAreaProps> {
           (scrollContainer.scrollTo
             ? scrollContainer.scrollTo({
                 top: scrollContainer.scrollHeight,
-                behavior
+                behavior,
               })
             : (scrollContainer.scrollTop = scrollContainer.scrollHeight)),
-        scrollTo: top =>
+        scrollTo: (top) =>
           scrollContainer &&
           (scrollContainer.scrollTo
             ? scrollContainer.scrollTo({
-                top: top
+                top: top,
               })
             : (scrollContainer.scrollTop = top)),
         scrolledToBottom: () =>
@@ -122,7 +122,7 @@ export class ChatScrollArea extends React.PureComponent<ChatScrollAreaProps> {
         scrollHeight: () =>
           this.scrollContainer && this.scrollContainer.scrollHeight,
         clientHeight: () =>
-          this.scrollContainer && this.scrollContainer.clientHeight
+          this.scrollContainer && this.scrollContainer.clientHeight,
       });
   }
 }

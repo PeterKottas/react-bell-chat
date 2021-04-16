@@ -1,22 +1,22 @@
-import * as React from "react";
+import * as React from 'react';
 import DefaultChatBubble, {
   ChatBubbleProps,
   ChatBubbleStyles,
   MessageRenderProps,
-} from "../ChatBubble";
-import DefaultSystemChatBubble from "../SystemChatBubble";
-import bubbleGroupStyles, { BubbleGroupStyles } from "./styles";
-import { Message } from "../";
-import { Author } from "../Author";
-import Avatar, { AvatarProps, AvatarClasses } from "../Avatar";
+} from '../ChatBubble';
+import DefaultSystemChatBubble from '../SystemChatBubble';
+import bubbleGroupStyles, { BubbleGroupStyles } from './styles';
+import { Message } from '../';
+import { Author } from '../Author';
+import Avatar, { AvatarProps, AvatarClasses } from '../Avatar';
 import {
   LastSeenAvatarProps,
   LastSeenAvatarStyles,
   LastSeenAvatarClasses,
-} from "../LastSeenAvatar";
-import { AvatarStyles } from "./../Avatar/index";
-import classnames from "classnames";
-import { ChatBubbleClasses } from "./../ChatBubble/index";
+} from '../LastSeenAvatar';
+import { AvatarStyles } from './../Avatar/index';
+import classnames from 'classnames';
+import { ChatBubbleClasses } from './../ChatBubble/index';
 
 export interface BubbleGroupClasses {
   chatBubbleWrapper?: string;
@@ -136,7 +136,7 @@ export default class BubbleGroup<T> extends React.PureComponent<
           ...this.props.style,
         }}
         className={classnames(
-          "react-bell-chat__bubble-group",
+          'react-bell-chat__bubble-group',
           classes && classes.chatBubbleWrapper,
           this.props.className
         )}
