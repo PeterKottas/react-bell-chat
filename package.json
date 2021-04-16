@@ -20,7 +20,7 @@
     "conventional-github-releaser": ".env.bat && conventional-github-releaser -p angular",
     "commit:build": "git add . && git commit -m \"Deploy commit\" --quiet & npm run push:git",
     "create:patch": "npm run version:patch && npm run push:git",
-    "deploy": "npm run build:gh-pages && npm run build:prod && npm run commit:build && npm publish && npm run conventional-github-releaser -p angular && npm run create:patch",
+    "deploy": "npm run build:gh-pages && npm run build:prod && npm run commit:build && yarn publish && npm run conventional-github-releaser -p angular && npm run create:patch",
     "lint": "eslint \"./src/**/*.{js,ts,tsx}\" --quiet --fix"
   },
   "keywords": [
