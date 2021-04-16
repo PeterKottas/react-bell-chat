@@ -13,7 +13,7 @@ const systemChatBubbleStyles: ChatBubbleStyles = {
 
 export interface SystemChatBubbleProps<T = string> extends ChatBubbleProps<T> {}
 
-function SystemChatBubble<T>(props: SystemChatBubbleProps<T>) {
+function SystemChatBubble<T = string>(props: SystemChatBubbleProps<T>) {
   let { styles, classes } = props;
   if (!styles) {
     styles = {};
