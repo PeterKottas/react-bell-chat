@@ -1,6 +1,6 @@
 {
   "name": "react-bell-chat",
-  "version": "1.0.30",
+  "version": "1.0.31",
   "description": "A library of React components for building chat UIs",
   "repository": "https://github.com/PeterKottas/react-bell-chat",
   "main": "./lib/index.min.js",
