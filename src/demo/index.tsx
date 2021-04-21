@@ -210,7 +210,7 @@ class Chat extends React.Component<ChatProps, ChatState> {
           <ChatFeed<string>
             yourAuthorId={0}
             authors={this.state.authors}
-            customChatBubble={this.state.useCustomBubble && customBubble}
+            CustomChatBubble={this.state.useCustomBubble && customBubble}
             // chatBubbleStyles={bubbleStyles}
             maxHeight={350}
             // minHeight={600}

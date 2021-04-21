@@ -36,8 +36,8 @@ export interface ChatBubbleProps<T = string> {
   isCenterInGroup?: boolean;
   lastSeenByAuthors?: Author[];
   showRecipientLastSeenMessage?: boolean;
-  customLastSeenAvatar?: (props: LastSeenAvatarProps) => JSX.Element;
-  customMessageRender?: (props: MessageRenderProps<T>) => JSX.Element | string;
+  CustomLastSeenAvatar?: (props: LastSeenAvatarProps) => JSX.Element;
+  CustomMessageRender?: (props: MessageRenderProps<T>) => JSX.Element | string;
 }
 
 export interface ChatBubbleState {
@@ -177,8 +177,8 @@ export function ChatBubble<T = string>(props: ChatBubbleProps<T>) {
           [classes?.userChatBubble]: youAreAuthor,
         })}
       >
-        {props.customMessageRender ? (
-          props.customMessageRender({
+        {props.CustomMessageRender ? (
+          props.CustomMessageRender({
             message: props.message,
             style: messageStyle,
             className: messageClassName,
@@ -285,7 +285,7 @@ export function ChatBubble<T = string>(props: ChatBubbleProps<T>) {
       {props.showRecipientLastSeenMessage &&
         props.lastSeenByAuthors &&
         props.lastSeenByAuthors.length > 0 &&
-        props.customLastSeenAvatar && (
+        props.CustomLastSeenAvatar && (
           <div
             style={{
               ...defaultStyles.lastSeenByContainer,
@@ -307,7 +307,7 @@ export function ChatBubble<T = string>(props: ChatBubbleProps<T>) {
               }*/
           >
             {props.lastSeenByAuthors.map((a, i) => (
-              <props.customLastSeenAvatar
+              <props.CustomLastSeenAvatar
                 key={i}
                 author={a}
                 styles={lastSeenAvatarStyles}

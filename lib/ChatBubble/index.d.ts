@@ -25,8 +25,8 @@ export interface ChatBubbleProps<T = string> {
     isCenterInGroup?: boolean;
     lastSeenByAuthors?: Author[];
     showRecipientLastSeenMessage?: boolean;
-    customLastSeenAvatar?: (props: LastSeenAvatarProps) => JSX.Element;
-    customMessageRender?: (props: MessageRenderProps<T>) => JSX.Element | string;
+    CustomLastSeenAvatar?: (props: LastSeenAvatarProps) => JSX.Element;
+    CustomMessageRender?: (props: MessageRenderProps<T>) => JSX.Element | string;
 }
 export interface ChatBubbleState {
     mouseOverLastSeenContainer: boolean;

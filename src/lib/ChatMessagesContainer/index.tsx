@@ -14,7 +14,9 @@ export interface ChatMessagesContainerProps
     styles?: ChatMessagesContainerStyles;
   }> {}
 
-const ChatMessagesContainer: React.FC<ChatMessagesContainerProps> = (props) => {
+export const ChatMessagesContainer: React.FC<ChatMessagesContainerProps> = (
+  props
+) => {
   const {
     children,
     classes,
@@ -60,5 +62,4 @@ const ChatMessagesContainer: React.FC<ChatMessagesContainerProps> = (props) => {
     </div>
   );
 };
-
 export default ChatMessagesContainer;

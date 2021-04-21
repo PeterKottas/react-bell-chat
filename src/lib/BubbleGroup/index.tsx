@@ -30,134 +30,113 @@ export interface BubbleGroupProps<T = string> {
   showRecipientAvatar?: boolean;
   bubblesCentered?: boolean;
 
-  className?: string;
   classes?: BubbleGroupClasses;
   chatBubbleClasses?: ChatBubbleClasses;
   avatarClasses?: AvatarClasses;
   lastSeenAvatarClasses?: LastSeenAvatarClasses;
 
-  style?: React.CSSProperties;
   styles?: BubbleGroupStyles;
   chatBubbleStyles?: ChatBubbleStyles;
   avatarStyles?: AvatarStyles;
   lastSeenAvatarStyles?: LastSeenAvatarStyles;
 
-  customAvatar?: (props: AvatarProps) => JSX.Element;
-  customMessageRender?: (props: MessageRenderProps<T>) => JSX.Element | string;
-  customLastSeenAvatar?: (props: LastSeenAvatarProps) => JSX.Element;
-  customChatBubble?: (props: ChatBubbleProps<T>) => JSX.Element;
-  customSystemChatBubble?: (props: ChatBubbleProps<T>) => JSX.Element;
+  CustomAvatar?: (props: AvatarProps) => JSX.Element;
+  CustomMessageRender?: (props: MessageRenderProps<T>) => JSX.Element | string;
+  CustomLastSeenAvatar?: (props: LastSeenAvatarProps) => JSX.Element;
+  CustomChatBubble?: (props: ChatBubbleProps<T>) => JSX.Element;
+  CustomSystemChatBubble?: (props: ChatBubbleProps<T>) => JSX.Element;
   showRecipientLastSeenMessage?: boolean;
 }
 
-export default class BubbleGroup<T = string> extends React.PureComponent<
-  BubbleGroupProps<T>
-> {
-  public static defaultProps: BubbleGroupProps<string> = {
-    messages: [],
-    author: undefined,
-    customAvatar: Avatar,
-    showRecipientLastSeenMessage: false,
-  };
+function BubbleGroup<T = string>(props: BubbleGroupProps<T>) {
+  const {
+    messages,
+    author,
 
-  constructor(props: BubbleGroupProps<T>) {
-    super(props);
-  }
+    CustomAvatar = Avatar,
 
-  renderGroup(messages: Message<T>[], author: Author) {
-    let { styles } = this.props;
-    if (!styles) {
-      styles = {};
-    }
-    const { bubbleGroupWrapper: chatBubbleWrapper } = styles;
-    const {
+    styles,
+
+    bubblesCentered,
+
+    chatBubbleStyles,
+    lastSeenAvatarStyles,
+    avatarStyles,
+
+    classes,
+    chatBubbleClasses,
+    lastSeenAvatarClasses,
+    avatarClasses,
+
+    showRecipientAvatar,
+    CustomChatBubble,
+    CustomSystemChatBubble,
+    showRecipientLastSeenMessage,
+    CustomLastSeenAvatar,
+    CustomMessageRender,
+  } = props;
+  const ChatBubble = CustomChatBubble || DefaultChatBubble;
+  const SystemChatBubble = CustomSystemChatBubble || DefaultSystemChatBubble;
+
+  const messageNodes = messages.map((message, i) => {
+    const _props: ChatBubbleProps<T> = {
+      yourAuthorId: props.yourAuthorId,
+      author,
+      message,
       bubblesCentered,
 
-      chatBubbleStyles,
+      styles: chatBubbleStyles,
       lastSeenAvatarStyles,
-      avatarStyles,
 
-      classes,
-      chatBubbleClasses,
+      classes: chatBubbleClasses,
       lastSeenAvatarClasses,
-      avatarClasses,
 
-      showRecipientAvatar,
-      customChatBubble,
-      customSystemChatBubble,
+      isFirstInGroup: i === 0,
+      isLastInGroup: i === messages.length - 1 && messages.length > 1,
+      isCenterInGroup: i < messages.length - 1 && messages.length > 1,
+      lastSeenByAuthors:
+        props.authors &&
+        props.authors.filter(
+          (a) =>
+            a.lastSeenMessageId !== undefined &&
+            a.lastSeenMessageId === message.id
+        ),
       showRecipientLastSeenMessage,
-      customLastSeenAvatar,
-      customMessageRender,
-    } = this.props;
-    const ChatBubble = customChatBubble || DefaultChatBubble;
-    const SystemChatBubble = customSystemChatBubble || DefaultSystemChatBubble;
-
-    const messageNodes = messages.map((message, i) => {
-      const props: ChatBubbleProps<T> = {
-        yourAuthorId: this.props.yourAuthorId,
-        author,
-        message,
-        bubblesCentered,
-
-        styles: chatBubbleStyles,
-        lastSeenAvatarStyles,
-
-        classes: chatBubbleClasses,
-        lastSeenAvatarClasses,
-
-        isFirstInGroup: i === 0,
-        isLastInGroup: i === messages.length - 1 && messages.length > 1,
-        isCenterInGroup: i < messages.length - 1 && messages.length > 1,
-        lastSeenByAuthors:
-          this.props.authors &&
-          this.props.authors.filter(
-            (a) =>
-              a.lastSeenMessageId !== undefined &&
-              a.lastSeenMessageId === message.id
-          ),
-        showRecipientLastSeenMessage,
-        customLastSeenAvatar,
-        customMessageRender,
-      };
-      return message.authorId !== undefined ? (
-        <ChatBubble key={i} {...props} />
-      ) : (
-        <SystemChatBubble key={i} {...props} />
-      );
-    });
-
-    const youAreAuthor = author && this.props.yourAuthorId === author.id;
-
-    return (
-      <div
-        style={{
-          ...bubbleGroupStyles.bubbleGroupWrapper,
-          ...chatBubbleWrapper,
-          ...this.props.style,
-        }}
-        className={classnames(
-          defaultClasses.chatBubbleWrapper,
-          classes?.chatBubbleWrapper,
-          this.props.className
-        )}
-      >
-        {!youAreAuthor &&
-          showRecipientAvatar &&
-          author &&
-          this.props.customAvatar && (
-            <this.props.customAvatar
-              author={this.props.author}
-              styles={avatarStyles}
-              classes={avatarClasses}
-            />
-          )}
-        {messageNodes}
-      </div>
+      CustomLastSeenAvatar,
+      CustomMessageRender,
+    };
+    return message.authorId !== undefined ? (
+      <ChatBubble key={i} {..._props} />
+    ) : (
+      <SystemChatBubble key={i} {..._props} />
     );
-  }
+  });
 
-  render() {
-    const { messages, author } = this.props;
-    return this.renderGroup(messages, author);
-  }
+  const youAreAuthor = author && props.yourAuthorId === author.id;
+
+  return (
+    <div
+      style={{
+        ...bubbleGroupStyles.bubbleGroupWrapper,
+        ...styles?.bubbleGroupWrapper,
+      }}
+      className={classnames(
+        defaultClasses.chatBubbleWrapper,
+        classes?.chatBubbleWrapper
+      )}
+    >
+      {!youAreAuthor && showRecipientAvatar && author && CustomAvatar && (
+        <CustomAvatar
+          author={author}
+          styles={avatarStyles}
+          classes={avatarClasses}
+        />
+      )}
+      {messageNodes}
+    </div>
+  );
 }
+
+const Memoized = React.memo(BubbleGroup);
+export default Memoized;
+export { Memoized as BubbleGroup };

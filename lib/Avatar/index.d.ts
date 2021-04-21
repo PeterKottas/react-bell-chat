@@ -9,5 +9,6 @@ export interface AvatarProps {
     styles?: AvatarStyles;
     classes?: AvatarClasses;
 }
-declare const _default: React.NamedExoticComponent<AvatarProps>;
-export default _default;
+declare const Memoized: React.NamedExoticComponent<AvatarProps>;
+export { Memoized as Avatar };
+export default Memoized;

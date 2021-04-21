@@ -11,5 +11,5 @@ export interface ChatMessagesContainerProps extends React.PropsWithChildren<{
     styles?: ChatMessagesContainerStyles;
 }> {
 }
-declare const ChatMessagesContainer: React.FC<ChatMessagesContainerProps>;
+export declare const ChatMessagesContainer: React.FC<ChatMessagesContainerProps>;
 export default ChatMessagesContainer;

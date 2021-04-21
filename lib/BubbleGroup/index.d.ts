@@ -17,26 +17,22 @@ export interface BubbleGroupProps<T = string> {
     authors?: Author[];
     showRecipientAvatar?: boolean;
     bubblesCentered?: boolean;
-    className?: string;
     classes?: BubbleGroupClasses;
     chatBubbleClasses?: ChatBubbleClasses;
     avatarClasses?: AvatarClasses;
     lastSeenAvatarClasses?: LastSeenAvatarClasses;
-    style?: React.CSSProperties;
     styles?: BubbleGroupStyles;
     chatBubbleStyles?: ChatBubbleStyles;
     avatarStyles?: AvatarStyles;
     lastSeenAvatarStyles?: LastSeenAvatarStyles;
-    customAvatar?: (props: AvatarProps) => JSX.Element;
-    customMessageRender?: (props: MessageRenderProps<T>) => JSX.Element | string;
-    customLastSeenAvatar?: (props: LastSeenAvatarProps) => JSX.Element;
-    customChatBubble?: (props: ChatBubbleProps<T>) => JSX.Element;
-    customSystemChatBubble?: (props: ChatBubbleProps<T>) => JSX.Element;
+    CustomAvatar?: (props: AvatarProps) => JSX.Element;
+    CustomMessageRender?: (props: MessageRenderProps<T>) => JSX.Element | string;
+    CustomLastSeenAvatar?: (props: LastSeenAvatarProps) => JSX.Element;
+    CustomChatBubble?: (props: ChatBubbleProps<T>) => JSX.Element;
+    CustomSystemChatBubble?: (props: ChatBubbleProps<T>) => JSX.Element;
     showRecipientLastSeenMessage?: boolean;
 }
-export default class BubbleGroup<T = string> extends React.PureComponent<BubbleGroupProps<T>> {
-    static defaultProps: BubbleGroupProps<string>;
-    constructor(props: BubbleGroupProps<T>);
-    renderGroup(messages: Message<T>[], author: Author): JSX.Element;
-    render(): JSX.Element;
-}
+declare function BubbleGroup<T = string>(props: BubbleGroupProps<T>): JSX.Element;
+declare const Memoized: React.MemoExoticComponent<typeof BubbleGroup>;
+export default Memoized;
+export { Memoized as BubbleGroup };

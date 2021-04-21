@@ -42,5 +42,6 @@ const Avatar: React.FC<AvatarProps> = (props) => {
     )
   );
 };
-
-export default React.memo(Avatar);
+const Memoized = React.memo(Avatar);
+export { Memoized as Avatar };
+export default Memoized;
