@@ -12,7 +12,7 @@
     "lib": ["es6", "dom"],
     "types": ["node"]
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/lib/*.ts"],
   "exclude": ["node_modules"],
   "paths": {
     "react": ["node_modules/@types/react/index"],
