@@ -95,7 +95,6 @@ export declare class ChatFeed<T = string> extends React.PureComponent<ChatFeedPr
      * Determines what type of message/messages to render.
      */
     renderMessages<T>(messages: Message<T>[]): React.ReactNode[];
-    renderIsTyping(): JSX.Element;
     apiRef(e: ChatScrollAreaApi): void;
     render(): JSX.Element;
     private onLoadOldMessages;

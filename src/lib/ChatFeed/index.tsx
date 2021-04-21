@@ -337,22 +337,6 @@ export class ChatFeed<T = string>
     return messageNodes;
   }
 
-  renderIsTyping() {
-    const { isTypingStyles, isTypingClasses } = this.props;
-    const typingAuthors =
-      this.props.authors &&
-      this.props.authors.filter(
-        (a) => a.isTyping && a.id !== this.props.yourAuthorId
-      );
-    return (
-      <this.props.CustomIsTyping
-        typingAuthors={typingAuthors}
-        styles={isTypingStyles}
-        classes={isTypingClasses}
-      />
-    );
-  }
-
   apiRef(e: ChatScrollAreaApi) {
     if (!this.scrollApi) {
       e.scrollToBottom();
@@ -361,7 +345,7 @@ export class ChatFeed<T = string>
   }
 
   render() {
-    let { styles, classes } = this.props;
+    let { styles, classes, isTypingStyles, isTypingClasses } = this.props;
     if (!styles) {
       styles = {};
     }
@@ -375,6 +359,12 @@ export class ChatFeed<T = string>
       loadingMessagesClasses,
       chatScrollAreaClasses,
     } = this.props;
+
+    const typingAuthors =
+      this.props.authors &&
+      this.props.authors.filter(
+        (a) => a.isTyping && a.id !== this.props.yourAuthorId
+      );
 
     return (
       <div
@@ -408,6 +398,7 @@ export class ChatFeed<T = string>
             }
           >
             <this.props.CustomLoadingMessages
+              key={-1}
               isVisible={
                 this.props.showLoadingMessages && this.state.isLoadingMessages
               }
@@ -415,7 +406,14 @@ export class ChatFeed<T = string>
               classes={loadingMessagesClasses}
             />
             {this.renderMessages<T>(this.props.messages)}
-            {this.props.showIsTyping && this.renderIsTyping()}
+            {this.props.showIsTyping && (
+              <this.props.CustomIsTyping
+                key={-2}
+                typingAuthors={typingAuthors}
+                styles={isTypingStyles}
+                classes={isTypingClasses}
+              />
+            )}
           </this.props.CustomChatMessagesContainer>
         </this.props.CustomScrollArea>
       </div>
