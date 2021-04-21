@@ -60,7 +60,6 @@ const styles: ChatBubbleStyles = {
     fontWeight: 300,
     margin: 0,
     marginRight: 30,
-    whiteSpace: 'pre',
   } as React.CSSProperties,
   userFirstChatBubbleInGroup: {
     borderTopRightRadius: 0,
