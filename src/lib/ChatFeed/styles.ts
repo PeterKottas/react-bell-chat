@@ -5,7 +5,6 @@ export interface ChatFeedStyles {
   showRecipientAvatarChatMessages?: React.CSSProperties;
   showRecipientLastSeenMessageChatMessages?: React.CSSProperties;
   showIsTypingChatMessages?: React.CSSProperties;
-  chatMessages?: React.CSSProperties;
 }
 
 const styles: ChatFeedStyles = {
@@ -16,24 +15,8 @@ const styles: ChatFeedStyles = {
     overflow: 'hidden',
     position: 'relative',
   },
-  showRecipientAvatarChatMessages: {
-    paddingLeft: 50,
-  },
-  showIsTypingChatMessages: {
-    paddingBottom: 24,
-    position: 'relative',
-  },
-  showRecipientLastSeenMessageChatMessages: {
-    paddingRight: 30,
-  },
-  chatMessages: {
-    paddingBottom: 10,
-    paddingTop: 10,
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
-  },
 };
+
+export { styles as DefaultChatFeedStyles };
 
 export default styles;

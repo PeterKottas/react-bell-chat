@@ -2,5 +2,6 @@ import * as React from 'react';
 export interface BubbleGroupStyles {
     bubbleGroupWrapper?: React.CSSProperties;
 }
-declare const _default: BubbleGroupStyles;
-export default _default;
+declare const styles: BubbleGroupStyles;
+export default styles;
+export { styles as defaultBubbleGroupStyles };

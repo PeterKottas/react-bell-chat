@@ -5,11 +5,11 @@ import { Message } from '../';
 import { Author } from '../Author';
 import { AvatarProps, AvatarClasses } from '../Avatar';
 import { LastSeenAvatarProps, LastSeenAvatarStyles, LastSeenAvatarClasses } from '../LastSeenAvatar';
-import { AvatarStyles } from './../Avatar/index';
-import { ChatBubbleClasses } from './../ChatBubble/index';
-export interface BubbleGroupClasses {
-    chatBubbleWrapper?: string;
-}
+import { AvatarStyles } from './../Avatar';
+import { ChatBubbleClasses } from './../ChatBubble';
+import { BubbleGroupClasses } from './classes';
+export * from './styles';
+export * from './classes';
 export interface BubbleGroupProps<T = string> {
     yourAuthorId?: number;
     messages: Message<T>[];

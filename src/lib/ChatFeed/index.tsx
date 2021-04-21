@@ -3,15 +3,17 @@
 // other developers make chat interfaces.
 
 import * as React from 'react';
-import BubbleGroup, { BubbleGroupClasses } from '../BubbleGroup';
+import BubbleGroup, {
+  BubbleGroupClasses,
+  BubbleGroupStyles,
+} from '../BubbleGroup';
 import DefaultChatBubble, {
   ChatBubbleProps,
   MessageRenderProps,
 } from '../ChatBubble';
 import Message from '../Message';
-import chatStyles, { ChatFeedStyles } from './styles';
 import { Author } from '../Author';
-import { ChatBubbleStyles } from '../ChatBubble/';
+import { ChatBubbleStyles, ChatBubbleClasses } from '../ChatBubble';
 import Avatar, { AvatarProps, AvatarStyles, AvatarClasses } from '../Avatar';
 import IsTyping, { IsTypingStyles, IsTypingClasses } from '../IsTyping';
 import ChatScrollArea, {
@@ -20,6 +22,11 @@ import ChatScrollArea, {
   ChatScrollAreaStyles,
   ChatScrollAreaClasses,
 } from '../ChatScrollArea';
+import ChatMessagesContainer, {
+  ChatMessagesContainerProps,
+  ChatMessagesContainerClasses,
+  ChatMessagesContainerStyles,
+} from '../ChatMessagesContainer';
 import LastSeenAvatar, {
   LastSeenAvatarProps,
   LastSeenAvatarStyles,
@@ -38,20 +45,13 @@ import LoadingMessages, {
 } from '../LoadingMessages';
 import SystemChatBubble from '../SystemChatBubble';
 import classnames from 'classnames';
-import { BubbleGroupStyles } from '../BubbleGroup/styles';
-import { ChatBubbleClasses } from './../ChatBubble/index';
+import chatStyles, { ChatFeedStyles } from './styles';
+import defaultClasses, { ChatFeedClasses } from './classes';
+
+export * from './classes';
+export * from './styles';
 
 // Model for ChatFeed props.
-
-export { ChatFeedStyles };
-
-export interface ChatFeedClasses {
-  chatPanel?: string;
-  showRecipientAvatarChatMessages?: string;
-  showRecipientLastSeenMessageChatMessages?: string;
-  showIsTypingChatMessages?: string;
-  chatMessages?: string;
-}
 
 export interface ChatFeedProps<T = string> {
   // Structural props
@@ -82,6 +82,9 @@ export interface ChatFeedProps<T = string> {
   customSystemChatBubble?: (props: ChatBubbleProps<T>) => JSX.Element;
   customAvatar?: (props: AvatarProps) => JSX.Element;
   customScrollArea?: (props: ChatScrollAreaProps) => JSX.Element;
+  customChatMessagesContainer?: (
+    props: ChatMessagesContainerProps
+  ) => JSX.Element;
   customIsTyping?: (props: ChatScrollAreaProps) => JSX.Element;
   customLastSeenAvatar?: (props: LastSeenAvatarProps) => JSX.Element;
   customMessageRender?: (props: MessageRenderProps<T>) => JSX.Element | string;
@@ -95,7 +98,8 @@ export interface ChatFeedProps<T = string> {
   styles?: ChatFeedStyles;
   bubbleGroupStyles?: BubbleGroupStyles;
   chatBubbleStyles?: ChatBubbleStyles;
-  chatScrollArea?: ChatScrollAreaStyles;
+  chatScrollAreaStyles?: ChatScrollAreaStyles;
+  chatMessagesContainerStyles?: ChatMessagesContainerStyles;
   avatarStyles?: AvatarStyles;
   lastSeenAvatarStyles?: LastSeenAvatarStyles;
   dateRowStyles?: DateRowStyles;
@@ -108,6 +112,7 @@ export interface ChatFeedProps<T = string> {
   chatBubbleClasses?: ChatBubbleClasses;
   bubbleGroupClasses?: BubbleGroupClasses;
   chatScrollAreaClasses?: ChatScrollAreaClasses;
+  chatMessagesContainerClasses?: ChatMessagesContainerClasses;
   avatarClasses?: AvatarClasses;
   lastSeenAvatarClasses?: LastSeenAvatarClasses;
   dateRowClasses?: DateRowClasses;
@@ -142,7 +147,7 @@ export interface ChatFeedSnapshot {
 }
 
 // React component to render a complete chat feed
-export default class ChatFeed<T = string>
+export class ChatFeed<T = string>
   extends React.PureComponent<ChatFeedProps<T>, ChatFeedState>
   implements ChatFeedApi {
   public static defaultProps: ChatFeedProps = {
@@ -152,6 +157,7 @@ export default class ChatFeed<T = string>
     customMessageRender: DefaultMessageRenderFunc,
     customAvatar: Avatar,
     customScrollArea: DefaultScrollAreaFunc,
+    customChatMessagesContainer: ChatMessagesContainer,
     customLastSeenAvatar: LastSeenAvatar,
     customDateRow: DateRow,
     customLoadingMessages: LoadingMessages,
@@ -354,16 +360,17 @@ export default class ChatFeed<T = string>
     const {
       loadingMessagesStyle,
       chatFeedStyles,
-      chatScrollArea,
+      chatScrollAreaStyles,
       loadingMessagesClasses,
       chatScrollAreaClasses,
     } = this.props;
+
     return (
       <div
         className={classnames(
-          'react-bell-chat__chat-panel',
+          defaultClasses.chatPanel,
           this.props.className,
-          classes.chatPanel
+          classes?.chatPanel
         )}
         style={{
           ...chatStyles.chatPanel,
@@ -377,33 +384,17 @@ export default class ChatFeed<T = string>
           apiRef={this.apiRef}
           loadOldMessagesThreshold={this.props.loadOldMessagesThreshold}
           onLoadOldMessages={this.onLoadOldMessages}
-          styles={chatScrollArea}
+          styles={chatScrollAreaStyles}
           classes={chatScrollAreaClasses}
         >
-          <div
-            style={{
-              ...chatStyles.chatMessages,
-              ...(this.props.showRecipientAvatar &&
-                chatStyles.showRecipientAvatarChatMessages),
-              ...(this.props.showRecipientAvatar &&
-                styles.showRecipientAvatarChatMessages),
-              ...(this.props.showIsTyping &&
-                chatStyles.showIsTypingChatMessages),
-              ...(this.props.showIsTyping && styles.showIsTypingChatMessages),
-              ...(this.props.showRecipientLastSeenMessage &&
-                chatStyles.showRecipientLastSeenMessageChatMessages),
-              ...(this.props.showRecipientLastSeenMessage &&
-                styles.showRecipientLastSeenMessageChatMessages),
-            }}
-            className={classnames(
-              'react-bell-chat__chat-messages',
-              classes.chatMessages,
-              this.props.showRecipientAvatar &&
-                classes.showRecipientAvatarChatMessages,
-              this.props.showIsTyping && classes.showIsTypingChatMessages,
-              this.props.showRecipientLastSeenMessage &&
-                classes.showRecipientLastSeenMessageChatMessages
-            )}
+          <this.props.customChatMessagesContainer
+            classes={this.props.chatMessagesContainerClasses}
+            styles={this.props.chatMessagesContainerStyles}
+            showIsTyping={this.props.showIsTyping}
+            showRecipientAvatar={this.props.showRecipientAvatar}
+            showRecipientLastSeenMessage={
+              this.props.showRecipientLastSeenMessage
+            }
           >
             {
               <this.props.customLoadingMessages
@@ -416,7 +407,7 @@ export default class ChatFeed<T = string>
             }
             {this.renderMessages<T>(this.props.messages)}
             {this.props.showIsTyping && this.renderIsTyping()}
-          </div>
+          </this.props.customChatMessagesContainer>
         </this.props.customScrollArea>
       </div>
     );

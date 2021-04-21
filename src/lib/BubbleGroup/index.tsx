@@ -14,13 +14,13 @@ import {
   LastSeenAvatarStyles,
   LastSeenAvatarClasses,
 } from '../LastSeenAvatar';
-import { AvatarStyles } from './../Avatar/index';
+import { AvatarStyles } from './../Avatar';
 import classnames from 'classnames';
-import { ChatBubbleClasses } from './../ChatBubble/index';
+import { ChatBubbleClasses } from './../ChatBubble';
+import defaultClasses, { BubbleGroupClasses } from './classes';
 
-export interface BubbleGroupClasses {
-  chatBubbleWrapper?: string;
-}
+export * from './styles';
+export * from './classes';
 
 export interface BubbleGroupProps<T = string> {
   yourAuthorId?: number;
@@ -136,8 +136,8 @@ export default class BubbleGroup<T = string> extends React.PureComponent<
           ...this.props.style,
         }}
         className={classnames(
-          'react-bell-chat__bubble-group',
-          classes && classes.chatBubbleWrapper,
+          defaultClasses.chatBubbleWrapper,
+          classes?.chatBubbleWrapper,
           this.props.className
         )}
       >

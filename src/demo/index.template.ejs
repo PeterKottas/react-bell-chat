@@ -54,6 +54,10 @@ htmlWebpackPlugin.options.scripts = htmlWebpackPlugin.options.scripts || [] %>
         padding: 10px 20px;
       }
 
+      form{
+        display: flex;
+      }
+
       input {
         border: none;
         border-top: 1px solid #ddd;
@@ -128,7 +132,7 @@ htmlWebpackPlugin.options.scripts = htmlWebpackPlugin.options.scripts || [] %>
     htmlWebpackPlugin.options.environment !== 'local') { %>
     <link
       rel="stylesheet"
-      href="/dist/site.css?verhash=<%= htmlWebpackPlugin.files.chunks.site.hash %>"
+      href="/dist/site.css?verhash=<%= htmlWebpackPlugin.files.chunks.site.fullhash %>"
     />
     <% } %>
     <link

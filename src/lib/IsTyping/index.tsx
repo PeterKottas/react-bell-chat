@@ -1,54 +1,31 @@
 import * as React from 'react';
 import { Author } from '../Author';
 import classnames from 'classnames';
-
-const isTypingStyles: IsTypingStyles = {
-  container: {
-    position: 'absolute',
-    bottom: 2,
-    left: 0,
-    right: 0,
-    color: 'rgb(204, 204, 204)',
-    textAlign: 'center',
-  } as React.CSSProperties,
-};
-
-export interface IsTypingStyles {
-  container?: React.CSSProperties;
-}
-
-export interface IsTypingClasses {
-  container?: string;
-}
+import defaultClasses, { IsTypingClasses } from './classes';
+import defaultStyles, { IsTypingStyles } from './styles';
+export * from './classes';
+export * from './styles';
 
 export interface IsTypingProps {
   typingAuthors: Author[];
   styles?: IsTypingStyles;
-  style?: React.CSSProperties;
-  className?: string;
   classes?: IsTypingClasses;
 }
 
 const IsTyping: React.FC<IsTypingProps> = (props) => {
   let { styles, classes } = props;
-  if (!styles) {
-    styles = {};
-  }
-  if (!classes) {
-    classes = {};
-  }
-  const { container } = styles;
+
+  const style = React.useMemo(
+    () => ({ ...defaultStyles.container, ...styles?.container }),
+    [styles?.container]
+  );
 
   return (
     props.typingAuthors &&
     props.typingAuthors.length > 0 && (
       <div
-        className={classnames(
-          'react-bell-chat__is-typing__container',
-          props.className,
-          classes.container
-        )}
-        style={{ ...isTypingStyles.container, ...container, ...props.style }}
+        className={classnames(defaultClasses.container, classes?.container)}
+        style={style}
       >
         {props.typingAuthors
           .map((a) => a.name)

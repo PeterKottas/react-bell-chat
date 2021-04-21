@@ -1,52 +1,30 @@
 import * as React from 'react';
 import classnames from 'classnames';
-
-export interface DateRowStyles {
-  container?: React.CSSProperties;
-}
-
-export interface DateRowClasses {
-  container?: string;
-}
-
-const dateRowStyles: DateRowStyles = {
-  container: {
-    textAlign: 'center',
-    fontSize: 12,
-    color: 'rgba(0, 0, 0, 0.55)',
-  },
-};
+import defaultClasses, { DateRowClasses } from './classes';
+import defaultStyles, { DateRowStyles } from './styles';
+export * from './classes';
+export * from './styles';
 
 export interface DateRowProps {
   date: Date;
   styles?: DateRowStyles;
-  style?: React.CSSProperties;
-  className?: string;
   classes?: DateRowClasses;
 }
 
 const DateRow: React.FC<DateRowProps> = (props) => {
   let { styles, classes } = props;
-  if (!styles) {
-    styles = {};
-  }
-  if (!classes) {
-    classes = {};
-  }
-  const { container } = styles;
+  const style = React.useMemo(
+    () => ({
+      ...defaultStyles.container,
+      ...styles?.container,
+    }),
+    [styles?.container]
+  );
   return (
     props.date && (
       <div
-        className={classnames(
-          'react-bell-chat__date-row',
-          props.className,
-          classes.container
-        )}
-        style={{
-          ...dateRowStyles.container,
-          ...container,
-          ...props.style,
-        }}
+        className={classnames(defaultClasses.container, classes?.container)}
+        style={style}
         title={props.date.toLocaleDateString([], {
           weekday: 'long',
           year: 'numeric',

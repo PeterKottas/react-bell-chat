@@ -6,7 +6,7 @@
   "main": "./lib/index.min.js",
   "typings": "lib/index.d.ts",
   "scripts": {
-    "start": "set NODE_ENV=local && webpack --config webpack/webpack.config.dev.js",
+    "start": "set NODE_ENV=local && webpack --config webpack/webpack.config.dev.js --stats-children --stats-error-details",
     "build:typings": "tsc --declaration --emitDeclarationOnly --declarationDir lib",
     "build:clean": "rimraf lib",
     "build:lib": "webpack --config ./webpack/webpack.config.js && webpack --config ./webpack/webpack.config.min.js",

@@ -1,24 +1,9 @@
 import * as React from 'react';
 import classnames from 'classnames';
-
-export interface ChatScrollAreaStyles {
-  container?: React.CSSProperties;
-}
-
-export interface ChatScrollAreaClasses {
-  container?: string;
-}
-
-const chatScrollAreaStyles: ChatScrollAreaStyles = {
-  container: {
-    overflow: 'auto',
-    padding: '0 10px',
-    display: 'flex',
-    flexDirection: 'column',
-    height: '100%',
-    // flexDirection: 'column-reverse'
-  },
-};
+import defaultStyles, { ChatScrollAreaStyles } from './styles';
+import defaultClasses, { ChatScrollAreaClasses } from './classes';
+export * from './classes';
+export * from './styles';
 
 export interface ChatScrollAreaProps {
   maxHeight?: string | number;
@@ -29,8 +14,6 @@ export interface ChatScrollAreaProps {
   loadOldMessagesThreshold: number;
   onLoadOldMessages: () => Promise<void>;
 
-  style?: React.CSSProperties;
-  className?: string;
   classes?: ChatScrollAreaClasses;
 }
 
@@ -53,32 +36,20 @@ export class ChatScrollArea extends React.PureComponent<ChatScrollAreaProps> {
   }
 
   public render() {
-    let { styles, classes } = this.props;
-    if (!styles) {
-      styles = {};
-    }
-    if (!classes) {
-      classes = {};
-    }
-    const { container } = styles;
+    const { styles, classes } = this.props;
     return (
       <div
         ref={this.containerRef}
-        className={classnames(
-          'react-bell-chat__chat-scroll-area',
-          this.props.className,
-          classes.container
-        )}
+        className={classnames(defaultClasses.container, classes?.container)}
         style={{
-          ...chatScrollAreaStyles.container,
+          ...defaultStyles.container,
           ...(this.props.maxHeight !== undefined
             ? { maxHeight: this.props.maxHeight }
             : {}),
           ...(this.props.minHeight !== undefined
             ? { minHeight: this.props.minHeight }
             : {}),
-          ...container,
-          ...this.props.style,
+          ...styles?.container,
         }}
         onScroll={this.onScroll}
       >

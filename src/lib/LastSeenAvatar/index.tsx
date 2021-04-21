@@ -1,74 +1,48 @@
 import * as React from 'react';
 import { Author } from '../Author';
 import classnames from 'classnames';
+import defaultClasses, { LastSeenAvatarClasses } from './classes';
+import defaultStyles, { LastSeenAvatarStyles } from './styles';
+export * from './classes';
+export * from './styles';
 
 export interface LastSeenAvatarProps {
   author: Author;
+  index?: number;
+  mouseOver?: boolean;
   styles?: LastSeenAvatarStyles;
   classes?: LastSeenAvatarClasses;
-  style?: React.CSSProperties;
-  className?: string;
 }
-
-export interface LastSeenAvatarClasses {
-  container?: string;
-  text?: string;
-}
-
-export interface LastSeenAvatarStyles {
-  container?: React.CSSProperties;
-  text?: React.CSSProperties;
-}
-
-const lastSeenAvatarStyles = {
-  container: {
-    width: 20,
-    height: 20,
-    lineHeight: '20px',
-    fontWeight: 400,
-    fontSize: 10,
-    color: 'white',
-    backgroundColor: 'rgb(153, 153, 153)',
-    borderRadius: 10,
-    textAlign: 'center',
-    transition: '0.3s all ease-in-out',
-    display: 'block',
-    position: 'relative',
-  } as React.CSSProperties,
-  text: {
-    pointerEvents: 'none',
-  } as React.CSSProperties,
-};
 
 const LastSeenAvatar: React.FC<LastSeenAvatarProps> = (props) => {
-  let { styles, classes } = props;
-  if (!styles) {
-    styles = {};
-  }
-  if (!classes) {
-    classes = {};
-  }
-  const { container, text } = styles;
+  let { styles, classes, index, mouseOver } = props;
+
+  const style = React.useMemo(
+    () => ({
+      ...defaultStyles.container,
+      ...styles?.container,
+      ...(index > 0 && !mouseOver ? { marginTop: -12 } : { marginTop: -4 }),
+    }),
+    [styles?.container, index, mouseOver]
+  );
+
+  const textStyle = React.useMemo(
+    () => ({
+      ...defaultStyles.text,
+      ...styles?.text,
+    }),
+    [styles?.text]
+  );
+
   return (
     props.author && (
       <div
-        style={{
-          ...lastSeenAvatarStyles.container,
-          ...container,
-          ...props.style,
-        }}
-        className={classnames(
-          'react-bell-chat__last-seen-avatar',
-          props.className,
-          classes.container
-        )}
+        style={style}
+        className={classnames(defaultClasses.container, classes?.container)}
       >
         <span
-          style={{ ...lastSeenAvatarStyles.text, ...text }}
-          className={classnames(
-            'react-bell-chat__last-seen-avatar__text',
-            classes.text
-          )}
+          style={textStyle}
+          className={classnames(defaultClasses.text, classes?.text)}
         >
           {props.author.lastSeenAvatarName
             ? props.author.lastSeenAvatarName

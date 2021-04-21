@@ -1,10 +1,8 @@
 import * as React from 'react';
-export interface ChatScrollAreaStyles {
-    container?: React.CSSProperties;
-}
-export interface ChatScrollAreaClasses {
-    container?: string;
-}
+import { ChatScrollAreaStyles } from './styles';
+import { ChatScrollAreaClasses } from './classes';
+export * from './classes';
+export * from './styles';
 export interface ChatScrollAreaProps {
     maxHeight?: string | number;
     minHeight?: string | number;
@@ -13,8 +11,6 @@ export interface ChatScrollAreaProps {
     apiRef?: (api: ChatScrollAreaApi) => void;
     loadOldMessagesThreshold: number;
     onLoadOldMessages: () => Promise<void>;
-    style?: React.CSSProperties;
-    className?: string;
     classes?: ChatScrollAreaClasses;
 }
 export interface ChatScrollAreaApi {

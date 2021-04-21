@@ -110,4 +110,7 @@ const styles: ChatBubbleStyles = {
   loadingSpinnerColor: 'rgba(255, 255, 255, 0.55)',
   isSendIconColor: '#cddc39',
 };
+
+export { styles as DefaultChatBubbleStyles };
+
 export default styles;

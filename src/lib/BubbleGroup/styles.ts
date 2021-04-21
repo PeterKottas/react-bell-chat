@@ -4,10 +4,14 @@ export interface BubbleGroupStyles {
   bubbleGroupWrapper?: React.CSSProperties;
 }
 
-export default {
+const styles: BubbleGroupStyles = {
   bubbleGroupWrapper: {
     marginTop: 10,
     marginBottom: 10,
     position: 'relative',
   },
-} as BubbleGroupStyles;
+};
+
+export default styles;
+
+export { styles as defaultBubbleGroupStyles };

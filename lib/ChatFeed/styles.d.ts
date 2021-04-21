@@ -4,7 +4,7 @@ export interface ChatFeedStyles {
     showRecipientAvatarChatMessages?: React.CSSProperties;
     showRecipientLastSeenMessageChatMessages?: React.CSSProperties;
     showIsTypingChatMessages?: React.CSSProperties;
-    chatMessages?: React.CSSProperties;
 }
 declare const styles: ChatFeedStyles;
+export { styles as DefaultChatFeedStyles };
 export default styles;

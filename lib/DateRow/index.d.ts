@@ -1,15 +1,11 @@
 import * as React from 'react';
-export interface DateRowStyles {
-    container?: React.CSSProperties;
-}
-export interface DateRowClasses {
-    container?: string;
-}
+import { DateRowClasses } from './classes';
+import { DateRowStyles } from './styles';
+export * from './classes';
+export * from './styles';
 export interface DateRowProps {
     date: Date;
     styles?: DateRowStyles;
-    style?: React.CSSProperties;
-    className?: string;
     classes?: DateRowClasses;
 }
 declare const _default: React.NamedExoticComponent<DateRowProps>;
