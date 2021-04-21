@@ -148,7 +148,13 @@ export interface ChatFeedApi {
   scrollApi: ChatScrollAreaApi;
 }
 function DefaultMessageRenderFunc(props: MessageRenderProps<string>) {
-  return props.message && <>{props.message.message}</>;
+  return (
+    props.message && (
+      <span className={props.className} style={props.style}>
+        {props.message.message}
+      </span>
+    )
+  );
 }
 
 export interface ChatFeedSnapshot {
@@ -401,15 +407,13 @@ export class ChatFeed<T = string>
               this.props.showRecipientLastSeenMessage
             }
           >
-            {
-              <this.props.CustomLoadingMessages
-                isVisible={
-                  this.props.showLoadingMessages || this.state.isLoadingMessages
-                }
-                styles={loadingMessagesStyle}
-                classes={loadingMessagesClasses}
-              />
-            }
+            <this.props.CustomLoadingMessages
+              isVisible={
+                this.props.showLoadingMessages && this.state.isLoadingMessages
+              }
+              styles={loadingMessagesStyle}
+              classes={loadingMessagesClasses}
+            />
             {this.renderMessages<T>(this.props.messages)}
             {this.props.showIsTyping && this.renderIsTyping()}
           </this.props.CustomChatMessagesContainer>

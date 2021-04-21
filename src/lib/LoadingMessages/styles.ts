@@ -8,7 +8,7 @@ const styles: LoadingMessagesStyle = {
     display: 'flex',
     marginBottom: 10,
   },
-  spinnerColor: 'rgb(0, 132, 255)',
+  spinnerColor: 'currentColor',
 };
 
 export { styles as defaultLoadingMessagesStyle };

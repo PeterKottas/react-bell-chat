@@ -39,7 +39,6 @@ const styles: ChatBubbleStyles = {
   } as React.CSSProperties,
   chatBubble: {
     position: 'relative',
-    backgroundColor: '#0084FF',
     borderRadius: 7,
     marginRight: 'auto',
     marginLeft: 'auto',
@@ -48,7 +47,6 @@ const styles: ChatBubbleStyles = {
     paddingBottom: 14,
     paddingLeft: 14,
     paddingRight: 14,
-    // boxShadow: 'rgba(0, 0, 0, 0.3) 2px 2px 2px'
   } as React.CSSProperties,
   userChatBubbleOrientationNormal: {
     marginRight: 0,
@@ -56,11 +54,8 @@ const styles: ChatBubbleStyles = {
   recipientChatBubbleOrientationNormal: {
     marginLeft: 0,
   } as React.CSSProperties,
-  recipientChatBubble: {
-    backgroundColor: '#ccc',
-  } as React.CSSProperties,
+  recipientChatBubble: {} as React.CSSProperties,
   text: {
-    color: '#FFFFFF',
     fontSize: 16,
     fontWeight: 300,
     margin: 0,
@@ -92,13 +87,14 @@ const styles: ChatBubbleStyles = {
     right: 14,
     bottom: 2,
     fontSize: 9,
-    color: 'rgba(255, 255, 255, 0.55)',
+    opacity: 0.5,
   } as React.CSSProperties,
   isSend: {
     position: 'absolute',
     right: 2,
-    bottom: 2,
+    bottom: 1,
     fontSize: 9,
+    opacity: 0.5,
   } as React.CSSProperties,
   lastSeenByContainer: {
     position: 'absolute',
@@ -107,8 +103,8 @@ const styles: ChatBubbleStyles = {
     width: 20,
     height: '100%',
   } as React.CSSProperties,
-  loadingSpinnerColor: 'rgba(255, 255, 255, 0.55)',
-  isSendIconColor: '#cddc39',
+  loadingSpinnerColor: 'currentColor',
+  isSendIconColor: 'currentColor',
 };
 
 export { styles as defaultChatBubbleStyles };

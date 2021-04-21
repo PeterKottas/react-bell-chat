@@ -29,7 +29,7 @@ const LastSeenAvatar: React.FC<LastSeenAvatarProps> = (props) => {
         : {}),
       ...(index > 0 && !mouseOver ? { marginTop: -12 } : { marginTop: -4 }),
     }),
-    [styles?.container, index, mouseOver]
+    [styles?.container, index, mouseOver, author?.bgImageUrl]
   );
 
   const textStyle = React.useMemo(

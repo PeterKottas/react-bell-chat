@@ -11,8 +11,6 @@ const styles = {
     lineHeight: '24px',
     fontWeight: 400,
     fontSize: 10,
-    color: 'white',
-    backgroundColor: 'rgb(153, 153, 153)',
     borderRadius: 12,
     textAlign: 'center',
     transition: '0.3s all ease-in-out',

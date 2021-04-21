@@ -12,8 +12,6 @@ const styles = {
     height: 40,
     lineHeight: '40px',
     fontWeight: 400,
-    color: 'white',
-    backgroundColor: 'rgb(153, 153, 153)',
     borderRadius: 20,
     textAlign: 'center',
     borderTopRightRadius: 5,
