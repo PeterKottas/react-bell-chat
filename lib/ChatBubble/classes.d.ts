@@ -26,5 +26,4 @@ export interface ChatBubbleClasses {
     lastSeenByContainer?: string;
 }
 declare const classes: ChatBubbleClasses;
-export { classes as DefaultChatBubbleClasses };
-export default classes;
+export { classes as defaultChatBubbleClasses };

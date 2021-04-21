@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classnames from 'classnames';
-import defaultStyles, { ChatScrollAreaStyles } from './styles';
-import defaultClasses, { ChatScrollAreaClasses } from './classes';
+import { ChatScrollAreaStyles, defaultChatScrollAreaStyles } from './styles';
+import { ChatScrollAreaClasses, defaultChatScrollAreaClasses } from './classes';
 export * from './classes';
 export * from './styles';
 
@@ -40,9 +40,12 @@ export class ChatScrollArea extends React.PureComponent<ChatScrollAreaProps> {
     return (
       <div
         ref={this.containerRef}
-        className={classnames(defaultClasses.container, classes?.container)}
+        className={classnames(
+          defaultChatScrollAreaClasses.container,
+          classes?.container
+        )}
         style={{
-          ...defaultStyles.container,
+          ...defaultChatScrollAreaStyles.container,
           ...(this.props.maxHeight !== undefined
             ? { maxHeight: this.props.maxHeight }
             : {}),
@@ -97,5 +100,3 @@ export class ChatScrollArea extends React.PureComponent<ChatScrollAreaProps> {
       });
   }
 }
-
-export default ChatScrollArea;

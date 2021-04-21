@@ -43,7 +43,7 @@ module.exports = mergeWithCustomize({
       // 'react-dom': '@hot-loader/react-dom'
     },
   },
-  entry: ['./src/demo/index.tsx', 'webpack-plugin-serve/client'],
+  entry: { index: ['webpack-plugin-serve/client', './src/demo/index.tsx'] },
   output: {
     path: clientOutputDir,
     publicPath: '/',

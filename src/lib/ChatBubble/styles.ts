@@ -111,6 +111,4 @@ const styles: ChatBubbleStyles = {
   isSendIconColor: '#cddc39',
 };
 
-export { styles as DefaultChatBubbleStyles };
-
-export default styles;
+export { styles as defaultChatBubbleStyles };

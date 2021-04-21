@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Author } from '../Author';
 import classnames from 'classnames';
-import defaultClasses, { IsTypingClasses } from './classes';
-import defaultStyles, { IsTypingStyles } from './styles';
+import { IsTypingClasses, defaultIsTypingClasses } from './classes';
+import { IsTypingStyles, defaultIsTypingStyles } from './styles';
 export * from './classes';
 export * from './styles';
 
@@ -16,7 +16,7 @@ const IsTyping: React.FC<IsTypingProps> = (props) => {
   let { styles, classes } = props;
 
   const style = React.useMemo(
-    () => ({ ...defaultStyles.container, ...styles?.container }),
+    () => ({ ...defaultIsTypingStyles.container, ...styles?.container }),
     [styles?.container]
   );
 
@@ -24,7 +24,10 @@ const IsTyping: React.FC<IsTypingProps> = (props) => {
     props.typingAuthors &&
     props.typingAuthors.length > 0 && (
       <div
-        className={classnames(defaultClasses.container, classes?.container)}
+        className={classnames(
+          defaultIsTypingClasses.container,
+          classes?.container
+        )}
         style={style}
       >
         {props.typingAuthors
@@ -38,4 +41,6 @@ const IsTyping: React.FC<IsTypingProps> = (props) => {
   );
 };
 
-export default React.memo(IsTyping);
+const Memoized = React.memo(IsTyping);
+
+export { Memoized as IsTyping };

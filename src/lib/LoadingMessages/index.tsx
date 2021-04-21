@@ -1,7 +1,10 @@
 import * as React from 'react';
 import classnames from 'classnames';
-import defaultStyles, { LoadingMessagesStyle } from './styles';
-import defaultClasses, { LoadingMessagesClasses } from './classes';
+import { LoadingMessagesStyle, defaultLoadingMessagesStyle } from './styles';
+import {
+  LoadingMessagesClasses,
+  defaultLoadingMessagesClasses,
+} from './classes';
 export * from './classes';
 export * from './styles';
 
@@ -17,7 +20,7 @@ const LoadingMessages: React.FC<LoadingMessagesProps> = (props) => {
 
   const style = React.useMemo(
     () => ({
-      ...defaultStyles.container,
+      ...defaultLoadingMessagesStyle.container,
       ...styles?.container,
     }),
     [styles?.container]
@@ -27,16 +30,16 @@ const LoadingMessages: React.FC<LoadingMessagesProps> = (props) => {
     () => ({
       background: 'none',
       margin: 'auto',
-      fill: styles?.spinnerColor ?? defaultStyles.spinnerColor,
+      fill: styles?.spinnerColor ?? defaultLoadingMessagesStyle.spinnerColor,
       opacity: props.isVisible ? 1 : 0,
       transition: '0.3s all ease-in-out',
     }),
-    [styles?.spinnerColor]
+    [styles?.spinnerColor, props.isVisible]
   );
   return (
     <div
       className={classnames(
-        defaultClasses.container,
+        defaultLoadingMessagesClasses.container,
         props.className,
         classes?.container
       )}
@@ -71,4 +74,6 @@ const LoadingMessages: React.FC<LoadingMessagesProps> = (props) => {
   );
 };
 
-export default React.memo(LoadingMessages);
+const Memoized = React.memo(LoadingMessages);
+
+export { Memoized as LoadingMessages };

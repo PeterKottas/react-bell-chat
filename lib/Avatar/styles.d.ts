@@ -6,5 +6,4 @@ declare const styles: {
     container: import("react").CSSProperties;
     text: import("react").CSSProperties;
 };
-export { styles as DefaultAvatarStyles };
-export default styles;
+export { styles as defaultAvatarStyles };

@@ -11,6 +11,4 @@ const styles: LoadingMessagesStyle = {
   spinnerColor: 'rgb(0, 132, 255)',
 };
 
-export { styles as DefaultLoadingMessagesStyle };
-
-export default styles;
+export { styles as defaultLoadingMessagesStyle };

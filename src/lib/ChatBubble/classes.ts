@@ -47,6 +47,4 @@ const classes: ChatBubbleClasses = {
   lastSeenByContainer: 'react-bell-chat__chat-bubble__last-seen-by__container',
 };
 
-export { classes as DefaultChatBubbleClasses };
-
-export default classes;
+export { classes as defaultChatBubbleClasses };

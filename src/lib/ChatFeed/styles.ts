@@ -17,6 +17,4 @@ const styles: ChatFeedStyles = {
   },
 };
 
-export { styles as DefaultChatFeedStyles };
-
-export default styles;
+export { styles as defaultChatFeedStyles };

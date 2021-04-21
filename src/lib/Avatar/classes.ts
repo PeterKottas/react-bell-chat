@@ -8,6 +8,4 @@ const classes: AvatarClasses = {
   text: 'react-bell-chat__avatar__text',
 };
 
-export { classes as DefaultAvatarClasses };
-
-export default classes;
+export { classes as defaultAvatarClasses };

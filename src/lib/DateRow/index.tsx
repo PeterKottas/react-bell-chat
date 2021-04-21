@@ -1,7 +1,7 @@
 import * as React from 'react';
 import classnames from 'classnames';
-import defaultClasses, { DateRowClasses } from './classes';
-import defaultStyles, { DateRowStyles } from './styles';
+import { DateRowClasses, defaultDateRowClasses } from './classes';
+import { DateRowStyles, defaultDateRowStyles } from './styles';
 export * from './classes';
 export * from './styles';
 
@@ -15,7 +15,7 @@ const DateRow: React.FC<DateRowProps> = (props) => {
   let { styles, classes } = props;
   const style = React.useMemo(
     () => ({
-      ...defaultStyles.container,
+      ...defaultDateRowStyles.container,
       ...styles?.container,
     }),
     [styles?.container]
@@ -23,7 +23,10 @@ const DateRow: React.FC<DateRowProps> = (props) => {
   return (
     props.date && (
       <div
-        className={classnames(defaultClasses.container, classes?.container)}
+        className={classnames(
+          defaultDateRowClasses.container,
+          classes?.container
+        )}
         style={style}
         title={props.date.toLocaleDateString([], {
           weekday: 'long',
@@ -38,4 +41,6 @@ const DateRow: React.FC<DateRowProps> = (props) => {
   );
 };
 
-export default React.memo(DateRow);
+const Memoized = React.memo(DateRow);
+
+export { Memoized as DateRow };

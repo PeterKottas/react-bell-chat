@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { BubbleGroupClasses, BubbleGroupStyles } from '../BubbleGroup';
+import { BubbleGroupClasses, BubbleGroupProps, BubbleGroupStyles } from '../BubbleGroup';
 import { ChatBubbleProps, MessageRenderProps } from '../ChatBubble';
-import Message from '../Message';
+import { Message } from '../Message';
 import { Author } from '../Author';
 import { ChatBubbleStyles, ChatBubbleClasses } from '../ChatBubble';
 import { AvatarProps, AvatarStyles, AvatarClasses } from '../Avatar';
-import { IsTypingStyles, IsTypingClasses } from '../IsTyping';
+import { IsTypingStyles, IsTypingClasses, IsTypingProps } from '../IsTyping';
 import { ChatScrollAreaProps, ChatScrollAreaApi, ChatScrollAreaStyles, ChatScrollAreaClasses } from '../ChatScrollArea';
 import { ChatMessagesContainerProps, ChatMessagesContainerClasses, ChatMessagesContainerStyles } from '../ChatMessagesContainer';
 import { LastSeenAvatarProps, LastSeenAvatarStyles, LastSeenAvatarClasses } from '../LastSeenAvatar';
@@ -13,6 +13,7 @@ import { DateRowProps, DateRowStyles, DateRowClasses } from '../DateRow';
 import { LoadingMessagesProps, LoadingMessagesStyle, LoadingMessagesClasses } from '../LoadingMessages';
 import { ChatFeedStyles } from './styles';
 import { ChatFeedClasses } from './classes';
+import { ComponentType } from '../utils/componentType';
 export * from './classes';
 export * from './styles';
 export interface ChatFeedProps<T = string> {
@@ -30,16 +31,17 @@ export interface ChatFeedProps<T = string> {
     showRecipientLastSeenMessage?: boolean;
     showIsTyping?: boolean;
     showLoadingMessages?: boolean;
-    CustomLoadingMessages?: (props: LoadingMessagesProps) => JSX.Element;
-    CustomChatBubble?: (props: ChatBubbleProps<T>) => JSX.Element;
-    CustomSystemChatBubble?: (props: ChatBubbleProps<T>) => JSX.Element;
-    CustomAvatar?: (props: AvatarProps) => JSX.Element;
-    CustomScrollArea?: (props: ChatScrollAreaProps) => JSX.Element;
-    CustomChatMessagesContainer?: (props: ChatMessagesContainerProps) => JSX.Element;
-    CustomIsTyping?: (props: ChatScrollAreaProps) => JSX.Element;
-    CustomLastSeenAvatar?: (props: LastSeenAvatarProps) => JSX.Element;
-    CustomMessageRender?: (props: MessageRenderProps<T>) => JSX.Element | string;
-    CustomDateRow?: (props: DateRowProps) => JSX.Element;
+    CustomLoadingMessages?: ComponentType<LoadingMessagesProps>;
+    CustomChatBubble?: ComponentType<ChatBubbleProps<T>>;
+    CustomBubbleGroup?: ComponentType<BubbleGroupProps<T>>;
+    CustomSystemChatBubble?: ComponentType<ChatBubbleProps<T>>;
+    CustomAvatar?: ComponentType<AvatarProps>;
+    CustomScrollArea?: ComponentType<ChatScrollAreaProps>;
+    CustomChatMessagesContainer?: ComponentType<ChatMessagesContainerProps>;
+    CustomIsTyping?: ComponentType<IsTypingProps>;
+    CustomLastSeenAvatar?: ComponentType<LastSeenAvatarProps>;
+    CustomMessageRender?: ComponentType<MessageRenderProps<T>>;
+    CustomDateRow?: ComponentType<DateRowProps>;
     onLoadOldMessages?: () => Promise<void>;
     style?: React.CSSProperties;
     styles?: ChatFeedStyles;
@@ -92,12 +94,9 @@ export declare class ChatFeed<T = string> extends React.PureComponent<ChatFeedPr
     /**
      * Determines what type of message/messages to render.
      */
-    renderMessages<T>(messages: Message<T>[]): JSX.Element[];
+    renderMessages<T>(messages: Message<T>[]): React.ReactNode[];
     renderIsTyping(): JSX.Element;
     apiRef(e: ChatScrollAreaApi): void;
-    /**
-     * render : renders our chat feed
-     */
     render(): JSX.Element;
     private onLoadOldMessages;
 }

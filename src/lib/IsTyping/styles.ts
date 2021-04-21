@@ -13,6 +13,4 @@ const styles: IsTypingStyles = {
   } as React.CSSProperties,
 };
 
-export { styles as DefaultIsTypingStyles };
-
-export default styles;
+export { styles as defaultIsTypingStyles };

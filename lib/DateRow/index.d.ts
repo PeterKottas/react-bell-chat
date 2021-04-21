@@ -8,5 +8,5 @@ export interface DateRowProps {
     styles?: DateRowStyles;
     classes?: DateRowClasses;
 }
-declare const _default: React.NamedExoticComponent<DateRowProps>;
-export default _default;
+declare const Memoized: React.NamedExoticComponent<DateRowProps>;
+export { Memoized as DateRow };

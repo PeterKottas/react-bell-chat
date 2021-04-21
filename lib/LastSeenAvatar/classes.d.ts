@@ -3,5 +3,4 @@ export interface LastSeenAvatarClasses {
     text?: string;
 }
 declare const classes: LastSeenAvatarClasses;
-export { classes as DefaultLastSeenAvatarClasses };
-export default classes;
+export { classes as defaultLastSeenAvatarClasses };

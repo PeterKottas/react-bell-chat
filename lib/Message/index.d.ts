@@ -9,4 +9,3 @@ export interface Message<T = string> {
     createdOn?: Date;
     isSend?: boolean;
 }
-export default Message;

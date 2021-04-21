@@ -6,6 +6,4 @@ const classes: ChatFeedClasses = {
   chatPanel: 'react-bell-chat__chat-panel',
 };
 
-export { classes as DefaultChatFeedClasses };
-
-export default classes;
+export { classes as defaultChatFeedClasses };

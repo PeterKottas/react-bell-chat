@@ -5,5 +5,4 @@ export interface ChatMessagesContainerClasses {
     showIsTyping?: string;
 }
 declare const classes: ChatMessagesContainerClasses;
-export { classes as DefaultChatMessagesContainerClasses };
-export default classes;
+export { classes as defaultChatMessagesContainerClasses };

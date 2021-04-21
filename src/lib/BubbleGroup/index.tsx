@@ -1,14 +1,12 @@
 import * as React from 'react';
-import DefaultChatBubble, {
+import {
   ChatBubbleProps,
   ChatBubbleStyles,
   MessageRenderProps,
 } from '../ChatBubble';
-import DefaultSystemChatBubble from '../SystemChatBubble';
-import bubbleGroupStyles, { BubbleGroupStyles } from './styles';
 import { Message } from '../';
 import { Author } from '../Author';
-import Avatar, { AvatarProps, AvatarClasses } from '../Avatar';
+import { AvatarProps, AvatarClasses } from '../Avatar';
 import {
   LastSeenAvatarProps,
   LastSeenAvatarStyles,
@@ -17,7 +15,9 @@ import {
 import { AvatarStyles } from './../Avatar';
 import classnames from 'classnames';
 import { ChatBubbleClasses } from './../ChatBubble';
-import defaultClasses, { BubbleGroupClasses } from './classes';
+import { BubbleGroupClasses, defaultBubbleGroupClasses } from './classes';
+import { BubbleGroupStyles, defaultBubbleGroupStyles } from './styles';
+import { ComponentType } from '../utils/componentType';
 
 export * from './styles';
 export * from './classes';
@@ -40,11 +40,12 @@ export interface BubbleGroupProps<T = string> {
   avatarStyles?: AvatarStyles;
   lastSeenAvatarStyles?: LastSeenAvatarStyles;
 
-  CustomAvatar?: (props: AvatarProps) => JSX.Element;
-  CustomMessageRender?: (props: MessageRenderProps<T>) => JSX.Element | string;
-  CustomLastSeenAvatar?: (props: LastSeenAvatarProps) => JSX.Element;
-  CustomChatBubble?: (props: ChatBubbleProps<T>) => JSX.Element;
-  CustomSystemChatBubble?: (props: ChatBubbleProps<T>) => JSX.Element;
+  CustomAvatar?: ComponentType<AvatarProps>;
+  CustomMessageRender?: ComponentType<MessageRenderProps<T>>;
+  CustomLastSeenAvatar?: ComponentType<LastSeenAvatarProps>;
+  CustomChatBubble?: ComponentType<ChatBubbleProps<T>>;
+  CustomSystemChatBubble?: ComponentType<ChatBubbleProps<T>>;
+
   showRecipientLastSeenMessage?: boolean;
 }
 
@@ -53,7 +54,7 @@ function BubbleGroup<T = string>(props: BubbleGroupProps<T>) {
     messages,
     author,
 
-    CustomAvatar = Avatar,
+    CustomAvatar,
 
     styles,
 
@@ -75,8 +76,6 @@ function BubbleGroup<T = string>(props: BubbleGroupProps<T>) {
     CustomLastSeenAvatar,
     CustomMessageRender,
   } = props;
-  const ChatBubble = CustomChatBubble || DefaultChatBubble;
-  const SystemChatBubble = CustomSystemChatBubble || DefaultSystemChatBubble;
 
   const messageNodes = messages.map((message, i) => {
     const _props: ChatBubbleProps<T> = {
@@ -106,22 +105,21 @@ function BubbleGroup<T = string>(props: BubbleGroupProps<T>) {
       CustomMessageRender,
     };
     return message.authorId !== undefined ? (
-      <ChatBubble key={i} {..._props} />
+      <CustomChatBubble key={i} {..._props} />
     ) : (
-      <SystemChatBubble key={i} {..._props} />
+      <CustomSystemChatBubble key={i} {..._props} />
     );
   });
 
   const youAreAuthor = author && props.yourAuthorId === author.id;
-
   return (
     <div
       style={{
-        ...bubbleGroupStyles.bubbleGroupWrapper,
+        ...defaultBubbleGroupStyles.bubbleGroupWrapper,
         ...styles?.bubbleGroupWrapper,
       }}
       className={classnames(
-        defaultClasses.chatBubbleWrapper,
+        defaultBubbleGroupClasses.chatBubbleWrapper,
         classes?.chatBubbleWrapper
       )}
     >
@@ -138,5 +136,4 @@ function BubbleGroup<T = string>(props: BubbleGroupProps<T>) {
 }
 
 const Memoized = React.memo(BubbleGroup);
-export default Memoized;
 export { Memoized as BubbleGroup };

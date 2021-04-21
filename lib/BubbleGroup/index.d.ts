@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { ChatBubbleProps, ChatBubbleStyles, MessageRenderProps } from '../ChatBubble';
-import { BubbleGroupStyles } from './styles';
 import { Message } from '../';
 import { Author } from '../Author';
 import { AvatarProps, AvatarClasses } from '../Avatar';
@@ -8,6 +7,8 @@ import { LastSeenAvatarProps, LastSeenAvatarStyles, LastSeenAvatarClasses } from
 import { AvatarStyles } from './../Avatar';
 import { ChatBubbleClasses } from './../ChatBubble';
 import { BubbleGroupClasses } from './classes';
+import { BubbleGroupStyles } from './styles';
+import { ComponentType } from '../utils/componentType';
 export * from './styles';
 export * from './classes';
 export interface BubbleGroupProps<T = string> {
@@ -25,14 +26,13 @@ export interface BubbleGroupProps<T = string> {
     chatBubbleStyles?: ChatBubbleStyles;
     avatarStyles?: AvatarStyles;
     lastSeenAvatarStyles?: LastSeenAvatarStyles;
-    CustomAvatar?: (props: AvatarProps) => JSX.Element;
-    CustomMessageRender?: (props: MessageRenderProps<T>) => JSX.Element | string;
-    CustomLastSeenAvatar?: (props: LastSeenAvatarProps) => JSX.Element;
-    CustomChatBubble?: (props: ChatBubbleProps<T>) => JSX.Element;
-    CustomSystemChatBubble?: (props: ChatBubbleProps<T>) => JSX.Element;
+    CustomAvatar?: ComponentType<AvatarProps>;
+    CustomMessageRender?: ComponentType<MessageRenderProps<T>>;
+    CustomLastSeenAvatar?: ComponentType<LastSeenAvatarProps>;
+    CustomChatBubble?: ComponentType<ChatBubbleProps<T>>;
+    CustomSystemChatBubble?: ComponentType<ChatBubbleProps<T>>;
     showRecipientLastSeenMessage?: boolean;
 }
 declare function BubbleGroup<T = string>(props: BubbleGroupProps<T>): JSX.Element;
 declare const Memoized: React.MemoExoticComponent<typeof BubbleGroup>;
-export default Memoized;
 export { Memoized as BubbleGroup };

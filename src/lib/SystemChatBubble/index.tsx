@@ -1,34 +1,33 @@
 import * as React from 'react';
-import { ChatBubbleProps } from '../ChatBubble';
+import { ChatBubbleProps, defaultChatBubbleConfig } from '../ChatBubble';
 import classnames from 'classnames';
-import defaultClasses from './classes';
-import defaultStyles from './styles';
+import { defaultSystemChatBubbleClasses } from './classes';
+import { defaultSystemChatBubbleStyles } from './styles';
 export * from './classes';
 export * from './styles';
 
 export interface SystemChatBubbleProps<T> extends ChatBubbleProps<T> {}
 
-export function SystemChatBubble<T = string>(props: SystemChatBubbleProps<T>) {
-  const { styles, classes, message } = props;
+function SystemChatBubble<T = string>(props: SystemChatBubbleProps<T>) {
+  const { styles, classes, message, config } = props;
 
-  const time =
-    message.createdOn &&
-    message.createdOn.toLocaleTimeString([], {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true,
-    });
+  const finalConfig = {
+    ...defaultChatBubbleConfig,
+    ...config,
+  };
+
+  const time = finalConfig.formatTime(message.createdOn);
 
   const style = React.useMemo(
     () => ({
-      ...defaultStyles.systemChatBubbleContainer,
+      ...defaultSystemChatBubbleStyles.systemChatBubbleContainer,
       ...styles?.systemChatBubbleContainer,
     }),
     [styles?.systemChatBubbleContainer]
   );
   const textStyle = React.useMemo(
     () => ({
-      ...defaultStyles.systemChatBubbleText,
+      ...defaultSystemChatBubbleStyles.systemChatBubbleText,
       ...styles?.systemChatBubbleText,
     }),
     [styles?.systemChatBubbleText]
@@ -37,14 +36,17 @@ export function SystemChatBubble<T = string>(props: SystemChatBubbleProps<T>) {
     message && (
       <div
         className={classnames(
-          defaultClasses.chatBubbleWrapper,
+          defaultSystemChatBubbleClasses.chatBubbleWrapper,
           classes?.chatBubbleWrapper
         )}
         style={style}
       >
         {time && (
           <span
-            className={classnames(defaultClasses.createdOn, classes?.createdOn)}
+            className={classnames(
+              defaultSystemChatBubbleClasses.createdOn,
+              classes?.createdOn
+            )}
             title={props.message.createdOn.toLocaleString()}
             style={textStyle}
           >
@@ -57,4 +59,6 @@ export function SystemChatBubble<T = string>(props: SystemChatBubbleProps<T>) {
   );
 }
 
-export default React.memo(SystemChatBubble);
+const Memoized = React.memo(SystemChatBubble);
+
+export { Memoized as SystemChatBubble };

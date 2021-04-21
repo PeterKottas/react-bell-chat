@@ -9,5 +9,5 @@ export interface LoadingMessagesProps {
     className?: string;
     isVisible: boolean;
 }
-declare const _default: React.NamedExoticComponent<LoadingMessagesProps>;
-export default _default;
+declare const Memoized: React.NamedExoticComponent<LoadingMessagesProps>;
+export { Memoized as LoadingMessages };

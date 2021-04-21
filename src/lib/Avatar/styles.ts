@@ -23,6 +23,4 @@ const styles = {
   } as React.CSSProperties,
 };
 
-export { styles as DefaultAvatarStyles };
-
-export default styles;
+export { styles as defaultAvatarStyles };

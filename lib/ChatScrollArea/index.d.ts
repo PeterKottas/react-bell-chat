@@ -29,4 +29,3 @@ export declare class ChatScrollArea extends React.PureComponent<ChatScrollAreaPr
     private onScroll;
     private containerRef;
 }
-export default ChatScrollArea;

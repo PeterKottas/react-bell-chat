@@ -10,6 +10,4 @@ const styles: DateRowStyles = {
   },
 };
 
-export { styles as DefaultDateRowStyles };
-
-export default styles;
+export { styles as defaultDateRowStyles };

@@ -11,5 +11,5 @@ export interface LastSeenAvatarProps {
     styles?: LastSeenAvatarStyles;
     classes?: LastSeenAvatarClasses;
 }
-declare const _default: React.NamedExoticComponent<LastSeenAvatarProps>;
-export default _default;
+declare const Memoized: React.NamedExoticComponent<LastSeenAvatarProps>;
+export { Memoized as LastSeenAvatar };

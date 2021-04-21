@@ -5,5 +5,4 @@ export interface ChatMessagesContainerStyles {
     showIsTyping?: React.CSSProperties;
 }
 declare const styles: ChatMessagesContainerStyles;
-export { styles as DefaultChatMessagesContainerStyles };
-export default styles;
+export { styles as defaultChatMessagesContainerStyles };

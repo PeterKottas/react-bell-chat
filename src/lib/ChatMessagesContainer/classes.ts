@@ -13,6 +13,4 @@ const classes: ChatMessagesContainerClasses = {
   showIsTyping: 'react-bell-chat__chat-messages--showIsTyping',
 };
 
-export { classes as DefaultChatMessagesContainerClasses };
-
-export default classes;
+export { classes as defaultChatMessagesContainerClasses };

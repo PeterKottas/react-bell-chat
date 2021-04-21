@@ -1,7 +1,7 @@
-import * as classNames from 'classnames';
 import * as React from 'react';
-import defaultClasses, { ChatMessagesContainerClasses } from './classes';
-import defaultStyles, { ChatMessagesContainerStyles } from './styles';
+import * as classNames from 'classnames';
+import { ChatMessagesContainerClasses, defaultChatMessagesContainerClasses } from './classes';
+import { ChatMessagesContainerStyles, defaultChatMessagesContainerStyles } from './styles';
 export * from './classes';
 export * from './styles';
 
@@ -27,14 +27,14 @@ export const ChatMessagesContainer: React.FC<ChatMessagesContainerProps> = (
   } = props;
   const style = React.useMemo(
     () => ({
-      ...defaultStyles?.root,
+      ...defaultChatMessagesContainerStyles?.root,
       ...styles?.root,
-      ...(showRecipientAvatar && defaultStyles?.showRecipientAvatar),
+      ...(showRecipientAvatar && defaultChatMessagesContainerStyles?.showRecipientAvatar),
       ...(showRecipientAvatar && styles?.showRecipientAvatar),
-      ...(showIsTyping && defaultStyles?.showIsTyping),
+      ...(showIsTyping && defaultChatMessagesContainerStyles?.showIsTyping),
       ...(showIsTyping && styles?.showIsTyping),
       ...(showRecipientLastSeenMessage &&
-        defaultStyles?.showRecipientLastSeenMessage),
+        defaultChatMessagesContainerStyles?.showRecipientLastSeenMessage),
       ...(showRecipientLastSeenMessage && styles?.showRecipientLastSeenMessage),
     }),
     [
@@ -47,12 +47,12 @@ export const ChatMessagesContainer: React.FC<ChatMessagesContainerProps> = (
       styles?.showRecipientLastSeenMessage,
     ]
   );
-  const className = classNames(defaultClasses.root, classes?.root, {
-    [defaultClasses?.showRecipientAvatar]: showRecipientAvatar,
+  const className = classNames(defaultChatMessagesContainerClasses.root, classes?.root, {
+    [defaultChatMessagesContainerClasses?.showRecipientAvatar]: showRecipientAvatar,
     [classes?.showRecipientAvatar]: showRecipientAvatar,
-    [defaultClasses?.showIsTyping]: showIsTyping,
+    [defaultChatMessagesContainerClasses?.showIsTyping]: showIsTyping,
     [classes?.showIsTyping]: showIsTyping,
-    [defaultClasses?.showRecipientLastSeenMessage]: showRecipientLastSeenMessage,
+    [defaultChatMessagesContainerClasses?.showRecipientLastSeenMessage]: showRecipientLastSeenMessage,
     [classes?.showRecipientLastSeenMessage]: showRecipientLastSeenMessage,
   });
 
@@ -62,4 +62,3 @@ export const ChatMessagesContainer: React.FC<ChatMessagesContainerProps> = (
     </div>
   );
 };
-export default ChatMessagesContainer;

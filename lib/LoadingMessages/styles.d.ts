@@ -3,5 +3,4 @@ export interface LoadingMessagesStyle {
     spinnerColor?: string;
 }
 declare const styles: LoadingMessagesStyle;
-export { styles as DefaultLoadingMessagesStyle };
-export default styles;
+export { styles as defaultLoadingMessagesStyle };

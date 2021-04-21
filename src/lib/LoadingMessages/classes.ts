@@ -6,6 +6,4 @@ const classes: LoadingMessagesClasses = {
   container: 'react-bell-chat__loading-messages',
 };
 
-export { classes as DefaultLoadingMessagesClasses };
-
-export default classes;
+export { classes as defaultLoadingMessagesClasses };

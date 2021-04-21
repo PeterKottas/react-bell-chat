@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Author } from '../Author';
 import classnames from 'classnames';
-import defaultStyles, { AvatarStyles } from './styles';
-import defaultClasses, { AvatarClasses } from './classes';
+import { AvatarStyles, defaultAvatarStyles } from './styles';
+import { AvatarClasses, defaultAvatarClasses } from './classes';
 
 export * from './classes';
 export * from './styles';
@@ -15,21 +15,37 @@ export interface AvatarProps {
 
 const Avatar: React.FC<AvatarProps> = (props) => {
   const { author, classes, styles } = props;
+  const style = {
+    ...defaultAvatarStyles.container,
+    ...styles?.container,
+    ...(author?.bgImageUrl
+      ? ({
+          backgroundImage: `url(${author?.bgImageUrl})`,
+          backgroundSize: 'cover',
+        } as React.CSSProperties)
+      : {}),
+  };
   return (
     author && (
       <div
-        style={{
-          ...defaultStyles.container,
-          ...styles?.container,
-        }}
+        style={style}
         title={author.name}
-        className={classnames(defaultClasses.container, classes?.container)}
+        className={classnames(
+          defaultAvatarClasses.container,
+          classes?.container
+        )}
       >
         <span
-          style={{ ...styles?.text, ...(props.styles && props.styles?.text) }}
-          className={classnames(defaultClasses.text, classes?.text)}
+          style={{
+            ...defaultAvatarStyles.text,
+            ...styles?.text,
+            ...props.styles?.text,
+          }}
+          className={classnames(defaultAvatarClasses.text, classes?.text)}
         >
-          {author.avatarName
+          {author.bgImageUrl
+            ? null
+            : author.avatarName
             ? author.avatarName
             : author.name
                 .split(' ')
@@ -44,4 +60,3 @@ const Avatar: React.FC<AvatarProps> = (props) => {
 };
 const Memoized = React.memo(Avatar);
 export { Memoized as Avatar };
-export default Memoized;

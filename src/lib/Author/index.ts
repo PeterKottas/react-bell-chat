@@ -5,7 +5,5 @@ export interface Author {
   lastSeenAvatarName?: string;
   isTyping?: boolean;
   lastSeenMessageId?: number;
-  bgImageUrl?: number;
+  bgImageUrl?: string;
 }
-
-export default Author;

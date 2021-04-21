@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Message from '../Message';
+import { Message } from '../Message';
 import { Author } from '../Author';
 import {
   LastSeenAvatarProps,
@@ -7,11 +7,14 @@ import {
   LastSeenAvatarClasses,
 } from './../LastSeenAvatar';
 import classnames from 'classnames';
-import defaultStyles, { ChatBubbleStyles } from './styles';
-import defaultClasses, { ChatBubbleClasses } from './classes';
+import { ChatBubbleStyles, defaultChatBubbleStyles } from './styles';
+import { ChatBubbleClasses, defaultChatBubbleClasses } from './classes';
+import { ComponentType } from '../utils/componentType';
+import { ChatBubbleConfig, defaultChatBubbleConfig } from './config';
 
 export * from './styles';
 export * from './classes';
+export * from './config';
 
 export interface MessageRenderProps<T = string> {
   message: Message<T>;
@@ -22,6 +25,8 @@ export interface MessageRenderProps<T = string> {
 export interface ChatBubbleProps<T = string> {
   message: Message<T>;
   author?: Author;
+
+  config?: ChatBubbleConfig;
 
   styles?: ChatBubbleStyles;
   lastSeenAvatarStyles?: LastSeenAvatarStyles;
@@ -36,12 +41,8 @@ export interface ChatBubbleProps<T = string> {
   isCenterInGroup?: boolean;
   lastSeenByAuthors?: Author[];
   showRecipientLastSeenMessage?: boolean;
-  CustomLastSeenAvatar?: (props: LastSeenAvatarProps) => JSX.Element;
-  CustomMessageRender?: (props: MessageRenderProps<T>) => JSX.Element | string;
-}
-
-export interface ChatBubbleState {
-  mouseOverLastSeenContainer: boolean;
+  CustomLastSeenAvatar?: ComponentType<LastSeenAvatarProps>;
+  CustomMessageRender?: ComponentType<MessageRenderProps<T>>;
 }
 
 export function ChatBubble<T = string>(props: ChatBubbleProps<T>) {
@@ -55,7 +56,13 @@ export function ChatBubble<T = string>(props: ChatBubbleProps<T>) {
     lastSeenAvatarClasses,
     styles,
     classes,
+    config,
   } = props;
+
+  const finalConfig = {
+    ...defaultChatBubbleConfig,
+    ...config,
+  };
 
   const {
     userChatBubble,
@@ -87,33 +94,34 @@ export function ChatBubble<T = string>(props: ChatBubbleProps<T>) {
 
   // message.id 0 is reserved for blue
   const finalChatBubbleStyles: React.CSSProperties = {
-    ...defaultStyles.chatBubble,
+    ...defaultChatBubbleStyles.chatBubble,
     ...chatBubble,
     ...(youAreAuthor
-      ? defaultStyles.userChatBubble
-      : defaultStyles.recipientChatBubble),
+      ? defaultChatBubbleStyles.userChatBubble
+      : defaultChatBubbleStyles.recipientChatBubble),
     ...(youAreAuthor ? userChatBubble : recipientChatBubble),
     ...(youAreAuthor
-      ? defaultStyles.userChatBubbleOrientationNormal
-      : defaultStyles.recipientChatBubbleOrientationNormal),
+      ? defaultChatBubbleStyles.userChatBubbleOrientationNormal
+      : defaultChatBubbleStyles.recipientChatBubbleOrientationNormal),
     ...(youAreAuthor
       ? userChatBubbleOrientationNormal
       : recipientChatBubbleOrientationNormal),
-    ...(props.isFirstInGroup && defaultStyles.firstChatBubbleInGroup),
+    ...(props.isFirstInGroup && defaultChatBubbleStyles.firstChatBubbleInGroup),
     ...(props.isFirstInGroup &&
       (youAreAuthor
-        ? defaultStyles.userFirstChatBubbleInGroup
-        : defaultStyles.recipientFirstChatBubbleInGroup)),
-    ...(props.isCenterInGroup && defaultStyles.centerChatBubbleInGroup),
+        ? defaultChatBubbleStyles.userFirstChatBubbleInGroup
+        : defaultChatBubbleStyles.recipientFirstChatBubbleInGroup)),
+    ...(props.isCenterInGroup &&
+      defaultChatBubbleStyles.centerChatBubbleInGroup),
     ...(props.isCenterInGroup &&
       (youAreAuthor
-        ? defaultStyles.userCenterChatBubbleInGroup
-        : defaultStyles.recipientCenterChatBubbleInGroup)),
-    ...(props.isLastInGroup && defaultStyles.lastChatBubbleInGroup),
+        ? defaultChatBubbleStyles.userCenterChatBubbleInGroup
+        : defaultChatBubbleStyles.recipientCenterChatBubbleInGroup)),
+    ...(props.isLastInGroup && defaultChatBubbleStyles.lastChatBubbleInGroup),
     ...(props.isLastInGroup &&
       (youAreAuthor
-        ? defaultStyles.userLastChatBubbleInGroup
-        : defaultStyles.recipientLastChatBubbleInGroup)),
+        ? defaultChatBubbleStyles.userLastChatBubbleInGroup
+        : defaultChatBubbleStyles.recipientLastChatBubbleInGroup)),
     ...(props.isFirstInGroup && firstChatBubbleInGroup),
     ...(props.isFirstInGroup &&
       (youAreAuthor
@@ -132,14 +140,16 @@ export function ChatBubble<T = string>(props: ChatBubbleProps<T>) {
   };
 
   const messageStyle = {
-    ...defaultStyles.text,
+    ...defaultChatBubbleStyles.text,
     ...text,
     ...(youAreAuthor ? userText : recipientText),
   };
   const messageClassName = classnames(
-    defaultClasses.text,
+    defaultChatBubbleClasses.text,
     classes?.text,
-    youAreAuthor ? defaultClasses.userText : defaultClasses.recipientText,
+    youAreAuthor
+      ? defaultChatBubbleClasses.userText
+      : defaultChatBubbleClasses.recipientText,
     youAreAuthor ? classes?.userText : classes?.recipientText
   );
 
@@ -160,29 +170,33 @@ export function ChatBubble<T = string>(props: ChatBubbleProps<T>) {
   return (
     <div
       style={{
-        ...defaultStyles.chatBubbleWrapper,
+        ...defaultChatBubbleStyles.chatBubbleWrapper,
         ...chatBubbleWrapper,
       }}
       className={classnames(
-        defaultClasses.chatBubbleWrapper,
+        defaultChatBubbleClasses.chatBubbleWrapper,
         classes?.chatBubbleWrapper
       )}
     >
       <div
         style={{ ...finalChatBubbleStyles }}
-        className={classnames(defaultClasses.chatBubble, classes?.chatBubble, {
-          [defaultClasses.recipientChatBubble]: !youAreAuthor,
-          [classes?.recipientChatBubble]: !youAreAuthor,
-          [defaultClasses.userChatBubble]: youAreAuthor,
-          [classes?.userChatBubble]: youAreAuthor,
-        })}
+        className={classnames(
+          defaultChatBubbleClasses.chatBubble,
+          classes?.chatBubble,
+          {
+            [defaultChatBubbleClasses.recipientChatBubble]: !youAreAuthor,
+            [classes?.recipientChatBubble ?? '']: !youAreAuthor,
+            [defaultChatBubbleClasses.userChatBubble]: youAreAuthor,
+            [classes?.userChatBubble ?? '']: youAreAuthor,
+          }
+        )}
       >
         {props.CustomMessageRender ? (
-          props.CustomMessageRender({
-            message: props.message,
-            style: messageStyle,
-            className: messageClassName,
-          })
+          <props.CustomMessageRender
+            message={props.message}
+            style={messageStyle}
+            className={messageClassName}
+          />
         ) : (
           <span style={messageStyle} className={messageClassName}>
             {props.message.message}
@@ -191,38 +205,37 @@ export function ChatBubble<T = string>(props: ChatBubbleProps<T>) {
         {props.message.createdOn && (
           <span
             style={{
-              ...defaultStyles.createdOn,
+              ...defaultChatBubbleStyles.createdOn,
               ...createdOn,
               ...(youAreAuthor
-                ? defaultStyles.userCreatedOn
-                : defaultStyles.recipientCreatedOn),
+                ? defaultChatBubbleStyles.userCreatedOn
+                : defaultChatBubbleStyles.recipientCreatedOn),
               ...(youAreAuthor ? userCreatedOn : recipientCreatedOn),
             }}
             className={classnames(
-              defaultClasses.createdOn,
+              defaultChatBubbleClasses.createdOn,
               classes?.createdOn,
               {
-                [defaultClasses.userCreatedOn]: youAreAuthor,
-                [classes?.userCreatedOn]: youAreAuthor,
-                [defaultClasses.recipientCreatedOn]: !youAreAuthor,
-                [classes?.recipientCreatedOn]: !youAreAuthor,
+                [defaultChatBubbleClasses.userCreatedOn]: youAreAuthor,
+                [classes?.userCreatedOn ?? '']: youAreAuthor,
+                [defaultChatBubbleClasses.recipientCreatedOn]: !youAreAuthor,
+                [classes?.recipientCreatedOn ?? '']: !youAreAuthor,
               }
             )}
             title={props.message.createdOn.toLocaleString()}
           >
-            {props.message.createdOn.toLocaleTimeString([], {
-              hour: '2-digit',
-              minute: '2-digit',
-              hour12: true,
-            })}
+            {finalConfig.formatTime(props.message.createdOn)}
           </span>
         )}
         {props.message.isSend !== undefined && youAreAuthor && (
           <span
             style={{
-              ...defaultStyles.isSend,
+              ...defaultChatBubbleStyles.isSend,
             }}
-            className={classnames(defaultClasses.isSend, classes?.isSend)}
+            className={classnames(
+              defaultChatBubbleClasses.isSend,
+              classes?.isSend
+            )}
             // TODO: Maybe when we do translations
             // title={props.message.isSend ? 'Send' : 'Sending'}
           >
@@ -239,7 +252,7 @@ export function ChatBubble<T = string>(props: ChatBubbleProps<T>) {
                   fill={
                     isSendIconColor
                       ? isSendIconColor
-                      : defaultStyles.isSendIconColor
+                      : defaultChatBubbleStyles.isSendIconColor
                   }
                   {
                     /* tslint:disable-next-line:max-line-length*/ ...{}
@@ -262,7 +275,7 @@ export function ChatBubble<T = string>(props: ChatBubbleProps<T>) {
                   fill={
                     loadingSpinnerColor
                       ? loadingSpinnerColor
-                      : defaultStyles.loadingSpinnerColor
+                      : defaultChatBubbleStyles.loadingSpinnerColor
                   }
                   transform="rotate(78 50 52.5)"
                 >
@@ -288,11 +301,11 @@ export function ChatBubble<T = string>(props: ChatBubbleProps<T>) {
         props.CustomLastSeenAvatar && (
           <div
             style={{
-              ...defaultStyles.lastSeenByContainer,
+              ...defaultChatBubbleStyles.lastSeenByContainer,
               ...lastSeenByContainer,
             }}
             className={classnames(
-              defaultClasses.lastSeenByContainer,
+              defaultChatBubbleClasses.lastSeenByContainer,
               classes?.lastSeenByContainer
             )}
             onMouseEnter={onMouseEnterLastSeenContainer}
@@ -321,5 +334,3 @@ export function ChatBubble<T = string>(props: ChatBubbleProps<T>) {
     </div>
   );
 }
-
-export default ChatBubble;

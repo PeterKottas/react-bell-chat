@@ -9,5 +9,5 @@ export interface IsTypingProps {
     styles?: IsTypingStyles;
     classes?: IsTypingClasses;
 }
-declare const _default: React.NamedExoticComponent<IsTypingProps>;
-export default _default;
+declare const Memoized: React.NamedExoticComponent<IsTypingProps>;
+export { Memoized as IsTyping };

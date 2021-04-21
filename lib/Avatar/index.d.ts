@@ -11,4 +11,3 @@ export interface AvatarProps {
 }
 declare const Memoized: React.NamedExoticComponent<AvatarProps>;
 export { Memoized as Avatar };
-export default Memoized;

@@ -29,5 +29,4 @@ export interface ChatBubbleStyles {
     isSendIconColor?: string;
 }
 declare const styles: ChatBubbleStyles;
-export { styles as DefaultChatBubbleStyles };
-export default styles;
+export { styles as defaultChatBubbleStyles };

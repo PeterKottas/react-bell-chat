@@ -7,5 +7,4 @@ declare const styles: {
     container: import("react").CSSProperties;
     text: import("react").CSSProperties;
 };
-export { styles as DefaultLastSeenAvatarStyles };
-export default styles;
+export { styles as defaultLastSeenAvatarStyles };

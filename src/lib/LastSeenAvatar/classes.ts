@@ -8,6 +8,4 @@ const classes: LastSeenAvatarClasses = {
   text: 'react-bell-chat__last-seen-avatar__text',
 };
 
-export { classes as DefaultLastSeenAvatarClasses };
-
-export default classes;
+export { classes as defaultLastSeenAvatarClasses };

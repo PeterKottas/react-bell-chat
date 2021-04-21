@@ -13,6 +13,4 @@ const styles: ChatScrollAreaStyles = {
   },
 };
 
-export { styles as DefaultChatScrollAreaStyles };
-
-export default styles;
+export { styles as defaultChatScrollAreaStyles };
