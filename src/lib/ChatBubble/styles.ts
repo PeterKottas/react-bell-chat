@@ -63,6 +63,9 @@ const styles: ChatBubbleStyles = {
     fontWeight: 300,
     margin: 0,
     marginRight: 30,
+    overflowWrap: 'break-word',
+    wordWrap: 'break-word',
+    hyphens: 'auto',
   } as React.CSSProperties,
   userFirstChatBubbleInGroup: {
     borderTopRightRadius: 0,
