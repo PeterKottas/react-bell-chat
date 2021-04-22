@@ -39,7 +39,10 @@ const styles: ChatBubbleStyles = {
   } as React.CSSProperties,
   chatBubble: {
     position: 'relative',
-    borderRadius: 7,
+    borderTopRightRadius: 7,
+    borderTopLeftRadius: 7,
+    borderBottomRightRadius: 7,
+    borderBottomLeftRadius: 7,
     marginRight: 'auto',
     marginLeft: 'auto',
     maxWidth: '80%',
