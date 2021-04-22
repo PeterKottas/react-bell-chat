@@ -24,7 +24,7 @@ export interface MessageRenderProps<T = string> {
 
 export interface ChatBubbleProps<T = string> {
   message: Message<T>;
-  author?: Author;
+  author?: Author<T>;
 
   config?: ChatBubbleConfig;
 
@@ -39,9 +39,9 @@ export interface ChatBubbleProps<T = string> {
   isFirstInGroup?: boolean;
   isLastInGroup?: boolean;
   isCenterInGroup?: boolean;
-  lastSeenByAuthors?: Author[];
+  lastSeenByAuthors?: Author<T>[];
   showRecipientLastSeenMessage?: boolean;
-  CustomLastSeenAvatar?: ComponentType<LastSeenAvatarProps>;
+  CustomLastSeenAvatar?: ComponentType<LastSeenAvatarProps<T>>;
   CustomMessageRender?: ComponentType<MessageRenderProps<T>>;
 }
 

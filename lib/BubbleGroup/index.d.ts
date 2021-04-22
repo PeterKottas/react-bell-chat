@@ -13,8 +13,8 @@ export * from './classes';
 export interface BubbleGroupProps<T = string> {
     yourAuthorId?: number;
     messages: Message<T>[];
-    author: Author;
-    authors?: Author[];
+    author: Author<T>;
+    authors?: Author<T>[];
     showRecipientAvatar?: boolean;
     bubblesCentered?: boolean;
     classes?: BubbleGroupClasses;
@@ -25,9 +25,9 @@ export interface BubbleGroupProps<T = string> {
     chatBubbleStyles?: ChatBubbleStyles;
     avatarStyles?: AvatarStyles;
     lastSeenAvatarStyles?: LastSeenAvatarStyles;
-    CustomAvatar?: ComponentType<AvatarProps>;
+    CustomAvatar?: ComponentType<AvatarProps<T>>;
     CustomMessageRender?: ComponentType<MessageRenderProps<T>>;
-    CustomLastSeenAvatar?: ComponentType<LastSeenAvatarProps>;
+    CustomLastSeenAvatar?: ComponentType<LastSeenAvatarProps<T>>;
     CustomChatBubble?: ComponentType<ChatBubbleProps<T>>;
     CustomSystemChatBubble?: ComponentType<ChatBubbleProps<T>>;
     showRecipientLastSeenMessage?: boolean;

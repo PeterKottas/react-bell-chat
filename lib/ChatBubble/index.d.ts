@@ -16,7 +16,7 @@ export interface MessageRenderProps<T = string> {
 }
 export interface ChatBubbleProps<T = string> {
     message: Message<T>;
-    author?: Author;
+    author?: Author<T>;
     config?: ChatBubbleConfig;
     styles?: ChatBubbleStyles;
     lastSeenAvatarStyles?: LastSeenAvatarStyles;
@@ -27,9 +27,9 @@ export interface ChatBubbleProps<T = string> {
     isFirstInGroup?: boolean;
     isLastInGroup?: boolean;
     isCenterInGroup?: boolean;
-    lastSeenByAuthors?: Author[];
+    lastSeenByAuthors?: Author<T>[];
     showRecipientLastSeenMessage?: boolean;
-    CustomLastSeenAvatar?: ComponentType<LastSeenAvatarProps>;
+    CustomLastSeenAvatar?: ComponentType<LastSeenAvatarProps<T>>;
     CustomMessageRender?: ComponentType<MessageRenderProps<T>>;
 }
 export declare function ChatBubble<T = string>(props: ChatBubbleProps<T>): JSX.Element;

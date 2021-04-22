@@ -19,7 +19,7 @@ export * from './styles';
 export interface ChatFeedProps<T = string> {
     className?: string;
     messages: Message<T>[];
-    authors: Author[];
+    authors: Author<T>[];
     yourAuthorId: number;
     hasOldMessages?: boolean;
     loadOldMessagesThreshold?: number;
@@ -35,11 +35,11 @@ export interface ChatFeedProps<T = string> {
     CustomChatBubble?: ComponentType<ChatBubbleProps<T>>;
     CustomBubbleGroup?: ComponentType<BubbleGroupProps<T>>;
     CustomSystemChatBubble?: ComponentType<ChatBubbleProps<T>>;
-    CustomAvatar?: ComponentType<AvatarProps>;
+    CustomAvatar?: ComponentType<AvatarProps<T>>;
     CustomScrollArea?: ComponentType<ChatScrollAreaProps>;
     CustomChatMessagesContainer?: ComponentType<ChatMessagesContainerProps>;
-    CustomIsTyping?: ComponentType<IsTypingProps>;
-    CustomLastSeenAvatar?: ComponentType<LastSeenAvatarProps>;
+    CustomIsTyping?: ComponentType<IsTypingProps<T>>;
+    CustomLastSeenAvatar?: ComponentType<LastSeenAvatarProps<T>>;
     CustomMessageRender?: ComponentType<MessageRenderProps<T>>;
     CustomDateRow?: ComponentType<DateRowProps>;
     onLoadOldMessages?: () => Promise<void>;

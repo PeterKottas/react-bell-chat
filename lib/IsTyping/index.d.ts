@@ -1,13 +1,13 @@
-import * as React from 'react';
 import { Author } from '../Author';
 import { IsTypingClasses } from './classes';
 import { IsTypingStyles } from './styles';
 export * from './classes';
 export * from './styles';
-export interface IsTypingProps {
-    typingAuthors: Author[];
+export interface IsTypingProps<T = string> {
+    typingAuthors: Author<T>[];
     styles?: IsTypingStyles;
     classes?: IsTypingClasses;
 }
-declare const Memoized: React.NamedExoticComponent<IsTypingProps>;
+declare function IsTyping<T = string>(props: IsTypingProps<T>): JSX.Element;
+declare const Memoized: typeof IsTyping;
 export { Memoized as IsTyping };

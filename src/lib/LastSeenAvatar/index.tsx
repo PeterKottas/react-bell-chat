@@ -3,18 +3,19 @@ import { Author } from '../Author';
 import classnames from 'classnames';
 import { LastSeenAvatarClasses, defaultLastSeenAvatarClasses } from './classes';
 import { LastSeenAvatarStyles, defaultLastSeenAvatarStyles } from './styles';
+import { typedMemo } from '../utils/typedMemo';
 export * from './classes';
 export * from './styles';
 
-export interface LastSeenAvatarProps {
-  author: Author;
+export interface LastSeenAvatarProps<T = string> {
+  author: Author<T>;
   index?: number;
   mouseOver?: boolean;
   styles?: LastSeenAvatarStyles;
   classes?: LastSeenAvatarClasses;
 }
 
-const LastSeenAvatar: React.FC<LastSeenAvatarProps> = (props) => {
+function LastSeenAvatar<T = string>(props: LastSeenAvatarProps<T>) {
   let { styles, classes, index, mouseOver, author } = props;
 
   const style = React.useMemo(
@@ -65,8 +66,8 @@ const LastSeenAvatar: React.FC<LastSeenAvatarProps> = (props) => {
       </div>
     )
   );
-};
+}
 
-const Memoized = React.memo(LastSeenAvatar);
+const Memoized = typedMemo(LastSeenAvatar);
 
 export { Memoized as LastSeenAvatar };

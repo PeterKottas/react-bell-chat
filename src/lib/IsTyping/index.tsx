@@ -3,16 +3,17 @@ import { Author } from '../Author';
 import classnames from 'classnames';
 import { IsTypingClasses, defaultIsTypingClasses } from './classes';
 import { IsTypingStyles, defaultIsTypingStyles } from './styles';
+import { typedMemo } from '../utils/typedMemo';
 export * from './classes';
 export * from './styles';
 
-export interface IsTypingProps {
-  typingAuthors: Author[];
+export interface IsTypingProps<T = string> {
+  typingAuthors: Author<T>[];
   styles?: IsTypingStyles;
   classes?: IsTypingClasses;
 }
 
-const IsTyping: React.FC<IsTypingProps> = (props) => {
+function IsTyping<T = string>(props: IsTypingProps<T>) {
   let { styles, classes } = props;
 
   const style = React.useMemo(
@@ -39,8 +40,8 @@ const IsTyping: React.FC<IsTypingProps> = (props) => {
       </div>
     )
   );
-};
+}
 
-const Memoized = React.memo(IsTyping);
+const Memoized = typedMemo(IsTyping);
 
 export { Memoized as IsTyping };

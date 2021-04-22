@@ -17,6 +17,7 @@ import {
 } from '../lib';
 import { hot } from 'react-hot-loader';
 import { getGravatarUrl } from './utils/getGravatarUrl';
+import { useDebouncedCallback } from 'use-debounce';
 
 const styles: { [key: string]: React.CSSProperties } = {
   button: {
@@ -67,7 +68,9 @@ const customIsTypingFactory: (props: {
   bubble: React.FC<ChatBubbleProps<string>>;
   useCustomStyles: boolean;
   showRecipientAvatar: boolean;
-}) => React.FC<IsTypingProps> = ({ bubble, useCustomStyles }) => (props) =>
+}) => React.FC<IsTypingProps<string>> = ({ bubble, useCustomStyles }) => (
+  props
+) =>
   props.typingAuthors?.length > 0 && (
     <>
       {props.typingAuthors.map((a) => (
@@ -75,8 +78,14 @@ const customIsTypingFactory: (props: {
           key={a.id}
           yourAuthorId={0}
           author={a}
-          messages={[messages.find((m) => m.authorId === a.id)]}
-          chatBubbleClasses={loadingChatBubbleClasses}
+          messages={
+            a.isTypingMessage
+              ? [{ message: a.isTypingMessage + '...', authorId: a.id }]
+              : [messages.find((m) => m.authorId === a.id)]
+          }
+          chatBubbleClasses={
+            a.isTypingMessage ? undefined : loadingChatBubbleClasses
+          }
           CustomChatBubble={bubble ?? ChatBubble}
           CustomAvatar={Avatar}
           CustomLastSeenAvatar={LastSeenAvatar}
@@ -89,7 +98,7 @@ const customIsTypingFactory: (props: {
   );
 
 interface ChatState {
-  authors: Author[];
+  authors: Author<string>[];
   messages: Message<string>[];
   useCustomBubble: boolean;
   currentUser: number;
@@ -106,6 +115,7 @@ interface ChatState {
   useCustomStyles: boolean;
   useAvatarBg: boolean;
   useCustomIsTyping: boolean;
+  showMsgProgress: boolean;
 }
 
 function useClickHandler<T = ChatState>(
@@ -173,6 +183,7 @@ const App: React.FC = () => {
       useCustomStyles,
       useAvatarBg,
       useCustomIsTyping,
+      showMsgProgress,
     },
     setState,
   ] = React.useState<ChatState>({
@@ -270,18 +281,61 @@ const App: React.FC = () => {
     useCustomStyles: true,
     useAvatarBg: true,
     useCustomIsTyping: true,
+    showMsgProgress: true,
   });
 
   const onPress = React.useCallback((user: number) => {
     setState((prev) => ({ ...prev, currentUser: user }));
   }, []);
 
+  const handleIsTyping = React.useCallback((authorId: number) => {
+    setState((prev) => ({
+      ...prev,
+      authors: prev.authors
+        .slice(0)
+        .map((a, i) => (i === authorId ? a : { ...a, isTyping: !a.isTyping })),
+    }));
+  }, []);
+
+  const handleIsCurrentTyping = React.useCallback(() => {
+    if (currentUser !== 0) {
+      setState((prev) => ({
+        ...prev,
+        authors: prev.authors
+          .slice(0)
+          .map((a, i) =>
+            i === currentUser ? a : { ...a, isTyping: !a.isTyping }
+          ),
+      }));
+    }
+  }, [currentUser]);
+
+  const handleIsTypingDebounced = React.useCallback(
+    useDebouncedCallback(handleIsCurrentTyping, 700, {
+      leading: true,
+      trailing: true,
+    }),
+    [handleIsCurrentTyping]
+  );
+
   const onMessageChange = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const newMessage = e.target.value;
-      setState((prev) => ({ ...prev, messageText: newMessage }));
+      setState((prev) => ({
+        ...prev,
+        messageText: newMessage,
+        authors: showMsgProgress
+          ? prev.authors
+              .slice(0)
+              .map((a, i) =>
+                i === currentUser ? a : { ...a, isTypingMessage: newMessage }
+              )
+          : prev.authors,
+      }));
+      handleIsTypingDebounced();
+      handleIsTypingDebounced();
     },
-    []
+    [handleIsTypingDebounced, currentUser, showMsgProgress]
   );
 
   const onLoadOldMessages = React.useCallback(
@@ -309,6 +363,17 @@ const App: React.FC = () => {
     []
   );
 
+  React.useEffect(() => {
+    if (!showMsgProgress) {
+      setState((prev) => ({
+        ...prev,
+        authors: prev.authors.map((a, i) => ({
+          ...a,
+          isTypingMessage: '',
+        })),
+      }));
+    }
+  }, [showMsgProgress]);
   React.useEffect(() => chat.current?.scrollApi?.scrollToBottom?.(), [
     showIsTyping,
   ]);
@@ -324,6 +389,7 @@ const App: React.FC = () => {
     [useAvatarBg]
   );
 
+  const onShowMsgProgressClick = useClickHandler('showMsgProgress', setState);
   const onUseCustomStylesClick = useClickHandler('useCustomStyles', setState);
   const onUseCustomBubblesClick = useClickHandler('useCustomBubble', setState);
   const onShowAvatarClick = useClickHandler('showAvatar', setState);
@@ -379,36 +445,11 @@ const App: React.FC = () => {
         secondAuthorTimer: undefined,
       }));
     } else {
-      setState((prev) => ({
-        ...prev,
-        authors: prev.authors
-          .slice(0)
-          .map((a, i) => (i === 1 ? a : { ...a, isTyping: !a.isTyping })),
-      }));
-      let _firstAuthorTimer = window.setInterval(
-        () =>
-          setState((prev) => ({
-            ...prev,
-            authors: prev.authors
-              .slice(0)
-              .map((a, i) => (i === 1 ? a : { ...a, isTyping: !a.isTyping })),
-          })),
-        4000
-      );
-      setState((prev) => ({
-        ...prev,
-        authors: prev.authors
-          .slice(0)
-          .map((a, i) => (i === 2 ? a : { ...a, isTyping: !a.isTyping })),
-      }));
+      handleIsTyping(1);
+      let _firstAuthorTimer = window.setInterval(() => handleIsTyping(1), 4000);
+      handleIsTyping(2);
       let _secondAuthorTimer = window.setInterval(
-        () =>
-          setState((prev) => ({
-            ...prev,
-            authors: prev.authors
-              .slice(0)
-              .map((a, i) => (i === 2 ? a : { ...a, isTyping: !a.isTyping })),
-          })),
+        () => handleIsTyping(2),
         5200
       );
       setState((prev) => ({
@@ -418,7 +459,7 @@ const App: React.FC = () => {
         simulateTyping: !simulateTyping,
       }));
     }
-  }, [simulateTyping]);
+  }, [simulateTyping, handleIsTyping]);
 
   const onMessageSubmit = React.useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
@@ -436,6 +477,11 @@ const App: React.FC = () => {
           ...previousState,
           messageText: '',
           messages: previousState.messages.concat(newMessage),
+          authors: previousState.authors
+            .slice(0)
+            .map((a, i) =>
+              i === currentUser ? a : { ...a, isTypingMessage: '' }
+            ),
         }));
         chat.current?.onMessageSend?.();
         setTimeout(() => {
@@ -584,6 +630,15 @@ const App: React.FC = () => {
             marginTop: 10,
           }}
         >
+          <button
+            style={{
+              ...styles.button,
+              ...(showMsgProgress ? styles.selected : {}),
+            }}
+            onClick={onShowMsgProgressClick}
+          >
+            Show msg progress
+          </button>
           <button
             style={{
               ...styles.button,

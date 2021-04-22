@@ -1,15 +1,15 @@
-import * as React from 'react';
 import { Author } from '../Author';
 import { LastSeenAvatarClasses } from './classes';
 import { LastSeenAvatarStyles } from './styles';
 export * from './classes';
 export * from './styles';
-export interface LastSeenAvatarProps {
-    author: Author;
+export interface LastSeenAvatarProps<T = string> {
+    author: Author<T>;
     index?: number;
     mouseOver?: boolean;
     styles?: LastSeenAvatarStyles;
     classes?: LastSeenAvatarClasses;
 }
-declare const Memoized: React.NamedExoticComponent<LastSeenAvatarProps>;
+declare function LastSeenAvatar<T = string>(props: LastSeenAvatarProps<T>): JSX.Element;
+declare const Memoized: typeof LastSeenAvatar;
 export { Memoized as LastSeenAvatar };

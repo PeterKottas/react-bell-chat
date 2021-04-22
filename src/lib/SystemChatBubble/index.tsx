@@ -6,7 +6,7 @@ import { defaultSystemChatBubbleStyles } from './styles';
 export * from './classes';
 export * from './styles';
 
-export interface SystemChatBubbleProps<T> extends ChatBubbleProps<T> {}
+export interface SystemChatBubbleProps<T = string> extends ChatBubbleProps<T> {}
 
 function SystemChatBubble<T = string>(props: SystemChatBubbleProps<T>) {
   const { styles, classes, message, config } = props;

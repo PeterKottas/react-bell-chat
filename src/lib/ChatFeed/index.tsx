@@ -78,7 +78,7 @@ export interface ChatFeedProps<T = string> {
 
   // Functional props
   messages: Message<T>[];
-  authors: Author[];
+  authors: Author<T>[];
   yourAuthorId: number;
   hasOldMessages?: boolean;
   loadOldMessagesThreshold?: number;
@@ -100,11 +100,11 @@ export interface ChatFeedProps<T = string> {
   CustomChatBubble?: ComponentType<ChatBubbleProps<T>>;
   CustomBubbleGroup?: ComponentType<BubbleGroupProps<T>>;
   CustomSystemChatBubble?: ComponentType<ChatBubbleProps<T>>;
-  CustomAvatar?: ComponentType<AvatarProps>;
+  CustomAvatar?: ComponentType<AvatarProps<T>>;
   CustomScrollArea?: ComponentType<ChatScrollAreaProps>;
   CustomChatMessagesContainer?: ComponentType<ChatMessagesContainerProps>;
-  CustomIsTyping?: ComponentType<IsTypingProps>;
-  CustomLastSeenAvatar?: ComponentType<LastSeenAvatarProps>;
+  CustomIsTyping?: ComponentType<IsTypingProps<T>>;
+  CustomLastSeenAvatar?: ComponentType<LastSeenAvatarProps<T>>;
   CustomMessageRender?: ComponentType<MessageRenderProps<T>>;
   CustomDateRow?: ComponentType<DateRowProps>;
 
@@ -227,7 +227,12 @@ export class ChatFeed<T = string>
     snapshot: ChatFeedSnapshot
   ) {
     if (
-      this.props.messages.length !== prevProps.messages.length &&
+      (this.props.messages.length !== prevProps.messages.length ||
+        this.props.authors?.some?.(
+          (a) =>
+            a.isTyping !==
+            prevProps.authors?.find?.((_a) => a.id === _a.id)?.isTyping
+        )) &&
       snapshot &&
       snapshot.wasScrolledToBottom
     ) {

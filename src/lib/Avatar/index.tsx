@@ -3,17 +3,18 @@ import { Author } from '../Author';
 import classnames from 'classnames';
 import { AvatarStyles, defaultAvatarStyles } from './styles';
 import { AvatarClasses, defaultAvatarClasses } from './classes';
+import { typedMemo } from '../utils/typedMemo';
 
 export * from './classes';
 export * from './styles';
 
-export interface AvatarProps {
-  author: Author;
+export interface AvatarProps<T = string> {
+  author: Author<T>;
   styles?: AvatarStyles;
   classes?: AvatarClasses;
 }
 
-const Avatar: React.FC<AvatarProps> = (props) => {
+function Avatar<T = string>(props: AvatarProps<T>) {
   const { author, classes, styles } = props;
   const style = {
     ...defaultAvatarStyles.container,
@@ -57,6 +58,6 @@ const Avatar: React.FC<AvatarProps> = (props) => {
       </div>
     )
   );
-};
-const Memoized = React.memo(Avatar);
+}
+const Memoized = typedMemo(Avatar);
 export { Memoized as Avatar };
