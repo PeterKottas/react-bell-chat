@@ -281,7 +281,7 @@ const App: React.FC = () => {
     useCustomStyles: true,
     useAvatarBg: true,
     useCustomIsTyping: true,
-    showMsgProgress: true,
+    showMsgProgress: false,
   });
 
   const onPress = React.useCallback((user: number) => {
