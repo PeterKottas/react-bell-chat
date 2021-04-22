@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { ChatBubbleProps, ChatBubbleStyles, MessageRenderProps } from '../ChatBubble';
 import { Message } from '../';
 import { Author } from '../Author';
@@ -34,5 +33,5 @@ export interface BubbleGroupProps<T = string> {
     showRecipientLastSeenMessage?: boolean;
 }
 declare function BubbleGroup<T = string>(props: BubbleGroupProps<T>): JSX.Element;
-declare const Memoized: React.MemoExoticComponent<typeof BubbleGroup>;
+declare const Memoized: typeof BubbleGroup;
 export { Memoized as BubbleGroup };

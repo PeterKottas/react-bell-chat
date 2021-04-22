@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 var isLocalBuild =
   process.env &&
@@ -20,6 +21,39 @@ module.exports = {
         test: /\.tsx?$/,
         include: /src/,
         use: 'awesome-typescript-loader?silent=true',
+      },
+      {
+        test: /\.(scss|css)$/,
+        use: [
+          isLocalBuild
+            ? {
+                loader: 'style-loader',
+              }
+            : {
+                loader: MiniCssExtractPlugin.loader,
+              },
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true,
+              postcssOptions: {
+                plugins: (loader) => [require('autoprefixer')()],
+              },
+            },
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+        ],
       },
     ],
   },

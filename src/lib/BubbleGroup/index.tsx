@@ -18,6 +18,7 @@ import { ChatBubbleClasses } from './../ChatBubble';
 import { BubbleGroupClasses, defaultBubbleGroupClasses } from './classes';
 import { BubbleGroupStyles, defaultBubbleGroupStyles } from './styles';
 import { ComponentType } from '../utils/componentType';
+import { typedMemo } from '../utils/typedMemo';
 
 export * from './styles';
 export * from './classes';
@@ -135,5 +136,5 @@ function BubbleGroup<T = string>(props: BubbleGroupProps<T>) {
   );
 }
 
-const Memoized = React.memo(BubbleGroup);
+const Memoized = typedMemo(BubbleGroup);
 export { Memoized as BubbleGroup };

@@ -1,4 +1,5 @@
 import * as React from 'react';
+require('./app.scss');
 import {
   ChatFeed,
   Message,
@@ -7,6 +8,12 @@ import {
   ChatBubbleStyles,
   LastSeenAvatarStyles,
   AvatarStyles,
+  IsTypingProps,
+  BubbleGroup,
+  Avatar,
+  LastSeenAvatar,
+  ChatBubble,
+  ChatBubbleClasses,
 } from '../lib';
 import { hot } from 'react-hot-loader';
 import { getGravatarUrl } from './utils/getGravatarUrl';
@@ -34,17 +41,52 @@ const styles: { [key: string]: React.CSSProperties } = {
 };
 
 const customBubble: React.FC<ChatBubbleProps<string>> = (props) => (
-  <div>
-    <p>
+  <div className="mb-2">
+    <span>
       {props.author &&
         props.author.name +
           ' ' +
           (props.message.authorId !== props.yourAuthorId ? 'says' : 'said') +
-          ': ' +
-          props.message.message}
-    </p>
+          ': '}
+    </span>
+    <span className={props.classes?.text}>{props.message.message}</span>
   </div>
 );
+
+const loadingChatBubbleClasses: ChatBubbleClasses = {
+  text: 'loading--placeholder',
+};
+
+const messages: Message<string>[] = [
+  { message: '██ ██ ██████ ██ █ ████ █', authorId: 0 },
+  { message: '████ ████ ██ ████', authorId: 1 },
+  { message: '██ ███ ██ ███ ██ ███', authorId: 2 },
+];
+
+const customIsTypingFactory: (props: {
+  bubble: React.FC<ChatBubbleProps<string>>;
+  useCustomStyles: boolean;
+  showRecipientAvatar: boolean;
+}) => React.FC<IsTypingProps> = ({ bubble, useCustomStyles }) => (props) =>
+  props.typingAuthors?.length > 0 && (
+    <>
+      {props.typingAuthors.map((a) => (
+        <BubbleGroup<string>
+          key={a.id}
+          yourAuthorId={0}
+          author={a}
+          messages={[messages.find((m) => m.authorId === a.id)]}
+          chatBubbleClasses={loadingChatBubbleClasses}
+          CustomChatBubble={bubble ?? ChatBubble}
+          CustomAvatar={Avatar}
+          CustomLastSeenAvatar={LastSeenAvatar}
+          showRecipientAvatar={true}
+          chatBubbleStyles={useCustomStyles ? chatBubbleStyles : undefined}
+          avatarStyles={useCustomStyles ? avatarStyles : undefined}
+        />
+      ))}
+    </>
+  );
 
 interface ChatState {
   authors: Author[];
@@ -63,6 +105,7 @@ interface ChatState {
   secondAuthorTimer: number;
   useCustomStyles: boolean;
   useAvatarBg: boolean;
+  useCustomIsTyping: boolean;
 }
 
 function useClickHandler<T = ChatState>(
@@ -129,6 +172,7 @@ const App: React.FC = () => {
       useCustomBubble,
       useCustomStyles,
       useAvatarBg,
+      useCustomIsTyping,
     },
     setState,
   ] = React.useState<ChatState>({
@@ -141,14 +185,14 @@ const App: React.FC = () => {
       {
         id: 1,
         name: 'Mark',
-        isTyping: true,
+        isTyping: false,
         lastSeenMessageId: 7,
         bgImageUrl: getGravatarUrl(1),
       },
       {
         id: 2,
         name: 'Evan',
-        isTyping: true,
+        isTyping: false,
         lastSeenMessageId: 7,
         bgImageUrl: getGravatarUrl(2),
       },
@@ -225,6 +269,7 @@ const App: React.FC = () => {
     secondAuthorTimer: undefined,
     useCustomStyles: true,
     useAvatarBg: true,
+    useCustomIsTyping: true,
   });
 
   const onPress = React.useCallback((user: number) => {
@@ -280,13 +325,17 @@ const App: React.FC = () => {
   );
 
   const onUseCustomStylesClick = useClickHandler('useCustomStyles', setState);
-  const onCustomBubblesClick = useClickHandler('useCustomBubble', setState);
+  const onUseCustomBubblesClick = useClickHandler('useCustomBubble', setState);
   const onShowAvatarClick = useClickHandler('showAvatar', setState);
   const onShowDateRowClick = useClickHandler('showDateRow', setState);
   const onShowIsTypingClick = useClickHandler('showIsTyping', setState);
   const onShowLastSeenClick = useClickHandler('showLastSeen', setState);
   const onShowLoadingMessagesClick = useClickHandler(
     'showLoadingMessages',
+    setState
+  );
+  const onUseCustomIsTypingClick = useClickHandler(
+    'useCustomIsTyping',
     setState
   );
   const onUseAvatarBgClick = useClickHandler('useAvatarBg', setState);
@@ -330,6 +379,12 @@ const App: React.FC = () => {
         secondAuthorTimer: undefined,
       }));
     } else {
+      setState((prev) => ({
+        ...prev,
+        authors: prev.authors
+          .slice(0)
+          .map((a, i) => (i === 1 ? a : { ...a, isTyping: !a.isTyping })),
+      }));
       let _firstAuthorTimer = window.setInterval(
         () =>
           setState((prev) => ({
@@ -338,8 +393,14 @@ const App: React.FC = () => {
               .slice(0)
               .map((a, i) => (i === 1 ? a : { ...a, isTyping: !a.isTyping })),
           })),
-        2000
+        4000
       );
+      setState((prev) => ({
+        ...prev,
+        authors: prev.authors
+          .slice(0)
+          .map((a, i) => (i === 2 ? a : { ...a, isTyping: !a.isTyping })),
+      }));
       let _secondAuthorTimer = window.setInterval(
         () =>
           setState((prev) => ({
@@ -348,7 +409,7 @@ const App: React.FC = () => {
               .slice(0)
               .map((a, i) => (i === 2 ? a : { ...a, isTyping: !a.isTyping })),
           })),
-        3200
+        5200
       );
       setState((prev) => ({
         ...prev,
@@ -391,6 +452,18 @@ const App: React.FC = () => {
     [messageText, currentUser]
   );
 
+  const CustomIsTyping = React.useMemo(
+    () =>
+      useCustomIsTyping
+        ? customIsTypingFactory({
+            bubble: useCustomBubble ? customBubble : ChatBubble,
+            showRecipientAvatar: showAvatar,
+            useCustomStyles,
+          })
+        : undefined,
+    [useCustomBubble, useCustomIsTyping, showAvatar, useCustomStyles]
+  );
+
   return (
     <div className="container">
       <h1 className="text-center">react-bell-chat</h1>
@@ -408,9 +481,10 @@ const App: React.FC = () => {
       </div>
       <div className="chatfeed-wrapper">
         <ChatFeed<string>
+          ref={chat}
           yourAuthorId={0}
+          messages={messages}
           authors={authors}
-          CustomChatBubble={useCustomBubble ? customBubble : undefined}
           style={useCustomStyles ? style : undefined}
           avatarStyles={useCustomStyles ? avatarStyles : undefined}
           lastSeenAvatarStyles={
@@ -418,15 +492,15 @@ const App: React.FC = () => {
           }
           chatBubbleStyles={useCustomStyles ? chatBubbleStyles : undefined}
           maxHeight={350}
-          messages={messages}
+          CustomChatBubble={useCustomBubble ? customBubble : undefined}
+          CustomIsTyping={CustomIsTyping}
           showRecipientAvatar={showAvatar}
-          ref={chat}
           showIsTyping={showIsTyping}
           showRecipientLastSeenMessage={showLastSeen}
           showDateRow={showDateRow}
           showLoadingMessages={showLoadingMessages}
-          onLoadOldMessages={onLoadOldMessages}
           hasOldMessages={hasOldMessages}
+          onLoadOldMessages={onLoadOldMessages}
         />
 
         <form onSubmit={(e) => onMessageSubmit(e)}>
@@ -517,7 +591,7 @@ const App: React.FC = () => {
             }}
             onClick={onShowAvatarClick}
           >
-            Show avatar
+            Show Avatars
           </button>
           <button
             style={{
@@ -526,7 +600,7 @@ const App: React.FC = () => {
             }}
             onClick={onShowIsTypingClick}
           >
-            Show typing
+            Show typing indicator
           </button>
           <button
             style={{
@@ -536,15 +610,6 @@ const App: React.FC = () => {
             onClick={onShowLastSeenClick}
           >
             Show last seen
-          </button>
-          <button
-            style={{
-              ...styles.button,
-              ...(showDateRow ? styles.selected : {}),
-            }}
-            onClick={onShowDateRowClick}
-          >
-            Show date row
           </button>
         </div>
         <div
@@ -557,11 +622,11 @@ const App: React.FC = () => {
           <button
             style={{
               ...styles.button,
-              ...(useCustomBubble ? styles.selected : {}),
+              ...(showDateRow ? styles.selected : {}),
             }}
-            onClick={onCustomBubblesClick}
+            onClick={onShowDateRowClick}
           >
-            Custom Bubbles
+            Show date row
           </button>
           <button
             style={{
@@ -575,20 +640,11 @@ const App: React.FC = () => {
           <button
             style={{
               ...styles.button,
-              ...(useCustomStyles ? styles.selected : {}),
-            }}
-            onClick={onUseCustomStylesClick}
-          >
-            Custom styles
-          </button>
-          <button
-            style={{
-              ...styles.button,
               ...(useAvatarBg ? styles.selected : {}),
             }}
             onClick={onUseAvatarBgClick}
           >
-            Avatars
+            Avatars images
           </button>
           <button
             style={{
@@ -598,6 +654,42 @@ const App: React.FC = () => {
             onClick={onHasOldMessagesClick}
           >
             Has more messages
+          </button>
+        </div>
+        <div className="label">Customization:</div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-around',
+            marginTop: 10,
+          }}
+        >
+          <button
+            style={{
+              ...styles.button,
+              ...(useCustomStyles ? styles.selected : {}),
+            }}
+            onClick={onUseCustomStylesClick}
+          >
+            Styles
+          </button>
+          <button
+            style={{
+              ...styles.button,
+              ...(useCustomBubble ? styles.selected : {}),
+            }}
+            onClick={onUseCustomBubblesClick}
+          >
+            Bubbles
+          </button>
+          <button
+            style={{
+              ...styles.button,
+              ...(useCustomIsTyping ? styles.selected : {}),
+            }}
+            onClick={onUseCustomIsTypingClick}
+          >
+            Typing indicator
           </button>
         </div>
       </div>
