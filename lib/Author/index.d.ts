@@ -7,4 +7,5 @@ export interface Author<T = string> {
     bgImageUrl?: string;
     isTyping?: boolean;
     isTypingMessage?: T;
+    isOnline?: boolean;
 }
