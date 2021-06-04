@@ -229,9 +229,9 @@ export class ChatFeed<T = string>
     if (
       (this.props.messages.length !== prevProps.messages.length ||
         this.props.authors?.some?.(
-          (a) =>
+          a =>
             a.isTyping !==
-            prevProps.authors?.find?.((_a) => a.id === _a.id)?.isTyping
+            prevProps.authors?.find?.(_a => a.id === _a.id)?.isTyping
         )) &&
       snapshot &&
       snapshot.wasScrolledToBottom
@@ -273,11 +273,11 @@ export class ChatFeed<T = string>
     // First group by days
     const groups = groupBy(
       messages,
-      (item) => item.createdOn && item.createdOn.toDateString()
+      item => item.createdOn && item.createdOn.toDateString()
     );
     let messageNodes: React.ReactNode[] = [];
     let jsxKey = 0;
-    Object.keys(groups).forEach((key) => {
+    Object.keys(groups).forEach(key => {
       let group = [];
       const messagesGroup = groups[key];
       if (
@@ -305,7 +305,7 @@ export class ChatFeed<T = string>
             const messageGroup = group;
             const author =
               this.props.authors &&
-              this.props.authors.filter((a) => a.id === message.authorId)[0];
+              this.props.authors.filter(a => a.id === message.authorId)[0];
             group = [];
             jsxKey++;
             return (
@@ -350,7 +350,8 @@ export class ChatFeed<T = string>
   }
 
   render() {
-    let { styles, classes, isTypingStyles, isTypingClasses } = this.props;
+    let { styles, classes } = this.props;
+    const { isTypingStyles, isTypingClasses } = this.props;
     if (!styles) {
       styles = {};
     }
@@ -368,7 +369,7 @@ export class ChatFeed<T = string>
     const typingAuthors =
       this.props.authors &&
       this.props.authors.filter(
-        (a) => a.isTyping && a.id !== this.props.yourAuthorId
+        a => a.isTyping && a.id !== this.props.yourAuthorId
       );
 
     return (
@@ -427,7 +428,7 @@ export class ChatFeed<T = string>
 
   private async onLoadOldMessages() {
     if (!this.state.isLoadingMessages && this.props.hasOldMessages) {
-      await new Promise<void>((resolve) => {
+      await new Promise<void>(resolve => {
         this.setState(
           {
             isLoadingMessages: true,
@@ -438,7 +439,7 @@ export class ChatFeed<T = string>
       if (this.props.onLoadOldMessages) {
         await this.props.onLoadOldMessages();
       }
-      await new Promise<void>((resolve) => {
+      await new Promise<void>(resolve => {
         this.setState(
           {
             isLoadingMessages: false,

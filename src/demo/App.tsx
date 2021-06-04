@@ -446,9 +446,12 @@ const App: React.FC = () => {
       }));
     } else {
       handleIsTyping(1);
-      let _firstAuthorTimer = window.setInterval(() => handleIsTyping(1), 4000);
+      const _firstAuthorTimer = window.setInterval(
+        () => handleIsTyping(1),
+        4000
+      );
       handleIsTyping(2);
-      let _secondAuthorTimer = window.setInterval(
+      const _secondAuthorTimer = window.setInterval(
         () => handleIsTyping(2),
         5200
       );

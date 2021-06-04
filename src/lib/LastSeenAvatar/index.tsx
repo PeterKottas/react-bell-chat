@@ -16,7 +16,7 @@ export interface LastSeenAvatarProps<T = string> {
 }
 
 function LastSeenAvatar<T = string>(props: LastSeenAvatarProps<T>) {
-  let { styles, classes, index, mouseOver, author } = props;
+  const { styles, classes, index, mouseOver, author } = props;
 
   const style = React.useMemo(
     () => ({

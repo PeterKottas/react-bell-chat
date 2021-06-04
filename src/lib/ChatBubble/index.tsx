@@ -87,6 +87,7 @@ export function ChatBubble<T = string>(props: ChatBubbleProps<T>) {
     userCreatedOn,
     recipientCreatedOn,
     isSendIconColor,
+    isSend,
     loadingSpinnerColor,
     lastSeenByContainer,
   } = styles ?? {};
@@ -231,6 +232,7 @@ export function ChatBubble<T = string>(props: ChatBubbleProps<T>) {
           <span
             style={{
               ...defaultChatBubbleStyles.isSend,
+              ...isSend,
             }}
             className={classnames(
               defaultChatBubbleClasses.isSend,
