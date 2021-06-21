@@ -15,7 +15,7 @@ export interface LoadingMessagesProps {
   isVisible: boolean;
 }
 
-const LoadingMessages: React.FC<LoadingMessagesProps> = (props) => {
+const LoadingMessages: React.FC<LoadingMessagesProps> = props => {
   const { styles, classes } = props;
 
   const style = React.useMemo(
@@ -58,16 +58,18 @@ const LoadingMessages: React.FC<LoadingMessagesProps> = (props) => {
           d="M10 50A40 40 0 0 0 90 50A40 46 0 0 1 10 50"
           transform="rotate(42 50 53)"
         >
-          <animateTransform
-            attributeName="transform"
-            type="rotate"
-            calcMode="linear"
-            values="0 50 53;360 50 53"
-            keyTimes="0;1"
-            dur="1s"
-            begin="0s"
-            repeatCount="indefinite"
-          />
+          {props.isVisible ? (
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              calcMode="linear"
+              values="0 50 53;360 50 53"
+              keyTimes="0;1"
+              dur="1s"
+              begin="0s"
+              repeatCount="indefinite"
+            />
+          ) : null}
         </path>
       </svg>
     </div>

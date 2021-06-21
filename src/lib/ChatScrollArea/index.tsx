@@ -62,9 +62,12 @@ export class ChatScrollArea extends React.PureComponent<ChatScrollAreaProps> {
   }
 
   private onScroll() {
-    this.scrollContainer &&
-      this.scrollContainer.scrollTop <= this.props.loadOldMessagesThreshold &&
+    if (
+      this.scrollContainer &&
+      this.scrollContainer.scrollTop <= this.props.loadOldMessagesThreshold
+    ) {
       this.props.onLoadOldMessages();
+    }
   }
 
   private containerRef(scrollContainer: HTMLDivElement) {
@@ -79,7 +82,7 @@ export class ChatScrollArea extends React.PureComponent<ChatScrollAreaProps> {
                 behavior,
               })
             : (scrollContainer.scrollTop = scrollContainer.scrollHeight)),
-        scrollTo: (top) =>
+        scrollTo: top =>
           scrollContainer &&
           (scrollContainer.scrollTo
             ? scrollContainer.scrollTo({

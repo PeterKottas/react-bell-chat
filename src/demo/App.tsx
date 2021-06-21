@@ -41,7 +41,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
 };
 
-const customBubble: React.FC<ChatBubbleProps<string>> = (props) => (
+const customBubble: React.FC<ChatBubbleProps<string>> = props => (
   <div className="mb-2">
     <span>
       {props.author &&
@@ -68,12 +68,13 @@ const customIsTypingFactory: (props: {
   bubble: React.FC<ChatBubbleProps<string>>;
   useCustomStyles: boolean;
   showRecipientAvatar: boolean;
-}) => React.FC<IsTypingProps<string>> = ({ bubble, useCustomStyles }) => (
-  props
-) =>
+}) => React.FC<IsTypingProps<string>> = ({
+  bubble,
+  useCustomStyles,
+}) => props =>
   props.typingAuthors?.length > 0 && (
     <>
-      {props.typingAuthors.map((a) => (
+      {props.typingAuthors.map(a => (
         <BubbleGroup<string>
           key={a.id}
           yourAuthorId={0}
@@ -81,7 +82,7 @@ const customIsTypingFactory: (props: {
           messages={
             a.isTypingMessage
               ? [{ message: a.isTypingMessage + '...', authorId: a.id }]
-              : [messages.find((m) => m.authorId === a.id)]
+              : [messages.find(m => m.authorId === a.id)]
           }
           chatBubbleClasses={
             a.isTypingMessage ? undefined : loadingChatBubbleClasses
@@ -123,7 +124,7 @@ function useClickHandler<T = ChatState>(
   setState: React.Dispatch<React.SetStateAction<T>>
 ) {
   const handler = React.useCallback(() => {
-    setState((t) => ({ ...t, [propertyName]: !t[propertyName] }));
+    setState(t => ({ ...t, [propertyName]: !t[propertyName] }));
   }, [propertyName]);
   return handler;
 }
@@ -285,11 +286,11 @@ const App: React.FC = () => {
   });
 
   const onPress = React.useCallback((user: number) => {
-    setState((prev) => ({ ...prev, currentUser: user }));
+    setState(prev => ({ ...prev, currentUser: user }));
   }, []);
 
   const handleIsTyping = React.useCallback((authorId: number) => {
-    setState((prev) => ({
+    setState(prev => ({
       ...prev,
       authors: prev.authors
         .slice(0)
@@ -299,7 +300,7 @@ const App: React.FC = () => {
 
   const handleIsCurrentTyping = React.useCallback(() => {
     if (currentUser !== 0) {
-      setState((prev) => ({
+      setState(prev => ({
         ...prev,
         authors: prev.authors
           .slice(0)
@@ -321,7 +322,7 @@ const App: React.FC = () => {
   const onMessageChange = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const newMessage = e.target.value;
-      setState((prev) => ({
+      setState(prev => ({
         ...prev,
         messageText: newMessage,
         authors: showMsgProgress
@@ -340,9 +341,9 @@ const App: React.FC = () => {
 
   const onLoadOldMessages = React.useCallback(
     () =>
-      new Promise<void>((resolve) =>
+      new Promise<void>(resolve =>
         setTimeout(() => {
-          setState((previousState) => ({
+          setState(previousState => ({
             ...previousState,
             messages: new Array(10)
               .fill(1)
@@ -365,7 +366,7 @@ const App: React.FC = () => {
 
   React.useEffect(() => {
     if (!showMsgProgress) {
-      setState((prev) => ({
+      setState(prev => ({
         ...prev,
         authors: prev.authors.map((a, i) => ({
           ...a,
@@ -379,7 +380,7 @@ const App: React.FC = () => {
   ]);
   React.useEffect(
     () =>
-      setState((prev) => ({
+      setState(prev => ({
         ...prev,
         authors: prev.authors.map((a, i) => ({
           ...a,
@@ -408,7 +409,7 @@ const App: React.FC = () => {
   const onHasOldMessagesClick = useClickHandler('hasOldMessages', setState);
 
   const onSimulateMessageButtonClick = React.useCallback(() => {
-    setState((prev) => ({
+    setState(prev => ({
       ...prev,
       messages: prev.messages.concat([
         {
@@ -422,7 +423,7 @@ const App: React.FC = () => {
   }, []);
 
   const onSystemMessageClick = React.useCallback(() => {
-    setState((prev) => ({
+    setState(prev => ({
       ...prev,
       messages: prev.messages.concat([
         {
@@ -438,7 +439,7 @@ const App: React.FC = () => {
     if (simulateTyping) {
       clearInterval(firstAuthorTimer);
       clearInterval(secondAuthorTimer);
-      setState((prev) => ({
+      setState(prev => ({
         ...prev,
         simulateTyping: !simulateTyping,
         firstAuthorTimer: undefined,
@@ -455,7 +456,7 @@ const App: React.FC = () => {
         () => handleIsTyping(2),
         5200
       );
-      setState((prev) => ({
+      setState(prev => ({
         ...prev,
         firstAuthorTimer: _firstAuthorTimer,
         secondAuthorTimer: _secondAuthorTimer,
@@ -476,7 +477,7 @@ const App: React.FC = () => {
           createdOn: new Date(),
           isSend: false,
         };
-        setState((previousState) => ({
+        setState(previousState => ({
           ...previousState,
           messageText: '',
           messages: previousState.messages.concat(newMessage),
@@ -488,9 +489,9 @@ const App: React.FC = () => {
         }));
         chat.current?.onMessageSend?.();
         setTimeout(() => {
-          setState((previousState) => ({
+          setState(previousState => ({
             ...previousState,
-            messages: previousState.messages.map((m) =>
+            messages: previousState.messages.map(m =>
               m.id === id ? { ...m, isSend: true } : m
             ),
           }));
@@ -552,7 +553,7 @@ const App: React.FC = () => {
           onLoadOldMessages={onLoadOldMessages}
         />
 
-        <form onSubmit={(e) => onMessageSubmit(e)}>
+        <form onSubmit={e => onMessageSubmit(e)}>
           <input
             placeholder="Type a message..."
             className="message-input"
