@@ -8,13 +8,19 @@ import { typedMemo } from '../utils/typedMemo';
 export * from './classes';
 export * from './styles';
 
-export interface AvatarProps<T = string> {
-  author: Author<T>;
+export interface AvatarProps<
+  TMessage = string,
+  TAuthor extends Author<TMessage> = Author<TMessage>
+> {
+  author: TAuthor;
   styles?: AvatarStyles;
   classes?: AvatarClasses;
 }
 
-function Avatar<T = string>(props: AvatarProps<T>) {
+function Avatar<
+  TMessage = string,
+  TAuthor extends Author<TMessage> = Author<TMessage>
+>(props: AvatarProps<TMessage, TAuthor>) {
   const { author, classes, styles } = props;
   const style = {
     ...defaultAvatarStyles.container,
@@ -50,7 +56,7 @@ function Avatar<T = string>(props: AvatarProps<T>) {
             ? author.avatarName
             : author.name
                 .split(' ')
-                .map((part) => part[0])
+                .map(part => part[0])
                 .join('')
                 .toUpperCase()
                 .substr(0, 3)}

@@ -10,11 +10,11 @@ import { BubbleGroupStyles } from './styles';
 import { ComponentType } from '../utils/componentType';
 export * from './styles';
 export * from './classes';
-export interface BubbleGroupProps<T = string> {
+export interface BubbleGroupProps<TMessageData = string, TMessage extends Message<TMessageData> = Message<TMessageData>, TAuthor extends Author<TMessageData> = Author<TMessageData>> {
     yourAuthorId?: number;
-    messages: Message<T>[];
-    author: Author<T>;
-    authors?: Author<T>[];
+    messages: TMessage[];
+    author: TAuthor;
+    authors?: TAuthor[];
     showRecipientAvatar?: boolean;
     bubblesCentered?: boolean;
     classes?: BubbleGroupClasses;
@@ -25,13 +25,13 @@ export interface BubbleGroupProps<T = string> {
     chatBubbleStyles?: ChatBubbleStyles;
     avatarStyles?: AvatarStyles;
     lastSeenAvatarStyles?: LastSeenAvatarStyles;
-    CustomAvatar?: ComponentType<AvatarProps<T>>;
-    CustomMessageRender?: ComponentType<MessageRenderProps<T>>;
-    CustomLastSeenAvatar?: ComponentType<LastSeenAvatarProps<T>>;
-    CustomChatBubble?: ComponentType<ChatBubbleProps<T>>;
-    CustomSystemChatBubble?: ComponentType<ChatBubbleProps<T>>;
+    CustomAvatar?: ComponentType<AvatarProps<TMessageData, TAuthor>>;
+    CustomMessageRender?: ComponentType<MessageRenderProps<TMessageData, TMessage>>;
+    CustomLastSeenAvatar?: ComponentType<LastSeenAvatarProps<TMessageData, TAuthor>>;
+    CustomChatBubble?: ComponentType<ChatBubbleProps<TMessageData, TMessage, TAuthor>>;
+    CustomSystemChatBubble?: ComponentType<ChatBubbleProps<TMessageData, TMessage, TAuthor>>;
     showRecipientLastSeenMessage?: boolean;
 }
-declare function BubbleGroup<T = string>(props: BubbleGroupProps<T>): JSX.Element;
+declare function BubbleGroup<TMessageData = string, TMessage extends Message<TMessageData> = Message<TMessageData>, TAuthor extends Author<TMessageData> = Author<TMessageData>>(props: BubbleGroupProps<TMessageData, TMessage, TAuthor>): JSX.Element;
 declare const Memoized: typeof BubbleGroup;
 export { Memoized as BubbleGroup };

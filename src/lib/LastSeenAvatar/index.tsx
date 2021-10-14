@@ -7,15 +7,21 @@ import { typedMemo } from '../utils/typedMemo';
 export * from './classes';
 export * from './styles';
 
-export interface LastSeenAvatarProps<T = string> {
-  author: Author<T>;
+export interface LastSeenAvatarProps<
+  TMessageData = string,
+  TAuthor extends Author<TMessageData> = Author<TMessageData>
+> {
+  author: TAuthor;
   index?: number;
   mouseOver?: boolean;
   styles?: LastSeenAvatarStyles;
   classes?: LastSeenAvatarClasses;
 }
 
-function LastSeenAvatar<T = string>(props: LastSeenAvatarProps<T>) {
+function LastSeenAvatar<
+  TMessageData = string,
+  TAuthor extends Author<TMessageData> = Author<TMessageData>
+>(props: LastSeenAvatarProps<TMessageData, TAuthor>) {
   const { styles, classes, index, mouseOver, author } = props;
 
   const style = React.useMemo(

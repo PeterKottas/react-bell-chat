@@ -1,7 +1,13 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import { ChatMessagesContainerClasses, defaultChatMessagesContainerClasses } from './classes';
-import { ChatMessagesContainerStyles, defaultChatMessagesContainerStyles } from './styles';
+import {
+  ChatMessagesContainerClasses,
+  defaultChatMessagesContainerClasses,
+} from './classes';
+import {
+  ChatMessagesContainerStyles,
+  defaultChatMessagesContainerStyles,
+} from './styles';
 export * from './classes';
 export * from './styles';
 
@@ -14,9 +20,7 @@ export interface ChatMessagesContainerProps
     styles?: ChatMessagesContainerStyles;
   }> {}
 
-export const ChatMessagesContainer: React.FC<ChatMessagesContainerProps> = (
-  props
-) => {
+export const ChatMessagesContainer: React.FC<ChatMessagesContainerProps> = props => {
   const {
     children,
     classes,
@@ -29,7 +33,8 @@ export const ChatMessagesContainer: React.FC<ChatMessagesContainerProps> = (
     () => ({
       ...defaultChatMessagesContainerStyles?.root,
       ...styles?.root,
-      ...(showRecipientAvatar && defaultChatMessagesContainerStyles?.showRecipientAvatar),
+      ...(showRecipientAvatar &&
+        defaultChatMessagesContainerStyles?.showRecipientAvatar),
       ...(showRecipientAvatar && styles?.showRecipientAvatar),
       ...(showIsTyping && defaultChatMessagesContainerStyles?.showIsTyping),
       ...(showIsTyping && styles?.showIsTyping),
@@ -47,14 +52,18 @@ export const ChatMessagesContainer: React.FC<ChatMessagesContainerProps> = (
       styles?.showRecipientLastSeenMessage,
     ]
   );
-  const className = classNames(defaultChatMessagesContainerClasses.root, classes?.root, {
-    [defaultChatMessagesContainerClasses?.showRecipientAvatar]: showRecipientAvatar,
-    [classes?.showRecipientAvatar]: showRecipientAvatar,
-    [defaultChatMessagesContainerClasses?.showIsTyping]: showIsTyping,
-    [classes?.showIsTyping]: showIsTyping,
-    [defaultChatMessagesContainerClasses?.showRecipientLastSeenMessage]: showRecipientLastSeenMessage,
-    [classes?.showRecipientLastSeenMessage]: showRecipientLastSeenMessage,
-  });
+  const className = classNames(
+    defaultChatMessagesContainerClasses.root,
+    classes?.root,
+    {
+      [defaultChatMessagesContainerClasses?.showRecipientAvatar]: showRecipientAvatar,
+      [classes?.showRecipientAvatar]: showRecipientAvatar,
+      [defaultChatMessagesContainerClasses?.showIsTyping]: showIsTyping,
+      [classes?.showIsTyping]: showIsTyping,
+      [defaultChatMessagesContainerClasses?.showRecipientLastSeenMessage]: showRecipientLastSeenMessage,
+      [classes?.showRecipientLastSeenMessage]: showRecipientLastSeenMessage,
+    }
+  );
 
   return (
     <div style={style} className={className}>

@@ -3,12 +3,22 @@ import { ChatBubbleProps, defaultChatBubbleConfig } from '../ChatBubble';
 import classnames from 'classnames';
 import { defaultSystemChatBubbleClasses } from './classes';
 import { defaultSystemChatBubbleStyles } from './styles';
+import { Author } from '../Author';
+import { Message } from '../Message';
 export * from './classes';
 export * from './styles';
 
-export interface SystemChatBubbleProps<T = string> extends ChatBubbleProps<T> {}
+export interface SystemChatBubbleProps<
+  TMessageData = string,
+  TMessage extends Message<TMessageData> = Message<TMessageData>,
+  TAuthor extends Author<TMessageData> = Author<TMessageData>
+> extends ChatBubbleProps<TMessageData, TMessage, TAuthor> {}
 
-function SystemChatBubble<T = string>(props: SystemChatBubbleProps<T>) {
+function SystemChatBubble<
+  TMessageData = string,
+  TMessage extends Message<TMessageData> = Message<TMessageData>,
+  TAuthor extends Author<TMessageData> = Author<TMessageData>
+>(props: SystemChatBubbleProps<TMessageData, TMessage, TAuthor>) {
   const { styles, classes, message, config } = props;
 
   const finalConfig = {

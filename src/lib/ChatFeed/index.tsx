@@ -72,13 +72,17 @@ export * from './styles';
 
 // Model for ChatFeed props.
 
-export interface ChatFeedProps<T = string> {
+export interface ChatFeedProps<
+  TMessageData = string,
+  TMessage extends Message<TMessageData> = Message<TMessageData>,
+  TAuthor extends Author<TMessageData> = Author<TMessageData>
+> {
   // Structural props
   className?: string;
 
   // Functional props
-  messages: Message<T>[];
-  authors: Author<T>[];
+  messages: TMessage[];
+  authors: TAuthor[];
   yourAuthorId: number;
   hasOldMessages?: boolean;
   loadOldMessagesThreshold?: number;
@@ -97,15 +101,25 @@ export interface ChatFeedProps<T = string> {
 
   // Custom components
   CustomLoadingMessages?: ComponentType<LoadingMessagesProps>;
-  CustomChatBubble?: ComponentType<ChatBubbleProps<T>>;
-  CustomBubbleGroup?: ComponentType<BubbleGroupProps<T>>;
-  CustomSystemChatBubble?: ComponentType<ChatBubbleProps<T>>;
-  CustomAvatar?: ComponentType<AvatarProps<T>>;
+  CustomChatBubble?: ComponentType<
+    ChatBubbleProps<TMessageData, TMessage, TAuthor>
+  >;
+  CustomBubbleGroup?: ComponentType<
+    BubbleGroupProps<TMessageData, TMessage, TAuthor>
+  >;
+  CustomSystemChatBubble?: ComponentType<
+    ChatBubbleProps<TMessageData, TMessage, TAuthor>
+  >;
+  CustomAvatar?: ComponentType<AvatarProps<TMessageData, TAuthor>>;
   CustomScrollArea?: ComponentType<ChatScrollAreaProps>;
   CustomChatMessagesContainer?: ComponentType<ChatMessagesContainerProps>;
-  CustomIsTyping?: ComponentType<IsTypingProps<T>>;
-  CustomLastSeenAvatar?: ComponentType<LastSeenAvatarProps<T>>;
-  CustomMessageRender?: ComponentType<MessageRenderProps<T>>;
+  CustomIsTyping?: ComponentType<IsTypingProps<TMessageData, TAuthor>>;
+  CustomLastSeenAvatar?: ComponentType<
+    LastSeenAvatarProps<TMessageData, TAuthor>
+  >;
+  CustomMessageRender?: ComponentType<
+    MessageRenderProps<TMessageData, TMessage>
+  >;
   CustomDateRow?: ComponentType<DateRowProps>;
 
   // Callbacks
@@ -164,8 +178,15 @@ export interface ChatFeedSnapshot {
 }
 
 // React component to render a complete chat feed
-export class ChatFeed<T = string>
-  extends React.PureComponent<ChatFeedProps<T>, ChatFeedState>
+export class ChatFeed<
+    TMessageData = string,
+    TMessage extends Message<TMessageData> = Message<TMessageData>,
+    TAuthor extends Author<TMessageData> = Author<TMessageData>
+  >
+  extends React.PureComponent<
+    ChatFeedProps<TMessageData, TMessage, TAuthor>,
+    ChatFeedState
+  >
   implements ChatFeedApi {
   public static defaultProps: ChatFeedProps = {
     messages: [],
@@ -187,7 +208,7 @@ export class ChatFeed<T = string>
 
   public scrollApi: ChatScrollAreaApi;
 
-  constructor(props: ChatFeedProps<T>) {
+  constructor(props: ChatFeedProps<TMessageData, TMessage, TAuthor>) {
     super(props);
     this.renderMessages = this.renderMessages.bind(this);
     this.onLoadOldMessages = this.onLoadOldMessages.bind(this);
@@ -206,7 +227,7 @@ export class ChatFeed<T = string>
   }
 
   getSnapshotBeforeUpdate(
-    prevProps: ChatFeedProps<T>,
+    prevProps: ChatFeedProps<TMessageData, TMessage, TAuthor>,
     prevState: ChatFeedState
   ) {
     const wasScrolledToBottom =
@@ -222,7 +243,7 @@ export class ChatFeed<T = string>
   }
 
   componentDidUpdate(
-    prevProps: ChatFeedProps<T>,
+    prevProps: ChatFeedProps<TMessageData, TMessage, TAuthor>,
     prevState: ChatFeedState,
     snapshot: ChatFeedSnapshot
   ) {
@@ -268,6 +289,7 @@ export class ChatFeed<T = string>
       bubbleGroupClasses,
       CustomChatBubble,
       showRecipientAvatar,
+      CustomBubbleGroup,
     } = this.props;
 
     // First group by days
@@ -309,7 +331,7 @@ export class ChatFeed<T = string>
             group = [];
             jsxKey++;
             return (
-              <this.props.CustomBubbleGroup
+              <CustomBubbleGroup
                 key={jsxKey}
                 yourAuthorId={this.props.yourAuthorId}
                 messages={messageGroup}
@@ -411,7 +433,7 @@ export class ChatFeed<T = string>
               styles={loadingMessagesStyle}
               classes={loadingMessagesClasses}
             />
-            {this.renderMessages<T>(this.props.messages)}
+            {this.renderMessages<TMessageData>(this.props.messages)}
             {this.props.showIsTyping && (
               <this.props.CustomIsTyping
                 key={-2}

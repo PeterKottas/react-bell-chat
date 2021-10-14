@@ -23,11 +23,15 @@ import { typedMemo } from '../utils/typedMemo';
 export * from './styles';
 export * from './classes';
 
-export interface BubbleGroupProps<T = string> {
+export interface BubbleGroupProps<
+  TMessageData = string,
+  TMessage extends Message<TMessageData> = Message<TMessageData>,
+  TAuthor extends Author<TMessageData> = Author<TMessageData>
+> {
   yourAuthorId?: number;
-  messages: Message<T>[];
-  author: Author<T>;
-  authors?: Author<T>[];
+  messages: TMessage[];
+  author: TAuthor;
+  authors?: TAuthor[];
   showRecipientAvatar?: boolean;
   bubblesCentered?: boolean;
 
@@ -41,16 +45,28 @@ export interface BubbleGroupProps<T = string> {
   avatarStyles?: AvatarStyles;
   lastSeenAvatarStyles?: LastSeenAvatarStyles;
 
-  CustomAvatar?: ComponentType<AvatarProps<T>>;
-  CustomMessageRender?: ComponentType<MessageRenderProps<T>>;
-  CustomLastSeenAvatar?: ComponentType<LastSeenAvatarProps<T>>;
-  CustomChatBubble?: ComponentType<ChatBubbleProps<T>>;
-  CustomSystemChatBubble?: ComponentType<ChatBubbleProps<T>>;
+  CustomAvatar?: ComponentType<AvatarProps<TMessageData, TAuthor>>;
+  CustomMessageRender?: ComponentType<
+    MessageRenderProps<TMessageData, TMessage>
+  >;
+  CustomLastSeenAvatar?: ComponentType<
+    LastSeenAvatarProps<TMessageData, TAuthor>
+  >;
+  CustomChatBubble?: ComponentType<
+    ChatBubbleProps<TMessageData, TMessage, TAuthor>
+  >;
+  CustomSystemChatBubble?: ComponentType<
+    ChatBubbleProps<TMessageData, TMessage, TAuthor>
+  >;
 
   showRecipientLastSeenMessage?: boolean;
 }
 
-function BubbleGroup<T = string>(props: BubbleGroupProps<T>) {
+function BubbleGroup<
+  TMessageData = string,
+  TMessage extends Message<TMessageData> = Message<TMessageData>,
+  TAuthor extends Author<TMessageData> = Author<TMessageData>
+>(props: BubbleGroupProps<TMessageData, TMessage, TAuthor>) {
   const {
     messages,
     author,
@@ -79,7 +95,7 @@ function BubbleGroup<T = string>(props: BubbleGroupProps<T>) {
   } = props;
 
   const messageNodes = messages.map((message, i) => {
-    const _props: ChatBubbleProps<T> = {
+    const _props: ChatBubbleProps<TMessageData, TMessage, TAuthor> = {
       yourAuthorId: props.yourAuthorId,
       author,
       message,
@@ -97,7 +113,7 @@ function BubbleGroup<T = string>(props: BubbleGroupProps<T>) {
       lastSeenByAuthors:
         props.authors &&
         props.authors.filter(
-          (a) =>
+          a =>
             a.lastSeenMessageId !== undefined &&
             a.lastSeenMessageId === message.id
         ),

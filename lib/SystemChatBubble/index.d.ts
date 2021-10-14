@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { ChatBubbleProps } from '../ChatBubble';
+import { Author } from '../Author';
+import { Message } from '../Message';
 export * from './classes';
 export * from './styles';
-export interface SystemChatBubbleProps<T = string> extends ChatBubbleProps<T> {
+export interface SystemChatBubbleProps<TMessageData = string, TMessage extends Message<TMessageData> = Message<TMessageData>, TAuthor extends Author<TMessageData> = Author<TMessageData>> extends ChatBubbleProps<TMessageData, TMessage, TAuthor> {
 }
-declare function SystemChatBubble<T = string>(props: SystemChatBubbleProps<T>): JSX.Element;
+declare function SystemChatBubble<TMessageData = string, TMessage extends Message<TMessageData> = Message<TMessageData>, TAuthor extends Author<TMessageData> = Author<TMessageData>>(props: SystemChatBubbleProps<TMessageData, TMessage, TAuthor>): JSX.Element;
 declare const Memoized: React.MemoExoticComponent<typeof SystemChatBubble>;
 export { Memoized as SystemChatBubble };

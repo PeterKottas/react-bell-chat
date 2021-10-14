@@ -9,14 +9,14 @@ import { ChatBubbleConfig } from './config';
 export * from './styles';
 export * from './classes';
 export * from './config';
-export interface MessageRenderProps<T = string> {
-    message: Message<T>;
+export interface MessageRenderProps<TMessageData = string, TMessage extends Message<TMessageData> = Message<TMessageData>> {
+    message: TMessage;
     style?: React.CSSProperties;
     className?: string;
 }
-export interface ChatBubbleProps<T = string> {
-    message: Message<T>;
-    author?: Author<T>;
+export interface ChatBubbleProps<TMessageData = string, TMessage extends Message<TMessageData> = Message<TMessageData>, TAuthor extends Author<TMessageData> = Author<TMessageData>> {
+    message: TMessage;
+    author?: TAuthor;
     config?: ChatBubbleConfig;
     styles?: ChatBubbleStyles;
     lastSeenAvatarStyles?: LastSeenAvatarStyles;
@@ -27,9 +27,9 @@ export interface ChatBubbleProps<T = string> {
     isFirstInGroup?: boolean;
     isLastInGroup?: boolean;
     isCenterInGroup?: boolean;
-    lastSeenByAuthors?: Author<T>[];
+    lastSeenByAuthors?: TAuthor[];
     showRecipientLastSeenMessage?: boolean;
-    CustomLastSeenAvatar?: ComponentType<LastSeenAvatarProps<T>>;
-    CustomMessageRender?: ComponentType<MessageRenderProps<T>>;
+    CustomLastSeenAvatar?: ComponentType<LastSeenAvatarProps<TMessageData>>;
+    CustomMessageRender?: ComponentType<MessageRenderProps<TMessageData>>;
 }
-export declare function ChatBubble<T = string>(props: ChatBubbleProps<T>): JSX.Element;
+export declare function ChatBubble<TMessageData = string, TMessage extends Message<TMessageData> = Message<TMessageData>, TAuthor extends Author<TMessageData> = Author<TMessageData>>(props: ChatBubbleProps<TMessageData, TMessage, TAuthor>): JSX.Element;

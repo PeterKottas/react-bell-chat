@@ -7,14 +7,20 @@ import { typedMemo } from '../utils/typedMemo';
 export * from './classes';
 export * from './styles';
 
-export interface IsTypingProps<T = string> {
-  typingAuthors: Author<T>[];
+export interface IsTypingProps<
+  TMessage = string,
+  TAuthor extends Author<TMessage> = Author<TMessage>
+> {
+  typingAuthors: TAuthor[];
   styles?: IsTypingStyles;
   classes?: IsTypingClasses;
 }
 
-function IsTyping<T = string>(props: IsTypingProps<T>) {
-  let { styles, classes } = props;
+function IsTyping<
+  TMessage = string,
+  TAuthor extends Author<TMessage> = Author<TMessage>
+>(props: IsTypingProps<TMessage, TAuthor>) {
+  const { styles, classes } = props;
 
   const style = React.useMemo(
     () => ({ ...defaultIsTypingStyles.container, ...styles?.container }),
@@ -32,7 +38,7 @@ function IsTyping<T = string>(props: IsTypingProps<T>) {
         style={style}
       >
         {props.typingAuthors
-          .map((a) => a.name)
+          .map(a => a.name)
           .join(', ')
           .replace(/,(?!.*,)/gim, ' and') +
           (props.typingAuthors.length === 1 ? ' is ' : ' are ') +
