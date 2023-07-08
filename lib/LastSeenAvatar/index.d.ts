@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { Author } from '../Author';
 import { LastSeenAvatarClasses } from './classes';
 import { LastSeenAvatarStyles } from './styles';
@@ -10,6 +11,6 @@ export interface LastSeenAvatarProps<TMessageData = string, TAuthor extends Auth
     styles?: LastSeenAvatarStyles;
     classes?: LastSeenAvatarClasses;
 }
-declare function LastSeenAvatar<TMessageData = string, TAuthor extends Author<TMessageData> = Author<TMessageData>>(props: LastSeenAvatarProps<TMessageData, TAuthor>): JSX.Element;
+declare function LastSeenAvatar<TMessageData = string, TAuthor extends Author<TMessageData> = Author<TMessageData>>(props: LastSeenAvatarProps<TMessageData, TAuthor>): React.JSX.Element;
 declare const Memoized: typeof LastSeenAvatar;
 export { Memoized as LastSeenAvatar };

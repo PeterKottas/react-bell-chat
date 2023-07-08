@@ -25,7 +25,7 @@ export interface ChatScrollAreaApi {
 export declare class ChatScrollArea extends React.PureComponent<ChatScrollAreaProps> {
     scrollContainer: HTMLDivElement;
     constructor(props: ChatScrollAreaProps);
-    render(): JSX.Element;
+    render(): React.JSX.Element;
     private onScroll;
     private containerRef;
 }

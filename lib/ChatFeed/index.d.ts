@@ -96,6 +96,6 @@ export declare class ChatFeed<TMessageData = string, TMessage extends Message<TM
      */
     renderMessages<T>(messages: Message<T>[]): React.ReactNode[];
     apiRef(e: ChatScrollAreaApi): void;
-    render(): JSX.Element;
+    render(): React.JSX.Element;
     private onLoadOldMessages;
 }

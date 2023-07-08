@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { ChatBubbleProps, ChatBubbleStyles, MessageRenderProps } from '../ChatBubble';
 import { Message } from '../';
 import { Author } from '../Author';
@@ -32,6 +33,6 @@ export interface BubbleGroupProps<TMessageData = string, TMessage extends Messag
     CustomSystemChatBubble?: ComponentType<ChatBubbleProps<TMessageData, TMessage, TAuthor>>;
     showRecipientLastSeenMessage?: boolean;
 }
-declare function BubbleGroup<TMessageData = string, TMessage extends Message<TMessageData> = Message<TMessageData>, TAuthor extends Author<TMessageData> = Author<TMessageData>>(props: BubbleGroupProps<TMessageData, TMessage, TAuthor>): JSX.Element;
+declare function BubbleGroup<TMessageData = string, TMessage extends Message<TMessageData> = Message<TMessageData>, TAuthor extends Author<TMessageData> = Author<TMessageData>>(props: BubbleGroupProps<TMessageData, TMessage, TAuthor>): React.JSX.Element;
 declare const Memoized: typeof BubbleGroup;
 export { Memoized as BubbleGroup };
