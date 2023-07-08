@@ -1,11 +1,20 @@
+@import 'normalize.css';
 html,
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
+  height: 100%;
+  min-height: 100%;
+}
+
+#chat-ui {
+  height: 100%;
+  min-height: 100%;
 }
 
 h1 {
   font-size: 48px;
+  margin-bottom: 1rem;
 }
 
 h2 {
@@ -23,13 +32,21 @@ button:focus {
 .container {
   max-width: 850px;
   margin: 0 auto;
-  margin-top: 20px;
   margin-bottom: 100px;
+  display: flex;
+  flex-direction: column;
+  &.container--mobile {
+    height: 100%;
+    max-height: 100%;
+  }
 }
 
 .install {
   text-align: center;
   margin: 20px auto;
+  code {
+    border-radius: 1rem;
+  }
 }
 
 code {
@@ -75,13 +92,20 @@ input:focus {
   outline: none;
 }
 
-.chatfeed-wrapper {
+.chat-feed-wrapper {
   box-shadow: 0 20px 20px rgba(0, 0, 0, 0.08);
   /*border-radius: 4px;*/
   /*max-width: 450px;*/
   margin: 0 auto;
   border: 1px solid #ddd;
   padding-bottom: 20px;
+}
+
+.chat-feed-wrapper--mobile {
+}
+
+.chat-feed-wrapper--standard {
+  margin-bottom: 100px;
 }
 
 .chat-history {
@@ -102,6 +126,22 @@ input:focus {
 
 .text-center {
   text-align: center;
+}
+
+.message-submit {
+  background-color: #0084ff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.buttons-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  padding: 0 0.5rem;
 }
 
 $base-color: #ddd;

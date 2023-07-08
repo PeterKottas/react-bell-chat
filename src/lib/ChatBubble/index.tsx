@@ -211,7 +211,7 @@ export function ChatBubble<
           />
         ) : (
           <span style={messageStyle} className={messageClassName}>
-            {props.message.message}
+            {(props.message.message as unknown) as React.ReactNode}
           </span>
         )}
         {props.message.createdOn && (

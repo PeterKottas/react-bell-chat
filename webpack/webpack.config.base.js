@@ -1,8 +1,4 @@
 const path = require('path');
-const webpack = require('webpack');
-const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 var isLocalBuild =
@@ -11,6 +7,7 @@ var isLocalBuild =
   process.env.NODE_ENV.trim().toString() == 'local';
 
 module.exports = {
+  target: 'web',
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
@@ -18,9 +15,29 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        include: /src/,
-        use: 'awesome-typescript-loader?silent=true',
+        test: /\.(j|t)sx?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: true,
+            babelrc: false,
+            presets: [
+              [
+                '@babel/preset-env',
+                { targets: { browsers: 'last 2 versions' } }, // or whatever your project requires
+              ],
+              '@babel/preset-typescript',
+              '@babel/preset-react',
+            ],
+            plugins: [
+              // plugin-proposal-decorators is only needed if you're using experimental decorators in TypeScript
+              // ["@babel/plugin-proposal-decorators", { legacy: true }],
+              ['@babel/plugin-proposal-class-properties', { loose: true }],
+              'react-hot-loader/babel',
+            ],
+          },
+        },
       },
       {
         test: /\.(scss|css)$/,
@@ -64,38 +81,9 @@ module.exports = {
     libraryTarget: 'umd',
   },
   plugins: [
-    new CheckerPlugin(),
-    new webpack.SourceMapDevToolPlugin({
-      filename: '[file].map', // Remove this line if you prefer inline source maps
-      moduleFilenameTemplate: path.relative('../lib', '[resourcePath]'), // Point sourcemap entries to the original file locations on disk
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
     }),
   ],
   mode: isLocalBuild ? 'development' : 'production',
-  ...(!isLocalBuild
-    ? {
-        optimization: {
-          minimizer: [
-            new UglifyJsPlugin({
-              cache: true,
-              parallel: true,
-              sourceMap: true, // set to true if you want JS source maps
-            }),
-            new OptimizeCSSAssetsPlugin({}),
-          ],
-          splitChunks: {
-            cacheGroups: {
-              /*default: false,
-                vendors: false,*/
-              // vendor chunk
-              /*vendor: {
-                  // sync + async chunks
-                  chunks: "all",
-                  // import file path containing node_modules
-                  test: /node_modules/
-                }*/
-            },
-          },
-        },
-      }
-    : {}),
 };

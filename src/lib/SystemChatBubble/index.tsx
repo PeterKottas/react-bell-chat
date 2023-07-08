@@ -19,7 +19,7 @@ function SystemChatBubble<
   TMessage extends Message<TMessageData> = Message<TMessageData>,
   TAuthor extends Author<TMessageData> = Author<TMessageData>
 >(props: SystemChatBubbleProps<TMessageData, TMessage, TAuthor>) {
-  const { styles, classes, message, config } = props;
+  const { styles, classes, message, config, CustomMessageRender } = props;
 
   const finalConfig = {
     ...defaultChatBubbleConfig,
@@ -63,7 +63,11 @@ function SystemChatBubble<
             {time}:{' '}
           </span>
         )}
-        {props.message.message}
+        {CustomMessageRender ? (
+          <CustomMessageRender message={props.message} />
+        ) : (
+          ((props.message.message as unknown) as React.ReactNode)
+        )}
       </div>
     )
   );

@@ -1,6 +1,4 @@
 const path = require('path');
-const webpack = require('webpack');
-var isLocalBuild = process.env.NODE_ENV === 'local';
 const { mergeWithCustomize } = require('webpack-merge');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
@@ -8,6 +6,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 var _ = require('lodash');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 let htmlPluginOptions = {
   alwaysWriteToDisk: true,
@@ -68,4 +67,12 @@ module.exports = mergeWithCustomize({
     }),
   ],
   mode: 'production',
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        parallel: true,
+      }),
+      new OptimizeCSSAssetsPlugin({}),
+    ],
+  },
 });

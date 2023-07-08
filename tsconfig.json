@@ -10,7 +10,8 @@
     "skipDefaultLibCheck": true,
     "noUnusedLocals": true,
     "lib": ["es6", "dom"],
-    "types": ["node"]
+    "types": ["node"],
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src/lib/*.ts"],
   "exclude": ["node_modules"],

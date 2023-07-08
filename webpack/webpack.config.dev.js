@@ -8,6 +8,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 var _ = require('lodash');
 const { WebpackPluginServe: Serve } = require('webpack-plugin-serve');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 let htmlPluginOptions = {
   alwaysWriteToDisk: true,
@@ -43,7 +44,7 @@ module.exports = mergeWithCustomize({
       // 'react-dom': '@hot-loader/react-dom'
     },
   },
-  entry: { index: ['webpack-plugin-serve/client', './src/demo/index.tsx'] },
+  entry: { index: './src/demo/index.tsx' },
   output: {
     path: clientOutputDir,
     publicPath: '/',
@@ -52,6 +53,15 @@ module.exports = mergeWithCustomize({
   externals: {},
   mode: 'development',
   devtool: 'inline-source-map',
+  devServer: {
+    open: true,
+    hot: true,
+    historyApiFallback: true,
+    static: {
+      directory: path.join(__dirname, clientOutputDir),
+    },
+    port: 8080,
+  },
   plugins: [
     new MiniCssExtractPlugin({
       filename: '[name].css',
@@ -66,7 +76,7 @@ module.exports = mergeWithCustomize({
         },
       ],
     }),
-    new Serve({
+    /*new Serve({
       port: 8080,
       static: clientOutputDir,
       open: true,
@@ -74,7 +84,7 @@ module.exports = mergeWithCustomize({
       progress: false,
       hmr: true,
       historyFallback: true,
-    }),
+    }),*/
+    new ReactRefreshWebpackPlugin(),
   ],
-  watch: true,
 });
